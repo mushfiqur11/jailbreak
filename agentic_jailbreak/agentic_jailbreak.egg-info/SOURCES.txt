@@ -1,6 +1,0 @@
-setup.py
-agentic_jailbreak.egg-info/PKG-INFO
-agentic_jailbreak.egg-info/SOURCES.txt
-agentic_jailbreak.egg-info/dependency_links.txt
-agentic_jailbreak.egg-info/requires.txt
-agentic_jailbreak.egg-info/top_level.txt
