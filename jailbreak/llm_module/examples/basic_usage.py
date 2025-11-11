@@ -22,6 +22,8 @@ def example_llama_usage():
         "temperature": 0.7,
         "max_new_tokens": 512,
         "hf_token_path": "/home/mrahma45/HUGGINGFACE_KEY"
+        # Note: hf_model_path not specified - will use default: /Jailbreaking/github_repos/jailbreak/hf_models/
+        # To override default: "hf_model_path": "/custom/path/to/models"
     }
     
     # Initialize model as requested: llm = Llama(config)

@@ -124,8 +124,21 @@ class HuggingFaceBase(BaseLLM):
     
     def _setup_model_path(self) -> str:
         """Setup the model path, downloading if necessary."""
-        # Get model directory from config
-        hf_model_path = self.config.get("hf_model_path", "./models")
+        # Get model directory from config, with new default path
+        if "hf_model_path" not in self.config:
+            # Default to the jailbreak hf_models directory
+            import pathlib
+            current_file = pathlib.Path(__file__).resolve()
+            # Navigate from jailbreak/jailbreak/llm_module/base/hf_base.py to jailbreak/hf_models/
+            jailbreak_root = current_file.parents[3]  # Go up to the outer jailbreak directory
+            default_hf_path = jailbreak_root / "hf_models"
+            hf_model_path = str(default_hf_path)
+        else:
+            hf_model_path = self.config["hf_model_path"]
+        
+        # Ensure the directory exists
+        os.makedirs(hf_model_path, exist_ok=True)
+        
         model_path = os.path.join(hf_model_path, self.model_id)
         
         # Check if model exists locally
