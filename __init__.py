@@ -13,11 +13,11 @@ __author__ = "Jailbreak Framework Team"
 
 # Import key components for easy access
 try:
-    from .llm_module.models import Llama, GPT, Phi, Qwen, DeepSeek, Aya
-    from .llm_module.config import ModelConfigs, ConfigManager
-    from .llm_module.utils import ConversationManager, ModelUtils
-    from .llm_module.quantization import QuantizationConfig, MemoryOptimizer
-    from .llm_module.finetuning import LoRAConfig, LoRATrainer
+    from jailbreak.llm_module.models import Llama, GPT, Phi, Qwen, DeepSeek, Aya
+    from jailbreak.llm_module.config import ModelConfigs, ConfigManager
+    from jailbreak.llm_module.utils import ConversationManager, ModelUtils
+    from jailbreak.llm_module.quantization import QuantizationConfig, MemoryOptimizer
+    from jailbreak.llm_module.finetuning import LoRAConfig, LoRATrainer
     
     # Main exports - easy access to key functionality
     __all__ = [
