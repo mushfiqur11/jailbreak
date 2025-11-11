@@ -54,12 +54,13 @@ check_cuda() {
 
 # Function to check Python version
 check_python() {
+    module load python
     if command_exists python3; then
         PYTHON_VERSION=$(python3 --version | cut -d ' ' -f 2)
         print_info "Python version: $PYTHON_VERSION"
         
-        # Check if Python version is 3.8 or higher
-        if python3 -c "import sys; exit(0 if sys.version_info >= (3, 8) else 1)"; then
+        # Check if Python version is 3.9 or higher
+        if python3 -c "import sys; exit(0 if sys.version_info >= (3, 9) else 1)"; then
             print_success "Python version is compatible"
             return 0
         else
@@ -72,9 +73,9 @@ check_python() {
     fi
 }
 
-# Function to create and activate virtual environment
+# # Function to create and activate virtual environment
 setup_venv() {
-    local venv_name="jailbreak_env"
+    local venv_name="venv_jailbreak"
     
     if [ -d "$venv_name" ]; then
         print_info "Virtual environment '$venv_name' already exists"
@@ -89,6 +90,7 @@ setup_venv() {
     
     if [ ! -d "$venv_name" ]; then
         print_info "Creating virtual environment: $venv_name"
+        cd ../../
         python3 -m venv "$venv_name"
     fi
     
@@ -109,7 +111,7 @@ install_pytorch() {
     if check_cuda; then
         # Install PyTorch with CUDA support
         print_info "Installing PyTorch with CUDA support..."
-        pip install torch==2.6.0 torchvision==0.21.0 torchaudio==2.6.0 --index-url https://download.pytorch.org/whl/cu126
+        pip3 install torch torchvision --index-url https://download.pytorch.org/whl/cu126
     else
         # Install CPU-only PyTorch
         print_info "Installing PyTorch CPU-only version..."
