@@ -21,7 +21,7 @@ def example_llama_usage():
         "quantization": "none",  # Can be "auto", "4bit", "8bit" 
         "temperature": 0.7,
         "max_new_tokens": 512,
-        "hf_token_path": "./tokens/hf_token.txt"
+        "hf_token_path": "/home/mrahma45/HUGGINGFACE_KEY"
     }
     
     # Initialize model as requested: llm = Llama(config)
@@ -30,6 +30,10 @@ def example_llama_usage():
         
         # Set system prompt as requested
         llm.set_system_prompt("You are a helpful AI assistant specialized in cybersecurity.")
+        
+        # Get system prompt to verify it was set
+        current_prompt = llm.get_system_prompt()
+        print(f"Current system prompt: {current_prompt[:50]}...")
         
         # Add message as requested
         llm.add_message("user", "What are common attack vectors in web applications?")
@@ -43,15 +47,16 @@ def example_llama_usage():
         
         # Forward without arguments - uses conversation, doesn't save
         print("Generating response using conversation history...")
-        # response = llm.forward()  # This would actually call the model
-        print("Response generated (placeholder)")
+        response = llm.forward()  # This would actually call the model
+        print(f"{response}")
         
         # Forward with messages - one-shot, doesn't affect conversation state
         standalone_messages = [{"role": "user", "content": "What is XSS?"}]
         print("Generating standalone response...")
-        # response = llm.forward(standalone_messages)  # One-shot generation
-        print("Standalone response generated (placeholder)")
+        response = llm.forward(standalone_messages)  # One-shot generation
+        print(f"{response}")
         
+        print(f"f{llm.get_system_prompt()}")
         # Get model information
         model_info = llm.get_model_info()
         print(f"Model Info: {model_info}")
@@ -67,7 +72,7 @@ def example_gpt_usage():
     
     config = {
         "model_id": "gpt-4o",
-        "api_key_path": "./tokens/openai_key.txt",
+        "api_key_path": "/projects/klybarge/OPENAI_API_KEY_GENERAL",
         "temperature": 0.7,
         "max_tokens": 1024
     }
@@ -75,6 +80,11 @@ def example_gpt_usage():
     try:
         llm = GPT(config)
         llm.set_system_prompt("You are an expert in AI security research.")
+        
+        # Demonstrate get_system_prompt method
+        current_prompt = llm.get_system_prompt()
+        print(f"GPT system prompt: {current_prompt}")
+        
         llm.add_message("user", "Explain jailbreaking techniques")
         
         # response = llm.forward()

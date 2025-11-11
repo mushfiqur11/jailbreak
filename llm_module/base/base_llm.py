@@ -58,6 +58,15 @@ class BaseLLM(ABC):
         """
         pass
     
+    def get_system_prompt(self) -> Optional[str]:
+        """
+        Get the current system prompt.
+        
+        Returns:
+            Optional[str]: The current system prompt, or None if not set
+        """
+        return self.system_prompt
+    
     @abstractmethod
     def forward(self, messages: Optional[List[Dict[str, str]]] = None) -> str:
         """
