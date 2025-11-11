@@ -1,0 +1,35 @@
+Metadata-Version: 2.4
+Name: agentic_jailbreak
+Version: 0.1.0
+Summary: Agentic Jailbreak Framework (Under Development)
+Author: Jailbreak Framework Team
+Project-URL: Source, https://github.com/jailbreak-framework/agentic_jailbreak
+Project-URL: Documentation, https://github.com/jailbreak-framework/agentic_jailbreak/blob/main/README.md
+Keywords: jailbreaking ai-security agents research
+Classifier: Development Status :: 2 - Pre-Alpha
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Classifier: Topic :: Security
+Requires-Python: >=3.8
+Requires-Dist: llm_module>=1.0.0
+Requires-Dist: numpy>=1.24.0
+Requires-Dist: pandas>=2.0.0
+Requires-Dist: tqdm>=4.65.0
+Requires-Dist: pyyaml>=6.0.1
+Provides-Extra: dev
+Requires-Dist: pytest>=7.4.0; extra == "dev"
+Requires-Dist: pytest-cov>=4.1.0; extra == "dev"
+Dynamic: author
+Dynamic: classifier
+Dynamic: keywords
+Dynamic: project-url
+Dynamic: provides-extra
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary

@@ -75,6 +75,7 @@ check_python() {
 
 # # Function to create and activate virtual environment
 setup_venv() {
+    cd ../../
     local venv_name="venv_jailbreak"
     
     if [ -d "$venv_name" ]; then
@@ -90,7 +91,6 @@ setup_venv() {
     
     if [ ! -d "$venv_name" ]; then
         print_info "Creating virtual environment: $venv_name"
-        cd ../../
         python3 -m venv "$venv_name"
     fi
     
@@ -102,6 +102,7 @@ setup_venv() {
     pip install --upgrade pip
     
     print_success "Virtual environment setup complete"
+    cd jailbreak/setup
 }
 
 # Function to install PyTorch with appropriate CUDA support

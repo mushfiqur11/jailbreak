@@ -25,7 +25,6 @@ requests>=2.31.0
 
 # Optional GPU Support
 nvidia-ml-py3>=7.352.0  # For GPU monitoring
-flash-attn>=2.3.0      # Flash attention (optional, for speed)
 
 # Development and Testing
 pytest>=7.4.0
