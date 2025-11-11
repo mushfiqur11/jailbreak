@@ -5,10 +5,10 @@ This script demonstrates the key functionality of the llm_module with the exact 
 as requested, including explicit imports and usage patterns.
 """
 
-# Example usage as requested by the user
-from llm_module.models import Llama, GPT, Phi, Qwen, DeepSeek, Aya
-from llm_module.config import ModelConfigs, ConfigManager
-from llm_module.utils import ConversationManager, ModelUtils
+# Example usage with correct jailbreak package imports
+from jailbreak.llm_module.models import Llama, GPT, Phi, Qwen, DeepSeek, Aya
+from jailbreak.llm_module.config import ModelConfigs, ConfigManager
+from jailbreak.llm_module.utils import ConversationManager, ModelUtils
 
 
 def example_llama_usage():
@@ -181,7 +181,7 @@ def example_quantization_features():
     """Example of quantization features."""
     print("\n=== Quantization Features Example ===")
     
-    from llm_module.quantization import QuantizationConfig, MemoryOptimizer
+    from jailbreak.llm_module.quantization import QuantizationConfig, MemoryOptimizer
     
     # Auto-select quantization
     mode = QuantizationConfig.auto_select_quantization("meta-llama/Llama-3.3-70B-Instruct")
@@ -206,7 +206,7 @@ def example_lora_configuration():
     """Example of LoRA configuration for future fine-tuning."""
     print("\n=== LoRA Configuration Example ===")
     
-    from llm_module.finetuning import LoRAConfig, LoRATrainer
+    from jailbreak.llm_module.finetuning import LoRAConfig, LoRATrainer
     
     # Get optimized LoRA config for jailbreaking task
     lora_config = LoRAConfig.get_task_optimized_config("jailbreaking", "llama")

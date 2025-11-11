@@ -139,157 +139,27 @@ install_requirements() {
     print_success "Requirements installation complete"
 }
 
-# Function to create setup.py for llm_module if it doesn't exist
-create_llm_module_setup() {
-    local setup_file="../llm_module/setup.py"
+# Function to install the unified jailbreak package
+install_jailbreak_package() {
+    print_info "Installing jailbreak framework package in editable mode..."
     
-    if [ ! -f "$setup_file" ]; then
-        print_info "Creating setup.py for llm_module..."
-        
-        cat > "$setup_file" << 'EOF'
-from setuptools import setup, find_packages
-
-setup(
-    name="llm_module",
-    version="1.0.0",
-    description="LLM Module for Jailbreak Framework",
-    author="Jailbreak Framework Team",
-    packages=find_packages(),
-    python_requires=">=3.8",
-    install_requires=[
-        "torch>=2.0.0",
-        "transformers>=4.35.0",
-        "accelerate>=0.24.0",
-        "openai>=1.3.0",
-        "huggingface_hub>=0.19.0",
-        "bitsandbytes>=0.41.0",
-        "peft>=0.7.0",
-        "psutil>=5.9.0",
-        "numpy>=1.24.0",
-        "tqdm>=4.65.0",
-        "requests>=2.31.0",
-    ],
-    extras_require={
-        "dev": [
-            "pytest>=7.4.0",
-            "pytest-cov>=4.1.0",
-        ],
-        "viz": [
-            "matplotlib>=3.7.0",
-            "seaborn>=0.12.0",
-            "plotly>=5.15.0",
-        ],
-    },
-    classifiers=[
-        "Development Status :: 4 - Beta",
-        "Intended Audience :: Science/Research",
-        "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.8",
-        "Programming Language :: Python :: 3.9",
-        "Programming Language :: Python :: 3.10",
-        "Programming Language :: Python :: 3.11",
-    ],
-)
-EOF
-        
-        print_success "setup.py created for llm_module"
-    else
-        print_info "setup.py already exists for llm_module"
+    # Go to the jailbreak root directory (parent of setup)
+    cd ..
+    
+    # Check that setup.py exists
+    if [ ! -f "setup.py" ]; then
+        print_error "setup.py not found in jailbreak directory"
+        print_info "Please ensure the setup.py file exists at the root level"
+        exit 1
     fi
-}
-
-# Function to install llm_module package
-install_llm_module() {
-    print_info "Installing llm_module package in editable mode..."
-    
-    # Go to the llm_module directory
-    cd ../llm_module
     
     # Install in editable mode
     pip install -e .
     
-    print_success "llm_module package installed successfully"
+    print_success "jailbreak package installed successfully"
     
     # Return to setup directory
-    cd ../setup
-}
-
-# Function to create placeholder setup.py for agentic_jailbreak
-create_agentic_jailbreak_placeholder() {
-    local setup_file="../agentic_jailbreak/setup.py"
-    local init_file="../agentic_jailbreak/__init__.py"
-    
-    # Create __init__.py if it doesn't exist
-    if [ ! -f "$init_file" ]; then
-        print_info "Creating __init__.py for agentic_jailbreak..."
-        cat > "$init_file" << 'EOF'
-"""
-Agentic Jailbreak Framework
-
-A framework for conducting automated jailbreaking research on language models.
-Currently under development.
-"""
-
-__version__ = "0.1.0"
-__author__ = "Jailbreak Framework Team"
-
-# TODO: Add main framework components when ready
-print("Agentic Jailbreak Framework - Under Development")
-EOF
-    fi
-    
-    if [ ! -f "$setup_file" ]; then
-        print_info "Creating placeholder setup.py for agentic_jailbreak..."
-        
-        cat > "$setup_file" << 'EOF'
-from setuptools import setup, find_packages
-
-setup(
-    name="agentic_jailbreak",
-    version="0.1.0",
-    description="Agentic Jailbreak Framework (Under Development)",
-    author="Jailbreak Framework Team",
-    packages=find_packages(),
-    python_requires=">=3.8",
-    install_requires=[
-        "llm_module>=1.0.0",
-        # TODO: Add specific dependencies when framework is complete
-    ],
-    classifiers=[
-        "Development Status :: 2 - Pre-Alpha",
-        "Intended Audience :: Science/Research",
-        "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.8",
-        "Programming Language :: Python :: 3.9",
-        "Programming Language :: Python :: 3.10",
-        "Programming Language :: Python :: 3.11",
-    ],
-)
-EOF
-        
-        print_success "Placeholder setup.py created for agentic_jailbreak"
-    else
-        print_info "setup.py already exists for agentic_jailbreak"
-    fi
-}
-
-# Function to install agentic_jailbreak package (placeholder)
-install_agentic_jailbreak() {
-    print_warning "Installing agentic_jailbreak package (placeholder - under development)..."
-    
-    # Go to the agentic_jailbreak directory
-    cd ../agentic_jailbreak
-    
-    # Install in editable mode
-    pip install -e . || {
-        print_warning "agentic_jailbreak installation failed (expected - under development)"
-        print_info "Continuing with setup..."
-    }
-    
-    print_info "agentic_jailbreak placeholder installed"
-    
-    # Return to setup directory
-    cd ../setup
+    cd setup
 }
 
 # Function to verify installation
@@ -315,28 +185,28 @@ print(f'✓ PyTorch version: {torch.__version__}')
 print(f'✓ Transformers version: {transformers.__version__}')
 "
     
-    # Test llm_module import
-    print_info "Testing llm_module imports..."
+    # Test jailbreak package imports
+    print_info "Testing jailbreak package imports..."
     python3 -c "
 try:
-    import llm_module
-    from llm_module.models import Llama, GPT, Phi, Qwen, DeepSeek, Aya
-    from llm_module.config import ModelConfigs, ConfigManager
-    from llm_module.utils import ConversationManager, ModelUtils
-    print('✓ llm_module imported successfully')
+    import jailbreak
+    from jailbreak.llm_module.models import Llama, GPT, Phi, Qwen, DeepSeek, Aya
+    from jailbreak.llm_module.config import ModelConfigs, ConfigManager
+    from jailbreak.llm_module.utils import ConversationManager, ModelUtils
+    print('✓ jailbreak.llm_module imported successfully')
 except Exception as e:
-    print(f'✗ llm_module import error: {e}')
+    print(f'✗ jailbreak.llm_module import error: {e}')
     exit(1)
 "
     
-    # Test agentic_jailbreak import (may fail - that's ok)
-    print_info "Testing agentic_jailbreak import..."
+    # Test agentic_jailbreak subpackage import (may fail - that's ok)
+    print_info "Testing jailbreak.agentic_jailbreak import..."
     python3 -c "
 try:
-    import agentic_jailbreak
-    print('✓ agentic_jailbreak imported successfully (placeholder)')
+    import jailbreak.agentic_jailbreak
+    print('✓ jailbreak.agentic_jailbreak imported successfully (placeholder)')
 except Exception as e:
-    print(f'⚠ agentic_jailbreak import warning: {e}')
+    print(f'⚠ jailbreak.agentic_jailbreak import warning: {e}')
     print('  This is expected - agentic_jailbreak is under development')
 "
     
@@ -449,17 +319,11 @@ main() {
     print_header "Installing Requirements"
     install_requirements
     
-    # Step 5: Setup and install llm_module
-    print_header "Installing LLM Module Package"
-    create_llm_module_setup
-    install_llm_module
+    # Step 5: Install unified jailbreak package
+    print_header "Installing Jailbreak Framework Package"
+    install_jailbreak_package
     
-    # Step 6: Setup agentic_jailbreak (placeholder)
-    print_header "Setting up Agentic Jailbreak (Placeholder)"
-    create_agentic_jailbreak_placeholder
-    install_agentic_jailbreak
-    
-    # Step 7: Verify installation
+    # Step 6: Verify installation
     print_header "Verifying Installation"
     verify_installation
     
@@ -485,9 +349,9 @@ main() {
     print_info ""
     print_info "Next steps:"
     print_info "1. Add your API keys to the tokens directory"
-    print_info "2. Test llm_module: python -c 'import llm_module; print(\"Success!\")"
-    print_info "3. Run examples: python llm_module/examples/basic_usage.py"
-    print_info "4. Check documentation in llm_module/README.md"
+    print_info "2. Test jailbreak package: python -c 'import jailbreak; print(\"Success!\")'"
+    print_info "3. Run examples: python jailbreak/llm_module/examples/basic_usage.py"
+    print_info "4. Check documentation in jailbreak/llm_module/README.md"
     print_info ""
     print_success "Happy jailbreaking research! 🚀"
 }
