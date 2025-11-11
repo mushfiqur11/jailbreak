@@ -45,7 +45,6 @@ setup(
     extras_require={
         "gpu": [
             "nvidia-ml-py3>=7.352.0",  # For GPU monitoring
-            "flash-attn>=2.3.0",       # Flash attention (optional, for speed)
         ],
         "dev": [
             "pytest>=7.4.0",
