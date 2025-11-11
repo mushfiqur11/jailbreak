@@ -9,6 +9,7 @@ jailbreak.egg-info/requires.txt
 jailbreak.egg-info/top_level.txt
 jailbreak/__pycache__/__init__.cpython-39.pyc
 jailbreak/agentic_jailbreak/__init__.py
+jailbreak/agentic_jailbreak/__pycache__/__init__.cpython-39.pyc
 jailbreak/agentic_jailbreak/agents/attacker.py
 jailbreak/agentic_jailbreak/agents/judge.py
 jailbreak/agentic_jailbreak/agents/parser.py
@@ -31,10 +32,12 @@ jailbreak/llm_module/base/__init__.py
 jailbreak/llm_module/base/base_llm.py
 jailbreak/llm_module/base/hf_base.py
 jailbreak/llm_module/base/openai_base.py
+jailbreak/llm_module/base/vl_base.py
 jailbreak/llm_module/base/__pycache__/__init__.cpython-39.pyc
 jailbreak/llm_module/base/__pycache__/base_llm.cpython-39.pyc
 jailbreak/llm_module/base/__pycache__/hf_base.cpython-39.pyc
 jailbreak/llm_module/base/__pycache__/openai_base.cpython-39.pyc
+jailbreak/llm_module/base/__pycache__/vl_base.cpython-39.pyc
 jailbreak/llm_module/config/__init__.py
 jailbreak/llm_module/config/config_manager.py
 jailbreak/llm_module/config/model_configs.py
@@ -42,9 +45,13 @@ jailbreak/llm_module/config/__pycache__/__init__.cpython-39.pyc
 jailbreak/llm_module/config/__pycache__/config_manager.cpython-39.pyc
 jailbreak/llm_module/config/__pycache__/model_configs.cpython-39.pyc
 jailbreak/llm_module/examples/basic_usage.py
+jailbreak/llm_module/examples/test_hf_cache.py
 jailbreak/llm_module/finetuning/__init__.py
 jailbreak/llm_module/finetuning/lora_config.py
 jailbreak/llm_module/finetuning/trainer.py
+jailbreak/llm_module/finetuning/__pycache__/__init__.cpython-39.pyc
+jailbreak/llm_module/finetuning/__pycache__/lora_config.cpython-39.pyc
+jailbreak/llm_module/finetuning/__pycache__/trainer.cpython-39.pyc
 jailbreak/llm_module/models/__init__.py
 jailbreak/llm_module/models/aya.py
 jailbreak/llm_module/models/deepseek.py
@@ -68,3 +75,6 @@ jailbreak/llm_module/quantization/__pycache__/quantizers.cpython-39.pyc
 jailbreak/llm_module/utils/__init__.py
 jailbreak/llm_module/utils/common.py
 jailbreak/llm_module/utils/conversation.py
+jailbreak/llm_module/utils/__pycache__/__init__.cpython-39.pyc
+jailbreak/llm_module/utils/__pycache__/common.cpython-39.pyc
+jailbreak/llm_module/utils/__pycache__/conversation.cpython-39.pyc

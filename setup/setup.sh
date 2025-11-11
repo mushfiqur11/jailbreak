@@ -102,7 +102,7 @@ setup_venv() {
     pip install --upgrade pip
     
     print_success "Virtual environment setup complete"
-    cd jailbreak/setup
+    cd jailbreak-pkg/setup
 }
 
 # Function to install PyTorch with appropriate CUDA support
@@ -112,11 +112,10 @@ install_pytorch() {
     if check_cuda; then
         # Install PyTorch with CUDA support
         print_info "Installing PyTorch with CUDA support..."
-        pip3 install torch torchvision --index-url https://download.pytorch.org/whl/cu126
+        module unload python
+        pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
     else
-        # Install CPU-only PyTorch
-        print_info "Installing PyTorch CPU-only version..."
-        pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
+        print_info "ERROR: No NVIDIA GPU detected or nvidia-smi not available"
     fi
     
     print_success "PyTorch installation complete"
