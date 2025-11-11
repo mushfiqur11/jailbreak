@@ -1,11 +1,13 @@
 Metadata-Version: 2.4
-Name: llm_module
+Name: jailbreak
 Version: 1.0.0
-Summary: LLM Module for Jailbreak Framework
+Summary: Jailbreak Framework - Complete toolkit for AI security research and jailbreaking experiments
 Author: Jailbreak Framework Team
-Project-URL: Source, https://github.com/jailbreak-framework/llm_module
-Project-URL: Documentation, https://github.com/jailbreak-framework/llm_module/blob/main/README.md
-Keywords: llm language-model jailbreaking ai-security pytorch transformers
+Project-URL: Homepage, https://github.com/jailbreak-framework/jailbreak
+Project-URL: Source, https://github.com/jailbreak-framework/jailbreak
+Project-URL: Documentation, https://github.com/jailbreak-framework/jailbreak/blob/main/README.md
+Project-URL: Bug Reports, https://github.com/jailbreak-framework/jailbreak/issues
+Keywords: jailbreaking ai-security llm language-model pytorch transformers agents research
 Classifier: Development Status :: 4 - Beta
 Classifier: Intended Audience :: Science/Research
 Classifier: License :: OSI Approved :: MIT License
@@ -16,24 +18,29 @@ Classifier: Programming Language :: Python :: 3.10
 Classifier: Programming Language :: Python :: 3.11
 Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
 Classifier: Topic :: Security
+Classifier: Operating System :: OS Independent
 Requires-Python: >=3.8
+Description-Content-Type: text/markdown
 Requires-Dist: torch>=2.0.0
 Requires-Dist: transformers>=4.35.0
 Requires-Dist: accelerate>=0.24.0
+Requires-Dist: tokenizers>=0.15.0
+Requires-Dist: safetensors>=0.4.0
 Requires-Dist: openai>=1.3.0
 Requires-Dist: huggingface_hub>=0.19.0
 Requires-Dist: bitsandbytes>=0.41.0
+Requires-Dist: scipy>=1.11.0
 Requires-Dist: peft>=0.7.0
 Requires-Dist: psutil>=5.9.0
 Requires-Dist: numpy>=1.24.0
 Requires-Dist: tqdm>=4.65.0
 Requires-Dist: requests>=2.31.0
-Requires-Dist: scipy>=1.11.0
-Requires-Dist: tokenizers>=0.15.0
-Requires-Dist: safetensors>=0.4.0
-Requires-Dist: pyyaml>=6.0.1
 Requires-Dist: pandas>=2.0.0
 Requires-Dist: jsonlines>=4.0.0
+Requires-Dist: pyyaml>=6.0.1
+Requires-Dist: toml>=0.10.2
+Provides-Extra: gpu
+Requires-Dist: nvidia-ml-py3>=7.352.0; extra == "gpu"
 Provides-Extra: dev
 Requires-Dist: pytest>=7.4.0; extra == "dev"
 Requires-Dist: pytest-cov>=4.1.0; extra == "dev"
@@ -41,12 +48,10 @@ Provides-Extra: viz
 Requires-Dist: matplotlib>=3.7.0; extra == "viz"
 Requires-Dist: seaborn>=0.12.0; extra == "viz"
 Requires-Dist: plotly>=5.15.0; extra == "viz"
-Provides-Extra: optional
-Requires-Dist: nvidia-ml-py3>=7.352.0; extra == "optional"
-Requires-Dist: flash-attn>=2.3.0; extra == "optional"
-Requires-Dist: scikit-learn>=1.3.0; extra == "optional"
+Requires-Dist: scikit-learn>=1.3.0; extra == "viz"
 Dynamic: author
 Dynamic: classifier
+Dynamic: description-content-type
 Dynamic: keywords
 Dynamic: project-url
 Dynamic: provides-extra
