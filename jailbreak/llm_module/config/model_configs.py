@@ -95,32 +95,48 @@ class ModelConfigs:
         }
     }
     
-    # Qwen model configurations
+    # Qwen model configurations (using text-only models compatible with AutoModelForCausalLM)
     QWEN_CONFIGS = {
-        "qwen-0.6b": {
+        "qwen-0.5b": {
             **BASE_CONFIG,
-            "model_id": "Qwen/Qwen3-0.6B",
+            "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
             "quantization": "none",
             "temperature": 0.7,
             "top_p": 0.8
         },
-        "qwen-4b": {
+        "qwen-1.5b": {
             **BASE_CONFIG,
-            "model_id": "Qwen/Qwen3-4B",
+            "model_id": "Qwen/Qwen2.5-1.5B-Instruct",
             "quantization": "none",
             "temperature": 0.7,
             "top_p": 0.8
         },
-        "qwen-8b": {
+        "qwen-3b": {
             **BASE_CONFIG,
-            "model_id": "Qwen/Qwen3-8B",
+            "model_id": "Qwen/Qwen2.5-3B-Instruct",
+            "quantization": "none",
+            "temperature": 0.7,
+            "top_p": 0.8
+        },
+        "qwen-7b": {
+            **BASE_CONFIG,
+            "model_id": "Qwen/Qwen2.5-7B-Instruct",
             "quantization": "auto",
             "temperature": 0.7,
-            "top_p": 0.8
+            "top_p": 0.8,
+            "max_new_tokens": 1024
+        },
+        "qwen-14b": {
+            **BASE_CONFIG,
+            "model_id": "Qwen/Qwen2.5-14B-Instruct",
+            "quantization": "auto",
+            "temperature": 0.7,
+            "top_p": 0.8,
+            "max_new_tokens": 1024
         },
         "qwen-32b": {
             **BASE_CONFIG,
-            "model_id": "Qwen/Qwen3-32B", 
+            "model_id": "Qwen/Qwen2.5-32B-Instruct", 
             "quantization": "4bit",
             "temperature": 0.7,
             "top_p": 0.8,
@@ -130,7 +146,8 @@ class ModelConfigs:
             **BASE_CONFIG,
             "model_id": "Qwen/Qwen2.5-VL-7B-Instruct",
             "quantization": "auto",
-            "supports_vision": True
+            "supports_vision": True,
+            "note": "Vision-Language model - may require special handling"
         }
     }
     
