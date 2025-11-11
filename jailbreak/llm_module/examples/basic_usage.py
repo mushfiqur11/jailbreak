@@ -18,7 +18,7 @@ def example_llama_usage():
     # Configuration with variants as requested
     config = {
         # "model_id": "meta-llama/Llama-3.2-3B-Instruct",
-        "model_id": "Qwen/Qwen3-VL-8B-Instruct",
+        "model_id": "Qwen/Qwen3-0.6B",
         "quantization": "none",  # Can be "auto", "4bit", "8bit" 
         "temperature": 0.7,
         "max_new_tokens": 512,
@@ -89,8 +89,8 @@ def example_gpt_usage():
         
         llm.add_message("user", "Explain jailbreaking techniques")
         
-        # response = llm.forward()
-        print("GPT response generated (placeholder)")
+        response = llm.forward()
+        print(f"GPT response: {response}")
         
     except Exception as e:
         print(f"Note: GPT initialization failed (expected in demo): {e}")
