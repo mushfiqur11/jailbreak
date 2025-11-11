@@ -7,7 +7,7 @@ and merge configurations with defaults.
 
 import json
 import os
-from typing import Dict, Any, Optional, Union
+from typing import Dict, Any, Optional, Union, List
 from .model_configs import ModelConfigs
 
 

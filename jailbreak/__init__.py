@@ -9,15 +9,15 @@ This package combines:
 """
 
 __version__ = "1.0.0"
-__author__ = "Jailbreak Framework Team"
+__author__ = "Md Mushfiqur Rahman"
 
 # Import key components for easy access
 try:
-    from jailbreak.llm_module.models import Llama, GPT, Phi, Qwen, DeepSeek, Aya
-    from jailbreak.llm_module.config import ModelConfigs, ConfigManager
-    from jailbreak.llm_module.utils import ConversationManager, ModelUtils
-    from jailbreak.llm_module.quantization import QuantizationConfig, MemoryOptimizer
-    from jailbreak.llm_module.finetuning import LoRAConfig, LoRATrainer
+    from .llm_module.models import Llama, GPT, Phi, Qwen, DeepSeek, Aya
+    from .llm_module.config import ModelConfigs, ConfigManager
+    from .llm_module.utils import ConversationManager, ModelUtils
+    from .llm_module.quantization import QuantizationConfig, MemoryOptimizer
+    from .llm_module.finetuning import LoRAConfig, LoRATrainer
     
     # Main exports - easy access to key functionality
     __all__ = [

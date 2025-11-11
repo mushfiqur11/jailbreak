@@ -2,11 +2,11 @@ Metadata-Version: 2.4
 Name: jailbreak
 Version: 1.0.0
 Summary: Jailbreak Framework - Complete toolkit for AI security research and jailbreaking experiments
-Author: Jailbreak Framework Team
-Project-URL: Homepage, https://github.com/jailbreak-framework/jailbreak
-Project-URL: Source, https://github.com/jailbreak-framework/jailbreak
-Project-URL: Documentation, https://github.com/jailbreak-framework/jailbreak/blob/main/README.md
-Project-URL: Bug Reports, https://github.com/jailbreak-framework/jailbreak/issues
+Author: Md Mushfiqur Rahman
+Project-URL: Homepage, https://github.com/mushfiqur11/jailbreak
+Project-URL: Source, https://github.com/mushfiqur11/jailbreak
+Project-URL: Documentation, https://github.com/mushfiqur11/jailbreak/blob/main/README.md
+Project-URL: Bug Reports, https://github.com/mushfiqur11/jailbreak/issues
 Keywords: jailbreaking ai-security llm language-model pytorch transformers agents research
 Classifier: Development Status :: 4 - Beta
 Classifier: Intended Audience :: Science/Research
@@ -39,22 +39,12 @@ Requires-Dist: pandas>=2.0.0
 Requires-Dist: jsonlines>=4.0.0
 Requires-Dist: pyyaml>=6.0.1
 Requires-Dist: toml>=0.10.2
-Provides-Extra: gpu
-Requires-Dist: nvidia-ml-py3>=7.352.0; extra == "gpu"
-Provides-Extra: dev
-Requires-Dist: pytest>=7.4.0; extra == "dev"
-Requires-Dist: pytest-cov>=4.1.0; extra == "dev"
-Provides-Extra: viz
-Requires-Dist: matplotlib>=3.7.0; extra == "viz"
-Requires-Dist: seaborn>=0.12.0; extra == "viz"
-Requires-Dist: plotly>=5.15.0; extra == "viz"
-Requires-Dist: scikit-learn>=1.3.0; extra == "viz"
+Requires-Dist: typing
 Dynamic: author
 Dynamic: classifier
 Dynamic: description-content-type
 Dynamic: keywords
 Dynamic: project-url
-Dynamic: provides-extra
 Dynamic: requires-dist
 Dynamic: requires-python
 Dynamic: summary

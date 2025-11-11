@@ -6,7 +6,7 @@ setup(
     description="Jailbreak Framework - Complete toolkit for AI security research and jailbreaking experiments",
     long_description=open("README.md", "r", encoding="utf-8").read() if open("README.md", "r", encoding="utf-8") else "",
     long_description_content_type="text/markdown",
-    author="Jailbreak Framework Team",
+    author="Md Mushfiqur Rahman",
     packages=find_packages(),
     python_requires=">=3.9",
     install_requires=[
@@ -41,22 +41,9 @@ setup(
         # Configuration Management
         "pyyaml>=6.0.1",
         "toml>=0.10.2",
+
+        "typing",
     ],
-    extras_require={
-        "gpu": [
-            "nvidia-ml-py3>=7.352.0",  # For GPU monitoring
-        ],
-        "dev": [
-            "pytest>=7.4.0",
-            "pytest-cov>=4.1.0",
-        ],
-        "viz": [
-            "matplotlib>=3.7.0",
-            "seaborn>=0.12.0",
-            "plotly>=5.15.0",
-            "scikit-learn>=1.3.0",
-        ],
-    },
     entry_points={
         "console_scripts": [
             "jailbreak=jailbreak.cli:main",  # Future CLI entry point
@@ -77,16 +64,13 @@ setup(
     ],
     keywords="jailbreaking ai-security llm language-model pytorch transformers agents research",
     project_urls={
-        "Homepage": "https://github.com/jailbreak-framework/jailbreak",
-        "Source": "https://github.com/jailbreak-framework/jailbreak",
-        "Documentation": "https://github.com/jailbreak-framework/jailbreak/blob/main/README.md",
-        "Bug Reports": "https://github.com/jailbreak-framework/jailbreak/issues",
+        "Homepage": "https://github.com/mushfiqur11/jailbreak",
+        "Source": "https://github.com/mushfiqur11/jailbreak",
+        "Documentation": "https://github.com/mushfiqur11/jailbreak/blob/main/README.md",
+        "Bug Reports": "https://github.com/mushfiqur11/jailbreak/issues",
     },
     include_package_data=True,
     package_data={
-        "jailbreak": [
-            "llm_module/examples/*.py",
-            "agentic_jailbreak/agents/*_prompts/*.txt",
-        ]
+        "jailbreak": ["**/*"]
     },
 )
