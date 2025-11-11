@@ -188,6 +188,18 @@ class HuggingFaceBase(BaseLLM):
                 f"- Or wait for Vision-Language model support in future updates"
             )
         
+        # Log CUDA availability
+        cuda_available = torch.cuda.is_available()
+        if cuda_available:
+            gpu_count = torch.cuda.device_count()
+            current_device = torch.cuda.current_device()
+            gpu_name = torch.cuda.get_device_name(current_device)
+            gpu_memory = torch.cuda.get_device_properties(current_device).total_memory / (1024**3)
+            print(f"🔧 CUDA available: {gpu_count} GPUs detected")
+            print(f"🔧 Current GPU: {current_device} ({gpu_name}, {gpu_memory:.1f}GB)")
+        else:
+            print("⚠️  CUDA not available - model will load on CPU")
+        
         # Prepare loading arguments
         load_kwargs = {
             "trust_remote_code": True,
@@ -198,6 +210,7 @@ class HuggingFaceBase(BaseLLM):
         if self.quantization_config:
             load_kwargs["quantization_config"] = self.quantization_config
             load_kwargs["device_map"] = "auto"  # Required for quantization
+            print(f"🔧 Using device_map='auto' (required for quantization)")
         else:
             # Use optimal device mapping
             device_map = MemoryOptimizer.get_optimal_device_map(
@@ -205,6 +218,10 @@ class HuggingFaceBase(BaseLLM):
                 quantization_enabled=False
             )
             load_kwargs["device_map"] = device_map
+            print(f"🔧 Using device_map: {device_map}")
+        
+        # Log loading configuration
+        print(f"🔧 Model loading config: {load_kwargs}")
         
         # Load model
         try:
@@ -212,6 +229,10 @@ class HuggingFaceBase(BaseLLM):
                 self.model_path,
                 **load_kwargs
             )
+            
+            # Log actual device placement after loading
+            self._log_device_placement()
+            
         except Exception as e:
             if "Unrecognized configuration class" in str(e) and "VL" in str(e):
                 # This is likely a VL model that wasn't caught by our detection
@@ -226,6 +247,66 @@ class HuggingFaceBase(BaseLLM):
             else:
                 # Re-raise other errors as-is
                 raise
+    
+    def _log_device_placement(self) -> None:
+        """Log detailed device placement information for the model."""
+        if not hasattr(self, 'model') or self.model is None:
+            print("❌ Model not loaded - cannot check device placement")
+            return
+        
+        print("\n" + "="*50)
+        print("🔍 DEVICE PLACEMENT REPORT")
+        print("="*50)
+        
+        try:
+            # Check if model has device attribute (for single device models)
+            if hasattr(self.model, 'device'):
+                model_device = self.model.device
+                print(f"📍 Model device (direct): {model_device}")
+            else:
+                # For models with device_map, check parameter devices
+                devices = set()
+                for name, param in self.model.named_parameters():
+                    devices.add(param.device)
+                
+                if len(devices) == 1:
+                    model_device = list(devices)[0]
+                    print(f"📍 Model device (parameters): {model_device}")
+                else:
+                    print(f"📍 Model spans multiple devices: {devices}")
+                    # Log device mapping for multi-device models
+                    device_map = {}
+                    for name, param in self.model.named_parameters():
+                        layer = name.split('.')[0] if '.' in name else name
+                        if layer not in device_map:
+                            device_map[layer] = param.device
+                    
+                    print("📍 Device mapping by layer:")
+                    for layer, device in device_map.items():
+                        print(f"   {layer}: {device}")
+                    
+                    model_device = list(devices)[0]  # Use first device as primary
+            
+            # Check tokenizer (if it has device-related attributes)
+            if hasattr(self.tokenizer, 'device'):
+                print(f"📍 Tokenizer device: {self.tokenizer.device}")
+            else:
+                print(f"📍 Tokenizer: CPU-based (no device attribute)")
+            
+            # Log GPU memory usage if on CUDA
+            if model_device.type == 'cuda':
+                gpu_id = model_device.index if model_device.index is not None else 0
+                allocated = torch.cuda.memory_allocated(gpu_id) / (1024**3)
+                cached = torch.cuda.memory_reserved(gpu_id) / (1024**3)
+                print(f"🔋 GPU {gpu_id} memory: {allocated:.1f}GB allocated, {cached:.1f}GB cached")
+            
+            # Store primary device for later use
+            self.primary_device = model_device
+            
+        except Exception as e:
+            print(f"❌ Error checking device placement: {e}")
+        
+        print("="*50 + "\n")
     
     def _is_vision_language_model(self) -> bool:
         """
@@ -277,6 +358,10 @@ class HuggingFaceBase(BaseLLM):
         if not self.is_loaded:
             raise RuntimeError("Model is not loaded. Call _load_model() first.")
         
+        # Start timing for performance monitoring
+        import time
+        start_time = time.time()
+        
         # Prepare messages
         prepared_messages = self._prepare_messages(messages)
         
@@ -297,26 +382,76 @@ class HuggingFaceBase(BaseLLM):
             text = self._format_messages_fallback(prepared_messages)
             tokenized_input = self.tokenizer.encode(text, return_tensors="pt")
         
-        # Move to appropriate device
-        if hasattr(self.model, 'device'):
-            device = self.model.device
+        # Device verification and logging
+        model_device = self._get_model_device()
+        input_device = tokenized_input.device
+        
+        print(f"🔍 Forward pass device check:")
+        print(f"   Model device: {model_device}")
+        print(f"   Input device (before): {input_device}")
+        
+        # Check for device mismatch
+        if input_device != model_device:
+            print(f"⚡ Moving inputs from {input_device} to {model_device}")
+            move_start = time.time()
+            tokenized_input = tokenized_input.to(model_device)
+            move_time = time.time() - move_start
+            print(f"   Input transfer took: {move_time:.3f}s")
         else:
-            device = next(self.model.parameters()).device
-        tokenized_input = tokenized_input.to(device)
+            print(f"✅ Inputs already on correct device")
+        
+        # Log input shape and sequence length
+        input_shape = tokenized_input.shape
+        print(f"🔢 Input tensor shape: {input_shape}, sequence length: {input_shape[1]}")
+        
+        # Check GPU memory before generation (if on CUDA)
+        if model_device.type == 'cuda':
+            gpu_id = model_device.index if model_device.index is not None else 0
+            memory_before = torch.cuda.memory_allocated(gpu_id) / (1024**3)
+            print(f"🔋 GPU {gpu_id} memory before generation: {memory_before:.2f}GB")
         
         # Generate response
+        generation_start = time.time()
         with torch.no_grad():
             generated_tokens = self.model.generate(
                 tokenized_input,
                 **self.generation_config
             )
+        generation_time = time.time() - generation_start
+        
+        # Log generation performance
+        output_length = generated_tokens.shape[1] - input_shape[1]
+        tokens_per_second = output_length / generation_time if generation_time > 0 else 0
+        print(f"⚡ Generation completed:")
+        print(f"   Time: {generation_time:.2f}s")
+        print(f"   Tokens generated: {output_length}")
+        print(f"   Speed: {tokens_per_second:.1f} tokens/second")
+        
+        # Check GPU memory after generation (if on CUDA)
+        if model_device.type == 'cuda':
+            memory_after = torch.cuda.memory_allocated(gpu_id) / (1024**3)
+            memory_used = memory_after - memory_before
+            print(f"🔋 GPU {gpu_id} memory after generation: {memory_after:.2f}GB (+{memory_used:.2f}GB)")
         
         # Decode response
         input_length = tokenized_input.shape[1]
         generated_tokens = generated_tokens[0][input_length:]
         response = self.tokenizer.decode(generated_tokens, skip_special_tokens=True)
         
+        # Total time
+        total_time = time.time() - start_time
+        print(f"🏁 Total forward pass time: {total_time:.2f}s\n")
+        
         return response.strip()
+    
+    def _get_model_device(self) -> torch.device:
+        """Get the primary device of the model."""
+        if hasattr(self, 'primary_device'):
+            return self.primary_device
+        elif hasattr(self.model, 'device'):
+            return self.model.device
+        else:
+            return next(self.model.parameters()).device
     
     def _format_messages_fallback(self, messages: List[Dict[str, str]]) -> str:
         """
@@ -346,7 +481,7 @@ class HuggingFaceBase(BaseLLM):
     
     def get_model_info(self) -> Dict[str, Any]:
         """
-        Get comprehensive model information.
+        Get comprehensive model information including detailed device placement.
         
         Returns:
             Dict[str, Any]: Model information
@@ -361,10 +496,62 @@ class HuggingFaceBase(BaseLLM):
             "hf_token_configured": self.hf_token is not None
         })
         
-        if self.is_loaded and hasattr(self.model, 'device'):
-            info["device"] = str(self.model.device)
+        # Add detailed device information
+        if self.is_loaded:
+            device_info = self._get_device_info()
+            info.update(device_info)
         
         return info
+    
+    def _get_device_info(self) -> Dict[str, Any]:
+        """Get detailed device information for the loaded model."""
+        device_info = {
+            "cuda_available": torch.cuda.is_available(),
+            "device_count": torch.cuda.device_count() if torch.cuda.is_available() else 0
+        }
+        
+        if not hasattr(self, 'model') or self.model is None:
+            device_info["model_loaded"] = False
+            return device_info
+        
+        device_info["model_loaded"] = True
+        
+        try:
+            # Get model device(s)
+            if hasattr(self.model, 'device'):
+                primary_device = self.model.device
+                device_info["primary_device"] = str(primary_device)
+                device_info["single_device"] = True
+            else:
+                # Multi-device model
+                devices = set()
+                device_map = {}
+                for name, param in self.model.named_parameters():
+                    devices.add(param.device)
+                    layer = name.split('.')[0] if '.' in name else name
+                    if layer not in device_map:
+                        device_map[layer] = str(param.device)
+                
+                device_info["devices"] = [str(d) for d in devices]
+                device_info["single_device"] = len(devices) == 1
+                device_info["primary_device"] = str(list(devices)[0]) if devices else "unknown"
+                device_info["layer_device_map"] = device_map
+            
+            # GPU memory information if using CUDA
+            primary_device = torch.device(device_info["primary_device"])
+            if primary_device.type == 'cuda':
+                gpu_id = primary_device.index if primary_device.index is not None else 0
+                device_info["gpu_memory"] = {
+                    "allocated_gb": torch.cuda.memory_allocated(gpu_id) / (1024**3),
+                    "cached_gb": torch.cuda.memory_reserved(gpu_id) / (1024**3),
+                    "total_gb": torch.cuda.get_device_properties(gpu_id).total_memory / (1024**3),
+                    "gpu_name": torch.cuda.get_device_name(gpu_id)
+                }
+            
+        except Exception as e:
+            device_info["device_error"] = str(e)
+        
+        return device_info
     
     def prepare_for_lora(self, lora_config: Dict[str, Any]):
         """
