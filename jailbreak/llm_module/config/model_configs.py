@@ -18,7 +18,7 @@ class ModelConfigs:
     
     # Base configuration template
     BASE_CONFIG = {
-        # hf_model_path removed - will use new default: github_repos/jailbreak/hf_models/
+        "hf_model_path": "/scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/hf_models",
         "hf_token_path": "./tokens/hf_token.txt",
         "api_key_path": "./tokens/openai_key.txt",
         "temperature": 0.7,

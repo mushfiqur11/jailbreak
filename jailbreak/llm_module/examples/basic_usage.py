@@ -17,18 +17,18 @@ def example_llama_usage():
     
     # Configuration with variants as requested
     config = {
-        "model_id": "meta-llama/Llama-3.2-3B-Instruct",
+        # "model_id": "meta-llama/Llama-3.2-3B-Instruct",
+        "model_id": "Qwen/Qwen3-VL-8B-Instruct",
         "quantization": "none",  # Can be "auto", "4bit", "8bit" 
         "temperature": 0.7,
         "max_new_tokens": 512,
         "hf_token_path": "/home/mrahma45/HUGGINGFACE_KEY"
-        # Note: hf_model_path not specified - will use default: /Jailbreaking/github_repos/jailbreak/hf_models/
-        # To override default: "hf_model_path": "/custom/path/to/models"
     }
     
     # Initialize model as requested: llm = Llama(config)
     try:
-        llm = Llama(config)
+        # llm = Llama(config)
+        llm = Qwen(config)
         
         # Set system prompt as requested
         llm.set_system_prompt("You are a helpful AI assistant specialized in cybersecurity.")
@@ -229,8 +229,11 @@ def main():
     print("=" * 50)
     
     try:
+        print("Llama")
         example_llama_usage()
+        print("\nGPT")
         example_gpt_usage()
+        print("\nConfiguration Management")
         example_configuration_management()
         example_conversation_management()
         example_model_utilities()
