@@ -5,54 +5,57 @@ This module provides the Qwen class for all Qwen model variants,
 including Qwen2.5, Qwen3, and Qwen-VL series models.
 """
 
-from typing import Dict, Any, List, Optional
+from typing import Dict, Any, List, Optional, Union
+from PIL import Image
 from ..base.hf_base import HuggingFaceBase
+from ..base.vl_base import VisionLanguageBase
 
 
-class Qwen(HuggingFaceBase):
+def Qwen(config: Dict[str, Any]):
     """
-    Qwen language model implementation.
+    Factory function for Qwen models.
     
-    Supports all Qwen variants including:
-    - Qwen/Qwen2.5-VL-7B-Instruct
-    - Qwen/Qwen3-4B/8B/32B  
-    - Qwen/Qwen3-0.6B
+    Automatically selects the appropriate base class based on model type:
+    - VisionLanguageBase for VL models (Qwen-VL, Qwen3-VL)
+    - HuggingFaceBase for text-only models
+    
+    Args:
+        config (Dict[str, Any]): Configuration dictionary containing model parameters
+        
+    Returns:
+        QwenVL or QwenText: Appropriate Qwen model instance
     """
+    model_id = config.get("model_id", "").lower()
+    
+    # Check if it's a Vision-Language model
+    if "vl" in model_id or config.get("supports_vision", False):
+        return QwenVL(config)
+    else:
+        return QwenText(config)
+
+
+class QwenBase:
+    """Base class for shared Qwen functionality."""
     
     # Supported model variants
     SUPPORTED_VARIANTS = [
+        # Text-only models
+        'Qwen/Qwen2.5-0.5B-Instruct',
+        'Qwen/Qwen2.5-1.5B-Instruct',
+        'Qwen/Qwen2.5-3B-Instruct',
+        'Qwen/Qwen2.5-7B-Instruct',
+        'Qwen/Qwen2.5-14B-Instruct',
+        'Qwen/Qwen2.5-32B-Instruct',
+        # Vision-Language models
         'Qwen/Qwen2.5-VL-7B-Instruct',
+        'Qwen/Qwen3-VL-4B-Instruct',
+        'Qwen/Qwen3-VL-8B-Instruct',
+        # Legacy (for backward compatibility)
         'Qwen/Qwen3-4B',
         'Qwen/Qwen3-8B', 
         'Qwen/Qwen3-32B',
         'Qwen/Qwen3-0.6B'
     ]
-    
-    def __init__(self, config: Dict[str, Any]):
-        """
-        Initialize the Qwen model.
-        
-        Args:
-            config (Dict[str, Any]): Configuration dictionary containing model parameters
-        """
-        # Validate model ID
-        model_id = config.get("model_id", "")
-        if model_id and model_id not in self.SUPPORTED_VARIANTS:
-            print(f"Warning: {model_id} is not in the list of known Qwen variants")
-            print(f"Supported variants: {self.SUPPORTED_VARIANTS}")
-        
-        # Set default model if not specified
-        if not model_id:
-            config["model_id"] = "Qwen/Qwen3-4B"
-            print(f"No model_id specified, using default: {config['model_id']}")
-        
-        # Apply Qwen-specific optimizations
-        self._apply_qwen_optimizations(config)
-        
-        # Initialize parent class
-        super().__init__(config)
-        
-        print(f"Qwen model initialized: {self.model_id}")
     
     def _apply_qwen_optimizations(self, config: Dict[str, Any]) -> None:
         """Apply Qwen-specific optimizations to the configuration."""
@@ -81,13 +84,13 @@ class Qwen(HuggingFaceBase):
                 config["quantization"] = "4bit"  # Default to 4-bit for 32B models
             print("Applied Qwen-32B model optimizations (4-bit quantization)")
             
-        elif any(size in model_id for size in ["8b", "7b"]):
+        elif any(size in model_id for size in ["8b", "7b", "14b"]):
             # Medium model optimizations
             if "quantization" not in config:
                 config["quantization"] = "auto"  # Auto-select based on available memory
             print("Applied Qwen medium model optimizations (auto quantization)")
             
-        elif any(size in model_id for size in ["4b", "0.6b"]):
+        elif any(size in model_id for size in ["4b", "3b", "1.5b", "0.6b", "0.5b"]):
             # Small model optimizations
             if "quantization" not in config:
                 config["quantization"] = "none"  # Usually no quantization needed
@@ -98,6 +101,18 @@ class Qwen(HuggingFaceBase):
             config["supports_vision"] = True
             print("Enabled vision capabilities for Qwen-VL model")
     
+    def _validate_model_id(self, config: Dict[str, Any]) -> None:
+        """Validate and set default model ID."""
+        model_id = config.get("model_id", "")
+        if model_id and model_id not in self.SUPPORTED_VARIANTS:
+            print(f"Warning: {model_id} is not in the list of known Qwen variants")
+            print(f"Supported variants: {self.SUPPORTED_VARIANTS}")
+        
+        # Set default model if not specified
+        if not model_id:
+            config["model_id"] = "Qwen/Qwen2.5-3B-Instruct"
+            print(f"No model_id specified, using default: {config['model_id']}")
+
     def set_system_prompt(self, prompt: str) -> None:
         """
         Set the system prompt with Qwen-specific formatting.
@@ -137,171 +152,76 @@ class Qwen(HuggingFaceBase):
         formatted_parts.append("<|im_start|>assistant\n")
         
         return "\n".join(formatted_parts)
+
+
+class QwenText(HuggingFaceBase, QwenBase):
+    """Text-only Qwen model implementation."""
     
-    def get_model_info(self) -> Dict[str, Any]:
+    def __init__(self, config: Dict[str, Any]):
+        """Initialize text-only Qwen model."""
+        # Validate and optimize config
+        self._validate_model_id(config)
+        self._apply_qwen_optimizations(config)
+        
+        # Initialize parent class
+        super().__init__(config)
+        print(f"Qwen text model initialized: {self.model_id}")
+
+
+class QwenVL(VisionLanguageBase, QwenBase):
+    """Vision-Language Qwen model implementation."""
+    
+    def __init__(self, config: Dict[str, Any]):
+        """Initialize VL Qwen model."""
+        # Validate and optimize config
+        self._validate_model_id(config)
+        self._apply_qwen_optimizations(config)
+        
+        # Set default VL model if not specified
+        if not config.get("model_id"):
+            config["model_id"] = "Qwen/Qwen2.5-VL-7B-Instruct"
+            print(f"No VL model_id specified, using default: {config['model_id']}")
+        
+        # Initialize parent class
+        super().__init__(config)
+        print(f"Qwen VL model initialized: {self.model_id}")
+    
+    def _format_vl_messages(self, messages: List[Dict[str, str]]) -> str:
+        """Format messages for Qwen-VL models using Qwen's chat format."""
+        formatted_parts = []
+        
+        for message in messages:
+            role = message["role"]
+            content = message["content"]
+            
+            if role == "system":
+                formatted_parts.append(f"<|im_start|>system\n{content}<|im_end|>")
+            elif role == "user":
+                formatted_parts.append(f"<|im_start|>user\n{content}<|im_end|>")
+            elif role == "assistant":
+                formatted_parts.append(f"<|im_start|>assistant\n{content}<|im_end|>")
+        
+        # Add generation prompt
+        formatted_parts.append("<|im_start|>assistant\n")
+        
+        return "\n".join(formatted_parts)
+    
+    def process_image_with_text(self, image: Union[str, Image.Image], text: str) -> str:
         """
-        Get Qwen-specific model information.
-        
-        Returns:
-            Dict[str, Any]: Enhanced model information
-        """
-        info = super().get_model_info()
-        info.update({
-            "model_family": "Qwen",
-            "provider": "Alibaba Cloud",
-            "supported_variants": self.SUPPORTED_VARIANTS,
-            "estimated_parameters": self._get_parameter_count(),
-            "context_length": self._get_context_length(),
-            "special_features": self._get_special_features(),
-            "supports_vision": self._supports_vision()
-        })
-        return info
-    
-    def _get_parameter_count(self) -> str:
-        """Get estimated parameter count based on model name."""
-        model_id_lower = self.model_id.lower()
-        
-        if "32b" in model_id_lower:
-            return "~32B parameters"
-        elif "8b" in model_id_lower:
-            return "~8B parameters"
-        elif "7b" in model_id_lower:
-            return "~7B parameters"
-        elif "4b" in model_id_lower:
-            return "~4B parameters"
-        elif "0.6b" in model_id_lower:
-            return "~0.6B parameters"
-        else:
-            return "Unknown"
-    
-    def _get_context_length(self) -> int:
-        """Get context length based on model variant."""
-        model_id_lower = self.model_id.lower()
-        
-        if "qwen3" in model_id_lower:
-            return 131072  # Qwen3 context length
-        elif "qwen2.5" in model_id_lower:
-            return 32768   # Qwen2.5 context length
-        else:
-            return 8192    # Default/fallback
-    
-    def _get_special_features(self) -> List[str]:
-        """Get special features of the model."""
-        features = []
-        model_id_lower = self.model_id.lower()
-        
-        if "vl" in model_id_lower:
-            features.extend([
-                "Multimodal capabilities",
-                "Vision-language understanding",
-                "Image analysis and description"
-            ])
-        
-        if "qwen3" in model_id_lower:
-            features.extend([
-                "Latest generation",
-                "Enhanced reasoning",
-                "Improved multilingual support"
-            ])
-        
-        if any(size in model_id_lower for size in ["0.6b", "4b"]):
-            features.extend([
-                "Efficient and lightweight",
-                "Mobile/edge friendly",
-                "Fast inference"
-            ])
-        
-        # All Qwen models
-        features.extend([
-            "Multilingual support",
-            "Strong Chinese language capabilities",
-            "Good code generation",
-            "Alibaba Cloud optimized"
-        ])
-        
-        return features
-    
-    def _supports_vision(self) -> bool:
-        """Check if the model supports vision capabilities."""
-        return "vl" in self.model_id.lower()
-    
-    @classmethod
-    def get_recommended_config(cls, model_variant: str = "4b") -> Dict[str, Any]:
-        """
-        Get recommended configuration for different Qwen variants.
+        Process image with text using Qwen-VL.
         
         Args:
-            model_variant (str): Model variant ("0.6b", "4b", "8b", "32b", "vl", etc.)
+            image: Image file path, URL, or PIL Image
+            text: Text prompt for the image
             
         Returns:
-            Dict[str, Any]: Recommended configuration
+            str: Model response
         """
-        model_variant = model_variant.lower()
-        
-        base_config = {
-            "hf_model_path": "./models",
-            "hf_token_path": "./tokens/hf_token.txt",
-            "temperature": 0.7,
-            "top_p": 0.8,
-            "max_new_tokens": 512
-        }
-        
-        if "32b" in model_variant:
-            base_config.update({
-                "model_id": "Qwen/Qwen3-32B",
-                "quantization": "4bit",
-                "max_new_tokens": 1024
-            })
-        elif "8b" in model_variant:
-            base_config.update({
-                "model_id": "Qwen/Qwen3-8B",
-                "quantization": "auto"
-            })
-        elif "4b" in model_variant:
-            base_config.update({
-                "model_id": "Qwen/Qwen3-4B",
-                "quantization": "none"
-            })
-        elif "0.6b" in model_variant:
-            base_config.update({
-                "model_id": "Qwen/Qwen3-0.6B",
-                "quantization": "none"
-            })
-        elif "vl" in model_variant:
-            base_config.update({
-                "model_id": "Qwen/Qwen2.5-VL-7B-Instruct",
-                "quantization": "auto",
-                "supports_vision": True
-            })
-        else:
-            # Default to 4B
-            base_config.update({
-                "model_id": "Qwen/Qwen3-4B"
-            })
-        
-        return base_config
-    
-    def enable_lora_finetuning(self, lora_config: Optional[Dict[str, Any]] = None) -> Any:
-        """
-        Enable LoRA fine-tuning for the Qwen model.
-        
-        Args:
-            lora_config (Optional[Dict[str, Any]]): LoRA configuration
-            
-        Returns:
-            Any: PEFT model ready for fine-tuning (future implementation)
-        """
-        if lora_config is None:
-            # Use Qwen-optimized LoRA config
-            lora_config = {
-                "r": 16,
-                "lora_alpha": 32,
-                "lora_dropout": 0.05,
-                "target_modules": [
-                    "q_proj", "v_proj", "k_proj", "o_proj",
-                    "gate_proj", "down_proj", "up_proj"
-                ],
-                "task_type": "CAUSAL_LM"
-            }
-        
-        return self.prepare_for_lora(lora_config)
+        # Enhanced prompt for Qwen-VL
+        enhanced_text = f"Please analyze this image and answer: {text}"
+        messages = [{"role": "user", "content": enhanced_text}]
+        return self.forward(messages, images=[image])
+
+
+# For backward compatibility, create aliases
+QwenModel = Qwen  # Factory function

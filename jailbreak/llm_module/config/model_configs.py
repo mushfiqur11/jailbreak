@@ -18,7 +18,7 @@ class ModelConfigs:
     
     # Base configuration template
     BASE_CONFIG = {
-        "hf_model_path": "/scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/hf_models",
+        # hf_model_path removed - will use new default: github_repos/jailbreak/hf_models/
         "hf_token_path": "./tokens/hf_token.txt",
         "api_key_path": "./tokens/openai_key.txt",
         "temperature": 0.7,
@@ -147,7 +147,25 @@ class ModelConfigs:
             "model_id": "Qwen/Qwen2.5-VL-7B-Instruct",
             "quantization": "auto",
             "supports_vision": True,
-            "note": "Vision-Language model - may require special handling"
+            "note": "Vision-Language model with image understanding"
+        },
+        "qwen3-vl-4b": {
+            **BASE_CONFIG,
+            "model_id": "Qwen/Qwen3-VL-4B-Instruct",
+            "quantization": "none",
+            "supports_vision": True,
+            "temperature": 0.7,
+            "max_new_tokens": 1024,
+            "note": "Qwen3 Vision-Language 4B model"
+        },
+        "qwen3-vl-8b": {
+            **BASE_CONFIG,
+            "model_id": "Qwen/Qwen3-VL-8B-Instruct",
+            "quantization": "auto",
+            "supports_vision": True,
+            "temperature": 0.7,
+            "max_new_tokens": 1024,
+            "note": "Qwen3 Vision-Language 8B model"
         }
     }
     

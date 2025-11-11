@@ -176,6 +176,18 @@ class HuggingFaceBase(BaseLLM):
     
     def _load_model_weights(self) -> None:
         """Load the model weights."""
+        # Check if this is a Vision-Language model
+        if self._is_vision_language_model():
+            raise ValueError(
+                f"Vision-Language model detected: {self.model_id}\n"
+                f"VL models (containing 'VL', 'Vision', or marked with supports_vision=True) "
+                f"are not yet supported by the current HuggingFaceBase implementation.\n\n"
+                f"Supported alternatives:\n"
+                f"- For Qwen: Use text-only models like 'Qwen/Qwen2.5-7B-Instruct'\n"
+                f"- Use ModelConfigs.get_config('qwen-7b') for pre-configured text-only models\n"
+                f"- Or wait for Vision-Language model support in future updates"
+            )
+        
         # Prepare loading arguments
         load_kwargs = {
             "trust_remote_code": True,
@@ -195,10 +207,51 @@ class HuggingFaceBase(BaseLLM):
             load_kwargs["device_map"] = device_map
         
         # Load model
-        self.model = AutoModelForCausalLM.from_pretrained(
-            self.model_path,
-            **load_kwargs
-        )
+        try:
+            self.model = AutoModelForCausalLM.from_pretrained(
+                self.model_path,
+                **load_kwargs
+            )
+        except Exception as e:
+            if "Unrecognized configuration class" in str(e) and "VL" in str(e):
+                # This is likely a VL model that wasn't caught by our detection
+                raise ValueError(
+                    f"Vision-Language model loading failed: {self.model_id}\n"
+                    f"Error: {str(e)}\n\n"
+                    f"This appears to be a Vision-Language model that requires special handling.\n"
+                    f"Please use a text-only model instead, such as:\n"
+                    f"- Qwen/Qwen2.5-7B-Instruct (instead of Qwen3-VL models)\n"
+                    f"- Or use ModelConfigs.get_config('qwen-7b') for a pre-configured model"
+                ) from e
+            else:
+                # Re-raise other errors as-is
+                raise
+    
+    def _is_vision_language_model(self) -> bool:
+        """
+        Check if the model is a Vision-Language model.
+        
+        Returns:
+            bool: True if the model is a VL model, False otherwise
+        """
+        # Check configuration flag
+        if self.config.get("supports_vision", False):
+            return True
+        
+        # Check model ID for VL indicators
+        model_id_lower = self.model_id.lower()
+        vl_indicators = [
+            "vl",           # Qwen-VL, LLaVA-VL, etc.
+            "vision",       # Vision models
+            "llava",        # LLaVA models
+            "blip",         # BLIP models
+            "flamingo",     # Flamingo models
+            "kosmos",       # Kosmos models
+            "git-",         # GIT models
+            "pix2struct"    # Pix2Struct models
+        ]
+        
+        return any(indicator in model_id_lower for indicator in vl_indicators)
     
     def set_system_prompt(self, prompt: str) -> None:
         """
