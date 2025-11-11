@@ -444,6 +444,158 @@ class HuggingFaceBase(BaseLLM):
         
         return response.strip()
     
+    def batch_forward(self, batch_messages: List[List[Dict[str, str]]]) -> List[str]:
+        """
+        Generate responses for multiple message sequences efficiently using batching.
+        
+        Args:
+            batch_messages (List[List[Dict[str, str]]]): List of message sequences to process
+                
+        Returns:
+            List[str]: List of generated response texts
+        """
+        if not self.is_loaded:
+            raise RuntimeError("Model is not loaded. Call _load_model() first.")
+        
+        if not batch_messages:
+            return []
+        
+        batch_size = len(batch_messages)
+        print(f"🔄 Processing batch of {batch_size} message sequences")
+        
+        # Start timing for performance monitoring
+        import time
+        start_time = time.time()
+        
+        # Prepare all message sequences
+        prepared_batch = []
+        for messages in batch_messages:
+            prepared_messages = self._prepare_messages(messages)
+            if prepared_messages:
+                prepared_batch.append(prepared_messages)
+        
+        if not prepared_batch:
+            raise ValueError("No valid message sequences to process")
+        
+        # Tokenize all sequences
+        tokenized_inputs = []
+        for prepared_messages in prepared_batch:
+            try:
+                tokenized_input = self.tokenizer.apply_chat_template(
+                    prepared_messages,
+                    tokenize=True,
+                    add_generation_prompt=True,
+                    return_tensors="pt"
+                )
+            except Exception as e:
+                print(f"Warning: Chat template failed ({e}), using fallback formatting")
+                text = self._format_messages_fallback(prepared_messages)
+                tokenized_input = self.tokenizer.encode(text, return_tensors="pt")
+            
+            tokenized_inputs.append(tokenized_input)
+        
+        # Device verification and batch preparation
+        model_device = self._get_model_device()
+        
+        # Pad sequences to same length for batching
+        max_length = max(inp.shape[1] for inp in tokenized_inputs)
+        batch_input_ids = []
+        attention_masks = []
+        
+        for tokenized_input in tokenized_inputs:
+            # Pad sequence
+            seq_len = tokenized_input.shape[1]
+            if seq_len < max_length:
+                pad_length = max_length - seq_len
+                # Pad on the left (common for generation)
+                padded_input = torch.cat([
+                    torch.full((1, pad_length), self.tokenizer.pad_token_id, dtype=tokenized_input.dtype),
+                    tokenized_input
+                ], dim=1)
+                attention_mask = torch.cat([
+                    torch.zeros(1, pad_length, dtype=torch.long),
+                    torch.ones(1, seq_len, dtype=torch.long)
+                ], dim=1)
+            else:
+                padded_input = tokenized_input
+                attention_mask = torch.ones_like(tokenized_input, dtype=torch.long)
+            
+            batch_input_ids.append(padded_input)
+            attention_masks.append(attention_mask)
+        
+        # Stack into batch tensors
+        batch_input_ids = torch.cat(batch_input_ids, dim=0)
+        attention_mask = torch.cat(attention_masks, dim=0)
+        
+        # Move to model device
+        print(f"🔍 Batch device check:")
+        print(f"   Model device: {model_device}")
+        print(f"   Batch input device (before): {batch_input_ids.device}")
+        
+        if batch_input_ids.device != model_device:
+            print(f"⚡ Moving batch inputs to {model_device}")
+            move_start = time.time()
+            batch_input_ids = batch_input_ids.to(model_device)
+            attention_mask = attention_mask.to(model_device)
+            move_time = time.time() - move_start
+            print(f"   Batch transfer took: {move_time:.3f}s")
+        else:
+            print(f"✅ Batch inputs already on correct device")
+        
+        # Log batch details
+        print(f"🔢 Batch tensor shape: {batch_input_ids.shape}")
+        print(f"🔢 Max sequence length: {max_length}")
+        
+        # Check GPU memory before generation (if on CUDA)
+        if model_device.type == 'cuda':
+            gpu_id = model_device.index if model_device.index is not None else 0
+            memory_before = torch.cuda.memory_allocated(gpu_id) / (1024**3)
+            print(f"🔋 GPU {gpu_id} memory before batch generation: {memory_before:.2f}GB")
+        
+        # Generate batch response
+        generation_start = time.time()
+        with torch.no_grad():
+            generated_tokens = self.model.generate(
+                input_ids=batch_input_ids,
+                attention_mask=attention_mask,
+                **self.generation_config
+            )
+        generation_time = time.time() - generation_start
+        
+        # Log generation performance
+        total_output_length = generated_tokens.shape[1] * batch_size - batch_input_ids.shape[1] * batch_size
+        tokens_per_second = total_output_length / generation_time if generation_time > 0 else 0
+        print(f"⚡ Batch generation completed:")
+        print(f"   Time: {generation_time:.2f}s")
+        print(f"   Total tokens generated: {total_output_length}")
+        print(f"   Batch throughput: {tokens_per_second:.1f} tokens/second")
+        print(f"   Per-sequence throughput: {tokens_per_second/batch_size:.1f} tokens/second")
+        
+        # Check GPU memory after generation (if on CUDA)
+        if model_device.type == 'cuda':
+            memory_after = torch.cuda.memory_allocated(gpu_id) / (1024**3)
+            memory_used = memory_after - memory_before
+            print(f"🔋 GPU {gpu_id} memory after generation: {memory_after:.2f}GB (+{memory_used:.2f}GB)")
+        
+        # Decode responses
+        responses = []
+        original_lengths = [inp.shape[1] for inp in tokenized_inputs]
+        
+        for i, original_length in enumerate(original_lengths):
+            # Find actual start of original sequence (accounting for padding)
+            actual_start = max_length - original_length
+            generated_sequence = generated_tokens[i][actual_start + original_length:]
+            response = self.tokenizer.decode(generated_sequence, skip_special_tokens=True)
+            responses.append(response.strip())
+        
+        # Total time
+        total_time = time.time() - start_time
+        speedup = (total_time / batch_size) if batch_size > 1 else 1
+        print(f"🏁 Total batch processing time: {total_time:.2f}s")
+        print(f"🚀 Estimated speedup vs individual calls: {1/speedup:.1f}x\n")
+        
+        return responses
+    
     def _get_model_device(self) -> torch.device:
         """Get the primary device of the model."""
         if hasattr(self, 'primary_device'):
