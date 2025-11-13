@@ -157,6 +157,8 @@ def validate_required_fields(parsed_dict: Dict[str, Any], required_fields: list,
     Returns:
         Tuple[bool, str]: (is_valid, error_message)
     """
+    import typing
+    
     if not isinstance(parsed_dict, dict):
         return False, "Input is not a dictionary"
     
@@ -170,12 +172,14 @@ def validate_required_fields(parsed_dict: Dict[str, Any], required_fields: list,
             expected_type = field_types[field]
             actual_value = parsed_dict[field]
             
-            # Basic type checking (not too strict)
+            # Enhanced type checking to handle both built-in types and typing module types
             if expected_type == str and not isinstance(actual_value, str):
                 type_errors.append(f"Field '{field}' should be string, got {type(actual_value)}")
-            elif expected_type == list and not isinstance(actual_value, list):
+            elif (expected_type in (list, typing.List) or 
+                  (hasattr(typing, 'List') and expected_type is typing.List)) and not isinstance(actual_value, list):
                 type_errors.append(f"Field '{field}' should be list, got {type(actual_value)}")
-            elif expected_type == dict and not isinstance(actual_value, dict):
+            elif (expected_type in (dict, typing.Dict) or 
+                  (hasattr(typing, 'Dict') and expected_type is typing.Dict)) and not isinstance(actual_value, dict):
                 type_errors.append(f"Field '{field}' should be dict, got {type(actual_value)}")
     
     if missing_fields:

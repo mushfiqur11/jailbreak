@@ -11,8 +11,6 @@ Run with: python -m pytest test_parsers.py -v
 """
 
 import unittest
-import sys
-import os
 
 from jailbreak.agentic_module.agents.parser import (
     parse_llm_response_to_dict,
@@ -117,7 +115,7 @@ class TestUniversalParser(unittest.TestCase):
         result, error = parse_llm_response_to_dict("")
         
         self.assertIsNone(result)
-        self.assertIn("empty response", error)
+        self.assertIn("empty or non-string response", error)
     
     def test_nested_json_structures(self):
         """Test parsing complex nested JSON."""
