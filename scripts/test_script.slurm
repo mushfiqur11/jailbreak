@@ -4,8 +4,8 @@
 
 #SBATCH --partition=gpuq
 #SBATCH --qos=gpu
-#SBATCH --output=/scratch/%u/jailbreaking_repos/outputs/test_temp.out # Output file
-#SBATCH --error=/scratch/%u/jailbreaking_repos/outputs/test_temp.err # Error file
+#SBATCH --output=/scratch/%u/jailbreaking_repos/outputs/test_unit.out # Output file
+#SBATCH --error=/scratch/%u/jailbreaking_repos/outputs/test_unit.err # Error file
 #SBATCH --mail-type=FAIL    # ALL, NONE, BEGIN, END, FAIL, REQUEUE,..
 #SBATCH --mail-user=mrahma45@gmu.edu # Put your GMU email address here
 
@@ -30,4 +30,5 @@ source venv_jailbreak/bin/activate
 
 cd jailbreak-pkg/runs
 
-python llm_module/basic_usage.py
+# python llm_module/basic_usage.py
+python unit_tests/test_parsers.py
