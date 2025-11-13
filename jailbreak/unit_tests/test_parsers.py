@@ -14,9 +14,6 @@ import unittest
 import sys
 import os
 
-# Add the jailbreak module to the path
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
-
 from jailbreak.agentic_module.agents.parser import (
     parse_llm_response_to_dict,
     validate_required_fields,
