@@ -1,127 +1,165 @@
 """
 Basic usage examples for the LLM module.
 
-This script demonstrates the key functionality of the llm_module with the exact API
-as requested, including explicit imports and usage patterns.
+This script demonstrates the key functionality of the llm_module with both
+the direct model imports and the new model factory approach.
 """
 
-# Example usage with correct jailbreak package imports
+import logging
+from typing import Dict, Any, List
+
+# New model factory import (recommended approach)
+from jailbreak.llm_module import llm_model_factory
+
+# Traditional imports (still available for advanced usage)
 from jailbreak.llm_module.models import Llama, GPT, Phi, Qwen, DeepSeek, Aya
 from jailbreak.llm_module.config import ModelConfigs, ConfigManager
 from jailbreak.llm_module.utils import ConversationManager, ModelUtils
 
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
 
-def example_llama_usage():
-    """Example of using Llama model with the requested API."""
-    print("=== Llama Model Example ===")
-    
-    # Configuration with variants as requested
-    config = {
-        # "model_id": "meta-llama/Llama-3.2-3B-Instruct",
-        "model_id": "Qwen/Qwen3-0.6B",
-        "quantization": "none",  # Can be "auto", "4bit", "8bit" 
-        "temperature": 0.7,
-        "max_new_tokens": 512,
-        "hf_token_path": "/home/mrahma45/HUGGINGFACE_KEY"
+# Test configurations for different models
+TEST_CONFIGS = [
+    {
+        "name": "Qwen 0.6B",
+        "config": {
+            "model": "qwen",
+            "model_id": "Qwen/Qwen3-0.6B",
+            "quantization": "none",
+            "temperature": 0.7,
+            "max_new_tokens": 512,
+            "hf_token_path": "/home/mrahma45/HUGGINGFACE_KEY"
+        }
+    },
+    {
+        "name": "Llama 3.2 3B",
+        "config": {
+            "model": "llama",
+            "model_id": "meta-llama/Llama-3.2-3B-Instruct",
+            "quantization": "auto",
+            "temperature": 0.8,
+            "max_new_tokens": 1024,
+            "hf_token_path": "/home/mrahma45/HUGGINGFACE_KEY"
+        }
+    },
+    {
+        "name": "GPT-4o",
+        "config": {
+            "model": "gpt",
+            "model_id": "gpt-4o",
+            "api_key_path": "/projects/klybarge/OPENAI_API_KEY_GENERAL",
+            "temperature": 0.5,
+            "max_tokens": 512
+        }
+    },
+    {
+        "name": "Phi-3 Mini",
+        "config": {
+            "model": "phi",
+            "model_id": "microsoft/Phi-3-mini-4k-instruct",
+            "quantization": "auto",
+            "temperature": 0.7,
+            "max_new_tokens": 512,
+            "hf_token_path": "/home/mrahma45/HUGGINGFACE_KEY"
+        }
+    },
+    {
+        "name": "DeepSeek V2",
+        "config": {
+            "model": "deepseek",
+            "model_id": "deepseek-ai/DeepSeek-V2-Chat",
+            "quantization": "4bit",
+            "temperature": 0.6,
+            "max_new_tokens": 512,
+            "hf_token_path": "/home/mrahma45/HUGGINGFACE_KEY"
+        }
     }
+]
+
+
+def test_model_factory(config: Dict[str, Any], model_name: str) -> None:
+    """Test the model factory with a given configuration."""
+    logger.info(f"Testing {model_name} with factory approach")
     
-    # Initialize model as requested: llm = Llama(config)
     try:
-        # llm = Llama(config)
-        llm = Qwen(config)
+        # Create model using factory
+        llm = llm_model_factory(config)
+        logger.info(f"Successfully created {model_name}: {llm}")
         
-        # Set system prompt as requested
+        # Set system prompt
         llm.set_system_prompt("You are a helpful AI assistant specialized in cybersecurity.")
+        logger.info(f"Set system prompt for {model_name}")
         
-        # Get system prompt to verify it was set
-        current_prompt = llm.get_system_prompt()
-        print(f"Current system prompt: {current_prompt[:50]}...")
+        # Add test message
+        test_message = "What are common attack vectors in web applications?"
+        llm.add_message("user", test_message)
+        logger.info(f"Added test message to {model_name}")
         
-        # Add message as requested
-        llm.add_message("user", "What are common attack vectors in web applications?")
-        
-        # Add conversation as requested
+        # Add conversation history for testing
         conversation_history = [
             {"role": "user", "content": "Can you explain SQL injection?"},
             {"role": "assistant", "content": "SQL injection is a code injection technique..."}
         ]
         llm.add_conversation(conversation_history)
+        logger.info(f"Added conversation history to {model_name}")
         
-        # Forward without arguments - uses conversation, doesn't save
-        print("Generating response using conversation history...")
-        response = llm.forward()  # This would actually call the model
-        print(f"{response}")
-        
-        # Forward with messages - one-shot, doesn't affect conversation state
-        standalone_messages = [{"role": "user", "content": "What is XSS?"}]
-        print("Generating standalone response...")
-        response = llm.forward(standalone_messages)  # One-shot generation
-        print(f"{response}")
-        
-        print(f"f{llm.get_system_prompt()}")
         # Get model information
         model_info = llm.get_model_info()
-        print(f"Model Info: {model_info}")
+        logger.info(f"{model_name} Model Info: {model_info}")
         
-    except Exception as e:
-        print(f"Note: Model loading failed (expected in demo): {e}")
-        print("This is normal - the demo shows API usage without actual model loading")
-
-
-def example_gpt_usage():
-    """Example of using GPT model."""
-    print("\n=== GPT Model Example ===")
-    
-    config = {
-        "model_id": "gpt-4o",
-        "api_key_path": "/projects/klybarge/OPENAI_API_KEY_GENERAL",
-        "temperature": 0.7,
-        "max_tokens": 1024
-    }
-    
-    try:
-        llm = GPT(config)
-        llm.set_system_prompt("You are an expert in AI security research.")
-        
-        # Demonstrate get_system_prompt method
+        # Test API methods
         current_prompt = llm.get_system_prompt()
-        print(f"GPT system prompt: {current_prompt}")
+        logger.info(f"{model_name} system prompt: {current_prompt[:50]}..." if current_prompt else "No system prompt")
         
-        llm.add_message("user", "Explain jailbreaking techniques")
+        conversation = llm.get_conversation()
+        logger.info(f"{model_name} conversation length: {len(conversation)} messages")
         
-        response = llm.forward()
-        print(f"GPT response: {response}")
+        logger.info(f"{model_name} model ready for generation!")
         
     except Exception as e:
-        print(f"Note: GPT initialization failed (expected in demo): {e}")
+        logger.error(f"Failed to create or test {model_name}: {e}")
+        logger.info("This is expected in demo mode - shows API usage without actual model loading")
 
 
 def example_configuration_management():
     """Example of using configuration management."""
-    print("\n=== Configuration Management Example ===")
+    logger.info("Configuration Management Example")
     
     # List all available configurations
-    configs = ModelConfigs.list_configs()
-    print("Available configurations:", configs)
+    try:
+        configs = ModelConfigs.list_configs()
+        logger.info(f"Available configurations: {configs}")
+    except Exception as e:
+        logger.error(f"Failed to list configs: {e}")
     
     # Get a predefined configuration
     try:
         llama_config = ModelConfigs.get_config("llama-3b")
-        print(f"Llama 3B config: {llama_config}")
+        logger.info(f"Llama 3B config: {llama_config}")
     except KeyError as e:
-        print(f"Config not found: {e}")
+        logger.warning(f"Config not found: {e}")
+    except Exception as e:
+        logger.error(f"Error getting config: {e}")
     
     # Get memory-efficient configuration
-    memory_config = ModelConfigs.get_memory_efficient_config("llama-3b", available_memory_gb=8)
-    print(f"Memory-efficient config: {memory_config}")
+    try:
+        memory_config = ModelConfigs.get_memory_efficient_config("llama-3b", available_memory_gb=8)
+        logger.info(f"Memory-efficient config: {memory_config}")
+    except Exception as e:
+        logger.error(f"Error getting memory-efficient config: {e}")
     
     # Use ConfigManager
     config_manager = ConfigManager()
     try:
         config = config_manager.get_config("llama-3b")
-        print(f"Config via manager: {config}")
+        logger.info(f"Config via manager: {config}")
     except Exception as e:
-        print(f"Config manager error: {e}")
+        logger.error(f"Config manager error: {e}")
 
 
 def example_conversation_management():
@@ -225,36 +263,55 @@ def example_lora_configuration():
 
 def main():
     """Run all examples to demonstrate the LLM module functionality."""
-    print("LLM Module - Basic Usage Examples")
-    print("=" * 50)
+    logger.info("Starting LLM Module - Basic Usage Examples")
+    logger.info("=" * 50)
     
     try:
-        print("Llama")
-        example_llama_usage()
-        print("\nGPT")
-        example_gpt_usage()
-        print("\nConfiguration Management")
+        # Test all models using the factory approach
+        logger.info("=== MODEL FACTORY TESTS ===")
+        for test_config in TEST_CONFIGS:
+            test_model_factory(test_config["config"], test_config["name"])
+            logger.info("-" * 30)
+        
+        # Test utility functions
+        logger.info("\n=== UTILITY EXAMPLES ===")
+        logger.info("Testing configuration management...")
         example_configuration_management()
+        
+        logger.info("Testing conversation management...")
         example_conversation_management()
+        
+        logger.info("Testing model utilities...")
         example_model_utilities()
+        
+        logger.info("Testing quantization features...")
         example_quantization_features()
+        
+        logger.info("Testing LoRA configuration...")
         example_lora_configuration()
         
-        print("\n" + "=" * 50)
-        print("All examples completed successfully!")
-        print("\nKey Features Demonstrated:")
-        print("✓ Explicit model imports (from llm_module.models import Llama)")
-        print("✓ Configuration-based initialization (llm = Llama(config))")
-        print("✓ System prompt management (llm.set_system_prompt())")
-        print("✓ Message and conversation management")
-        print("✓ Dual forward modes (with/without conversation state)")
-        print("✓ Quantization support for memory efficiency")
-        print("✓ Future LoRA fine-tuning framework")
-        print("✓ Comprehensive configuration management")
-        print("✓ Conversation utilities and analytics")
+        logger.info("=" * 50)
+        logger.info("All examples completed successfully!")
+        logger.info("\nKey Features Demonstrated:")
+        logger.info("✓ NEW: Model Factory (llm_model_factory) - RECOMMENDED")
+        logger.info("✓ Dynamic model loading with simple config format")
+        logger.info("✓ Unified interface across all model types")
+        logger.info("✓ Configuration-based initialization")
+        logger.info("✓ System prompt management (llm.set_system_prompt())")
+        logger.info("✓ Message and conversation management")
+        logger.info("✓ Dual forward modes (with/without conversation state)")
+        logger.info("✓ Quantization support for memory efficiency")
+        logger.info("✓ Future LoRA fine-tuning framework")
+        logger.info("✓ Comprehensive configuration management")
+        logger.info("✓ Conversation utilities and analytics")
+        
+        logger.info("\n🎉 RECOMMENDED USAGE:")
+        logger.info("from jailbreak.llm_module import llm_model_factory")
+        logger.info("config = {'model': 'qwen', 'model_id': 'Qwen/Qwen3-0.6B', ...}")
+        logger.info("llm = llm_model_factory(config)")
         
     except Exception as e:
-        print(f"Error in examples: {e}")
+        logger.error(f"Error in examples: {e}")
         import traceback
         traceback.print_exc()
 

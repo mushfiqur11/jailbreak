@@ -26,11 +26,15 @@ from .config import ModelConfigs, ConfigManager
 from .utils import ConversationManager, ModelUtils
 from .quantization import QuantizationConfig, MemoryOptimizer
 from .finetuning import LoRAConfig, LoRATrainer
+from .model_factory import llm_model_factory
 
 # Main exports
 __all__ = [
     # Model classes
     'Llama', 'GPT', 'Phi', 'Qwen', 'DeepSeek', 'Aya',
+    
+    # Model factory
+    'llm_model_factory',
     
     # Configuration management
     'ModelConfigs', 'ConfigManager',
