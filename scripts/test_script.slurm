@@ -31,4 +31,4 @@ source venv_jailbreak/bin/activate
 cd jailbreak-pkg/runs
 
 # python llm_module/basic_usage.py
-python unit_tests/test_parsers.py
+python pipeline/basic.py --config_path ../scripts/configs/config.yaml

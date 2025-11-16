@@ -1,12 +1,13 @@
-from datasets import load_from_disk
 from argparse import ArgumentParser
 from omegaconf import OmegaConf
-from jailbreak.pipeline.utils import load_jailbreak_dataset
+from jailbreak.agentic_module.utils import load_jailbreak_dataset
 import logging
 
 def main(config):
     ds = load_jailbreak_dataset(config.data)
-    print(ds)
+    logging.info(ds)
+
+    
 
 if __name__ == "__main__":
     parser = ArgumentParser()
