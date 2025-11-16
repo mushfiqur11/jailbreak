@@ -43,6 +43,8 @@ setup(
         "toml>=0.10.2",
 
         "typing",
+        "omegaconf>=2.3.0",
+        "datasets>=2.14.0",
     ],
     entry_points={
         "console_scripts": [

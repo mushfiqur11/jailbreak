@@ -5,3 +5,5 @@ __pycache__/
 
 hf_models/
 jailbreak.egg-info/
+
+data/
