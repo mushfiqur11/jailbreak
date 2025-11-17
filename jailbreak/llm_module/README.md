@@ -41,10 +41,15 @@ llm.set_system_prompt("You are a helpful AI assistant specialized in cybersecuri
 
 # Add messages and generate responses
 llm.add_message("user", "What are common web vulnerabilities?")
-response = llm.forward()
+result = llm.forward()
+response = result['response']  # Extract response text
+# result also contains: input_tokens, output_tokens, generation_time
 
 # One-shot generation without affecting conversation state
-standalone_response = llm.forward([{"role": "user", "content": "Explain XSS"}])
+standalone_result = llm.forward([{"role": "user", "content": "Explain XSS"}])
+standalone_response = standalone_result['response']
+print(f"Generated in {standalone_result['generation_time']:.2f}s using "
+      f"{standalone_result['input_tokens']} input + {standalone_result['output_tokens']} output tokens")
 ```
 
 ## Features

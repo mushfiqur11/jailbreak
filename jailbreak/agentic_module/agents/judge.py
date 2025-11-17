@@ -76,8 +76,11 @@ class JudgeAgent:
             self.judge_llm.add_message("user", evaluation_message)
             
             # Generate evaluation
-            raw_response = self.judge_llm.forward()
+            result = self.judge_llm.forward()
+            raw_response = result['response']
             logger.debug(f"Raw judge response: {raw_response[:200]}...")
+            logger.debug(f"Generation metrics: {result['input_tokens']} input tokens, "
+                        f"{result['output_tokens']} output tokens, {result['generation_time']:.2f}s")
             
             # Parse the response
             parse_result = parse_judge_policy_response(raw_response)

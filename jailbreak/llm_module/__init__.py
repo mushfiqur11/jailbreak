@@ -14,7 +14,9 @@ Usage:
     # Set system prompt and generate responses
     llm.set_system_prompt("You are a helpful assistant.")
     llm.add_message("user", "Hello!")
-    response = llm.forward()
+    result = llm.forward()
+    response = result['response']  # Extract response from metrics dict
+    # result also contains: input_tokens, output_tokens, generation_time
 """
 
 __version__ = "1.0.0"

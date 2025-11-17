@@ -344,7 +344,7 @@ class HuggingFaceBase(BaseLLM):
         self.system_prompt = prompt
         print(f"System prompt set: {prompt[:100]}...")
     
-    def forward(self, messages: Optional[List[Dict[str, str]]] = None) -> str:
+    def forward(self, messages: Optional[List[Dict[str, str]]] = None) -> Dict[str, Any]:
         """
         Generate a response using the language model.
         
@@ -353,7 +353,11 @@ class HuggingFaceBase(BaseLLM):
                 If None, uses the internal conversation.
                 
         Returns:
-            str: Generated response text
+            Dict[str, Any]: Dictionary containing:
+                - 'response': Generated response text
+                - 'input_tokens': Number of input tokens used
+                - 'output_tokens': Number of output tokens generated
+                - 'generation_time': Time taken for generation in seconds
         """
         if not self.is_loaded:
             raise RuntimeError("Model is not loaded. Call _load_model() first.")
@@ -442,7 +446,13 @@ class HuggingFaceBase(BaseLLM):
         total_time = time.time() - start_time
         print(f"🏁 Total forward pass time: {total_time:.2f}s\n")
         
-        return response.strip()
+        # Return metrics dictionary
+        return {
+            'response': response.strip(),
+            'input_tokens': input_length,
+            'output_tokens': output_length,
+            'generation_time': total_time
+        }
     
     def batch_forward(self, batch_messages: List[List[Dict[str, str]]]) -> List[str]:
         """

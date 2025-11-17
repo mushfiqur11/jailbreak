@@ -123,7 +123,7 @@ class OpenAIBase(BaseLLM):
         self.system_prompt = prompt
         print(f"System prompt set: {prompt[:100]}...")
     
-    def forward(self, messages: Optional[List[Dict[str, str]]] = None) -> str:
+    def forward(self, messages: Optional[List[Dict[str, str]]] = None) -> Dict[str, Any]:
         """
         Generate a response using the OpenAI API.
         
@@ -132,8 +132,10 @@ class OpenAIBase(BaseLLM):
                 If None, uses the internal conversation.
                 
         Returns:
-            str: Generated response text
+            Dict[str, Any]: Dictionary containing response, token counts, and timing info
         """
+        import time
+        
         if not self.is_loaded:
             raise RuntimeError("OpenAI client is not initialized. Call _load_model() first.")
         
@@ -142,6 +144,8 @@ class OpenAIBase(BaseLLM):
         
         if not prepared_messages:
             raise ValueError("No messages to process")
+        
+        start_time = time.time()
         
         try:
             # Check if structured output is requested
@@ -153,7 +157,7 @@ class OpenAIBase(BaseLLM):
                     response_format=self.config["response_format"],
                     **{k: v for k, v in self.generation_config.items() if v is not None}
                 )
-                return response.choices[0].message.parsed
+                response_text = response.choices[0].message.parsed
             else:
                 # Standard chat completion
                 response = self.client.chat.completions.create(
@@ -161,7 +165,20 @@ class OpenAIBase(BaseLLM):
                     messages=prepared_messages,
                     **{k: v for k, v in self.generation_config.items() if v is not None}
                 )
-                return response.choices[0].message.content.strip()
+                response_text = response.choices[0].message.content.strip()
+            
+            generation_time = time.time() - start_time
+            
+            # Extract token usage information
+            input_tokens = getattr(response.usage, 'prompt_tokens', 0) if hasattr(response, 'usage') and response.usage else 0
+            output_tokens = getattr(response.usage, 'completion_tokens', 0) if hasattr(response, 'usage') and response.usage else 0
+            
+            return {
+                'response': response_text,
+                'input_tokens': input_tokens,
+                'output_tokens': output_tokens,
+                'generation_time': generation_time
+            }
                 
         except openai.APIError as e:
             raise Exception(f"OpenAI API error: {e}")

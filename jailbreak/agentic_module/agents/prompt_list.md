@@ -291,7 +291,10 @@ initial_plan_prompt = get_initial_planning_prompt(
 
 # Use with LLM
 llm.set_system_prompt(initial_plan_prompt)
-response = llm.forward()  # Returns JSON with plan
+result = llm.forward()  # Returns metrics dict with response, tokens, timing
+response = result['response']  # Extract JSON plan from response
+print(f"Plan generated in {result['generation_time']:.2f}s using "
+      f"{result['input_tokens']} input + {result['output_tokens']} output tokens")
 ```
 
 ### Integration with AttackerAgent

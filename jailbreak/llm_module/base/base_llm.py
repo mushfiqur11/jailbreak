@@ -68,7 +68,7 @@ class BaseLLM(ABC):
         return self.system_prompt
     
     @abstractmethod
-    def forward(self, messages: Optional[List[Dict[str, str]]] = None) -> str:
+    def forward(self, messages: Optional[List[Dict[str, str]]] = None) -> Dict[str, Any]:
         """
         Generate a response using the language model.
         
@@ -78,7 +78,11 @@ class BaseLLM(ABC):
                 the internal conversation state. If None, uses the internal conversation.
         
         Returns:
-            str: Generated response text
+            Dict[str, Any]: Dictionary containing:
+                - 'response': Generated response text
+                - 'input_tokens': Number of input tokens used
+                - 'output_tokens': Number of output tokens generated
+                - 'generation_time': Time taken for generation in seconds
         """
         pass
     

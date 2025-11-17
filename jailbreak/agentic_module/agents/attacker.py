@@ -519,8 +519,11 @@ class AttackerAgent:
             self.attacker_llm.clear_conversation()
             
             # Generate the plan
-            raw_response = self.attacker_llm.forward()
+            result = self.attacker_llm.forward()
+            raw_response = result['response']
             logger.debug(f"Raw initial planning response: {raw_response[:200]}...")
+            logger.debug(f"Generation metrics: {result['input_tokens']} input tokens, "
+                        f"{result['output_tokens']} output tokens, {result['generation_time']:.2f}s")
             
             # Parse response and extract nextPrompt
             next_prompt = self._parse_initial_plan_response(raw_response)
@@ -598,8 +601,11 @@ class AttackerAgent:
             self.attacker_llm.clear_conversation()
             
             # Generate the plan
-            raw_response = self.attacker_llm.forward()
+            result = self.attacker_llm.forward()
+            raw_response = result['response']
             logger.debug(f"Raw followup planning response: {raw_response[:200]}...")
+            logger.debug(f"Generation metrics: {result['input_tokens']} input tokens, "
+                        f"{result['output_tokens']} output tokens, {result['generation_time']:.2f}s")
             
             # Parse response and extract nextPrompt
             next_prompt = self._parse_followup_plan_response(raw_response)
@@ -634,7 +640,10 @@ class AttackerAgent:
             self.attacker_llm.clear_conversation()
             
             # Generate the plan
-            plan = self.attacker_llm.forward()
+            result = self.attacker_llm.forward()
+            plan = result['response']
+            logger.debug(f"Generation metrics: {result['input_tokens']} input tokens, "
+                        f"{result['output_tokens']} output tokens, {result['generation_time']:.2f}s")
             logger.info("Traceback attack plan generated successfully")
             
             return plan
@@ -667,7 +676,10 @@ class AttackerAgent:
             self.reasoning_llm.clear_conversation()
             
             # Generate the analysis
-            analysis = self.reasoning_llm.forward()
+            result = self.reasoning_llm.forward()
+            analysis = result['response']
+            logger.debug(f"Generation metrics: {result['input_tokens']} input tokens, "
+                        f"{result['output_tokens']} output tokens, {result['generation_time']:.2f}s")
             logger.info("Informed traceback completed successfully")
             
             return analysis
@@ -703,9 +715,12 @@ class AttackerAgent:
             
             # Generate the curation result
             result = self.reasoning_llm.forward()
+            curation_result = result['response']
+            logger.debug(f"Generation metrics: {result['input_tokens']} input tokens, "
+                        f"{result['output_tokens']} output tokens, {result['generation_time']:.2f}s")
             logger.info("Tactic curation completed successfully")
             
-            return result
+            return curation_result
             
         except Exception as e:
             logger.error(f"Failed to perform tactic curation: {e}")

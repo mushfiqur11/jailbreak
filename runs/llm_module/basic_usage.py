@@ -119,6 +119,19 @@ def test_model_factory(config: Dict[str, Any], model_name: str) -> None:
         conversation = llm.get_conversation()
         logger.info(f"{model_name} conversation length: {len(conversation)} messages")
         
+        # Test the new forward method with metrics
+        logger.info(f"Testing forward method with metrics for {model_name}...")
+        try:
+            # Generate response with metrics
+            result = llm.forward()
+            logger.info(f"{model_name} Response: {result['response'][:100]}...")
+            logger.info(f"{model_name} Metrics - Input tokens: {result['input_tokens']}, "
+                       f"Output tokens: {result['output_tokens']}, "
+                       f"Generation time: {result['generation_time']:.2f}s")
+        except Exception as e:
+            logger.error(f"Forward method test failed for {model_name}: {e}")
+            logger.info("This is expected in demo mode - shows new API usage")
+        
         logger.info(f"{model_name} model ready for generation!")
         
     except Exception as e:

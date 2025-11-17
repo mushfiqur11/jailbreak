@@ -68,8 +68,11 @@ class TargetAgent:
             self.target_llm.add_message("user", user_message)
             
             # Generate response
-            raw_response = self.target_llm.forward()
+            result = self.target_llm.forward()
+            raw_response = result['response']
             logger.debug(f"Raw target response: {raw_response[:200]}...")
+            logger.debug(f"Generation metrics: {result['input_tokens']} input tokens, "
+                        f"{result['output_tokens']} output tokens, {result['generation_time']:.2f}s")
             
             # Parse the response (currently just extracts the response text)
             parse_result = parse_safety_prompt_response(raw_response)
@@ -106,8 +109,11 @@ class TargetAgent:
             self.target_llm.add_conversation(conversation_history)
             
             # Generate response
-            raw_response = self.target_llm.forward()
+            result = self.target_llm.forward()
+            raw_response = result['response']
             logger.debug(f"Raw target response: {raw_response[:200]}...")
+            logger.debug(f"Generation metrics: {result['input_tokens']} input tokens, "
+                        f"{result['output_tokens']} output tokens, {result['generation_time']:.2f}s")
             
             # Parse the response
             parse_result = parse_safety_prompt_response(raw_response)
