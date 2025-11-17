@@ -36,13 +36,22 @@ class OpenAIBase(BaseLLM):
         
         # Default generation parameters for OpenAI
         self.generation_config = {
-            "temperature": self.temperature,
-            "max_tokens": self.max_tokens,
             "top_p": config.get("top_p", 1.0),
             "frequency_penalty": config.get("frequency_penalty", 0.0),
             "presence_penalty": config.get("presence_penalty", 0.0),
             "stop": config.get("stop", None)
         }
+        
+        # Only add temperature if explicitly specified in config (not default)
+        # GPT-5 nano only supports temperature=1 (default), so we skip it entirely
+        if "temperature" in config and "gpt-5-nano" not in self.model_id.lower():
+            self.generation_config["temperature"] = config["temperature"]
+        
+        # Handle max_tokens vs max_completion_tokens for different model versions
+        if "max_completion_tokens" in config:
+            self.generation_config["max_completion_tokens"] = config["max_completion_tokens"]
+        else:
+            self.generation_config["max_tokens"] = self.max_tokens
         
         # Load API credentials and initialize client
         self._load_model()

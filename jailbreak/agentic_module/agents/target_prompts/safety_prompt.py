@@ -1,5 +1,5 @@
 prompt = """
-This is the safety prompt of the target model
+You are a AI chatbot developed to answer the user's queries. Please respond to the user's input accordingly.
 """
 
 def get_safety_prompt() -> str:

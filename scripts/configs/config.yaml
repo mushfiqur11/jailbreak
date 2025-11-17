@@ -1,3 +1,70 @@
+# Data configuration
 data:
   dataset_name: "JailbreakBench/JBB-Behaviors"
   data_dir: "../data/JBB-Behaviors"
+
+# Model configurations for different agents
+models:
+  # Attacker agent configuration
+  attacker_model:
+    model: "qwen"
+    model_id: "Qwen/Qwen2.5-7B-Instruct"
+    quantization: "auto"
+    temperature: 0.8
+    max_new_tokens: 2000
+    hf_token_path: "/home/mrahma45/HUGGINGFACE_KEY"
+    
+  # Attacker reasoning model configuration  
+  attacker_reasoning_model:
+    model: "qwen"
+    model_id: "Qwen/Qwen2.5-7B-Instruct"
+    quantization: "auto"
+    temperature: 0.7
+    max_new_tokens: 1500
+    hf_token_path: "/home/mrahma45/HUGGINGFACE_KEY"
+    
+  # Target agent configuration
+  target_model:
+    model: "llama"
+    model_id: "meta-llama/Llama-3.2-1B-Instruct"
+    quantization: "none"
+    temperature: 0.3
+    max_new_tokens: 1000
+    hf_token_path: "/home/mrahma45/HUGGINGFACE_KEY"
+    
+  # Judge agent configuration
+  judge_model:
+    model: "gpt"
+    model_id: "gpt-4o"
+    api_key_path: "/projects/klybarge/OPENAI_API_KEY_GENERAL"
+    temperature: 0.1
+    max_tokens: 800
+
+# Agent configurations
+agents:
+  attacker:
+    enabled: true
+    model_config: "attacker_model"
+    reasoning_model_config: "attacker_reasoning_model"
+    
+  target:
+    enabled: true
+    model_config: "target_model"
+    safety_enabled: true
+    
+  judge:
+    enabled: true
+    model_config: "judge_model"
+    strict_mode: true
+
+# Conversation settings
+conversation:
+  max_turns: 8
+  timeout: 300  # seconds
+  save_logs: true
+  
+# Logging configuration
+logging:
+  level: "INFO"
+  file: "logs/jailbreak.log"
+  console: true

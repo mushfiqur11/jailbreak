@@ -45,6 +45,8 @@ setup(
         "typing",
         "omegaconf>=2.3.0",
         "datasets>=2.14.0",
+        "loguru>=0.7.0",
+        "Pillow>=10.0.0",
     ],
     entry_points={
         "console_scripts": [

@@ -1,0 +1,57 @@
+# Multi-agent jailbreaking pipeline configuration with all GPT models
+# Usage: python basic.py --config_path gpt_config.yaml
+
+# Data configuration
+data:
+  dataset_name: "JailbreakBench/JBB-Behaviors"
+  data_dir: "../data/JBB-Behaviors"
+
+# Direct agent configurations (used by basic.py)
+agents:
+  # Attacker agent configuration (main LLM)
+  attacker:
+    model: "gpt"
+    model_id: "gpt-5-nano-2025-08-07"
+    api_key_path: "G:\\Research\\Jailbreaking\\OPENAI_API_KEY"
+    max_completion_tokens: 2000
+    
+  # Attacker reasoning model configuration
+  reasoning:
+    model: "gpt" 
+    model_id: "gpt-5-nano-2025-08-07"
+    api_key_path: "G:\\Research\\Jailbreaking\\OPENAI_API_KEY"
+    max_completion_tokens: 1500
+    
+  # Target agent configuration
+  target:
+    model: "gpt"
+    model_id: "gpt-5-nano-2025-08-07"
+    api_key_path: "G:\\Research\\Jailbreaking\\OPENAI_API_KEY"
+    max_completion_tokens: 1000
+    
+  # Judge agent configuration
+  judge:
+    model: "gpt"
+    model_id: "gpt-5-nano-2025-08-07"
+    api_key_path: "G:\\Research\\Jailbreaking\\OPENAI_API_KEY"
+    max_completion_tokens: 800
+
+# Pipeline configuration
+pipeline:
+  max_turns: 8
+  max_trials: 3
+  timeout: 300  # seconds per turn
+  
+# Output configuration
+output_path: "gpt_conversation_results.json"
+
+# Logging configuration
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  
+# Additional settings
+settings:
+  save_intermediate_results: true
+  verbose_logging: true
+  early_stopping: true  # Stop trials early on strong violation

@@ -6,10 +6,10 @@ from jailbreak.agentic_module.agents.attacker_prompts import (
 
 from jailbreak.agentic_module.agents.reasoning_prompts import (
     get_curate_tactic_prompt,
-    get_informed_traceback_prompt,
-    get_generalize_tactics_prompt
+    get_informed_traceback_prompt
 )
 
+from jailbreak.agentic_module.agents.parser import safe_parse_with_validation
 from jailbreak.llm_module import llm_model_factory
 import logging
 import json
@@ -441,6 +441,53 @@ class AttackerAgent:
         except Exception as e:
             logger.error(f"Failed to update belief state: {e}")
     
+    def _get_knowledge_string(self) -> str:
+        """Get knowledge base content as string."""
+        try:
+            knowledge_data = self.knowledge_base.load_knowledge_base()
+            return json.dumps(knowledge_data, indent=2)
+        except Exception as e:
+            logger.warning(f"Failed to serialize knowledge base: {e}")
+            return "{}"
+    
+    def _get_tactics_string(self) -> str:
+        """Get available tactics as string."""
+        try:
+            tactics = list(self.knowledge_base.initial_tactics.keys())
+            if not tactics:
+                tactics = ["Request_Framing", "Hidden_Intention_Streamline", "Echoing"]  # fallback
+            return ", ".join(tactics)
+        except Exception as e:
+            logger.warning(f"Failed to get tactics: {e}")
+            return "Request_Framing, Hidden_Intention_Streamline, Echoing"
+    
+    def _parse_initial_plan_response(self, response: str) -> str:
+        """Parse initial planning response and extract nextPrompt."""
+        logger.debug("Parsing initial planning response")
+        
+        required_fields = ["suggestedTactics", "detailedPlan", "reasoning", "nextPrompt"]
+        field_types = {
+            "suggestedTactics": list,
+            "detailedPlan": str, 
+            "reasoning": str,
+            "nextPrompt": str
+        }
+        
+        parse_result = safe_parse_with_validation(
+            response, required_fields, field_types, "initial_planning"
+        )
+        
+        if not parse_result.success:
+            logger.error(f"Failed to parse initial planning response: {parse_result.error}")
+            raise ValueError(f"Initial planning response parsing failed: {parse_result.error}")
+        
+        # Update belief state with suggested tactics
+        if "suggestedTactics" in parse_result.data:
+            self.belief_state.strategy_state["currentTactic"] = parse_result.data["suggestedTactics"]
+        
+        logger.info("Successfully parsed initial planning response")
+        return parse_result.data["nextPrompt"]
+
     def get_initial_plan(self, goal: str, target_safety_prompt: str) -> str:
         """
         Generate initial attack plan using the attacker LLM.
@@ -450,55 +497,115 @@ class AttackerAgent:
             target_safety_prompt (str): The target's safety prompt
             
         Returns:
-            str: Generated initial plan
+            str: The nextPrompt extracted from the generated plan
         """
         logger.info("Generating initial attack plan")
         
         try:
-            # Get the initial planning prompt
-            prompt = get_initial_planning_prompt(goal, target_safety_prompt)
+            # Get required parameters
+            knowledge_str = self._get_knowledge_string()
+            tactics_str = self._get_tactics_string()
+            
+            # Get the initial planning prompt with all required parameters
+            prompt = get_initial_planning_prompt(
+                goal=goal,
+                target_safety_prompt=target_safety_prompt,
+                knowledge_str=knowledge_str,
+                tactics=tactics_str
+            )
             
             # Set system prompt and generate plan
             self.attacker_llm.set_system_prompt(prompt)
             self.attacker_llm.clear_conversation()
             
             # Generate the plan
-            plan = self.attacker_llm.forward()
-            logger.info("Initial attack plan generated successfully")
+            raw_response = self.attacker_llm.forward()
+            logger.debug(f"Raw initial planning response: {raw_response[:200]}...")
             
-            return plan
+            # Parse response and extract nextPrompt
+            next_prompt = self._parse_initial_plan_response(raw_response)
+            logger.info("Initial attack plan generated and parsed successfully")
+            
+            return next_prompt
             
         except Exception as e:
             logger.error(f"Failed to generate initial plan: {e}")
             raise
     
-    def get_followup_plan(self, goal: str, conversation_str: str, current_tactic: str) -> str:
+    def _parse_followup_plan_response(self, response: str) -> str:
+        """Parse followup planning response and extract nextPrompt from plan."""
+        logger.debug("Parsing followup planning response")
+        
+        required_fields = ["thought", "plan"]
+        field_types = {
+            "thought": str,
+            "plan": dict
+        }
+        
+        parse_result = safe_parse_with_validation(
+            response, required_fields, field_types, "followup_planning"
+        )
+        
+        if not parse_result.success:
+            logger.error(f"Failed to parse followup planning response: {parse_result.error}")
+            raise ValueError(f"Followup planning response parsing failed: {parse_result.error}")
+        
+        # Extract plan and validate required fields
+        plan_data = parse_result.data["plan"]
+        required_plan_fields = ["suggestedTactics", "reasoning", "infoToFocusOnNext", "nextPrompt"]
+        
+        for field in required_plan_fields:
+            if field not in plan_data:
+                raise ValueError(f"Missing required field in plan: {field}")
+        
+        # Update belief state with suggested tactics
+        if "suggestedTactics" in plan_data:
+            self.belief_state.strategy_state["currentTactic"] = plan_data["suggestedTactics"]
+        
+        logger.info("Successfully parsed followup planning response")
+        return plan_data["nextPrompt"]
+
+    def get_followup_plan(self, goal: str, target_safety_prompt: str) -> str:
         """
         Generate followup attack plan based on conversation history.
         
         Args:
             goal (str): The attack goal
-            conversation_str (str): Current conversation history
-            current_tactic (str): Current tactic being used
+            target_safety_prompt (str): The target's safety prompt
             
         Returns:
-            str: Generated followup plan
+            str: The nextPrompt extracted from the generated plan
         """
         logger.info("Generating followup attack plan")
         
         try:
-            # Get the followup planning prompt
-            prompt = get_followup_planning_prompt(goal, conversation_str, current_tactic)
+            # Get required parameters
+            belief_state_str = json.dumps(self.belief_state.to_dict(), indent=2)
+            knowledge_str = self._get_knowledge_string()
+            tactics_str = self._get_tactics_string()
+            
+            # Get the followup planning prompt with all required parameters
+            prompt = get_followup_planning_prompt(
+                goal=goal,
+                target_safety_prompt=target_safety_prompt,
+                belief_state_str=belief_state_str,
+                knowledge_str=knowledge_str,
+                tactics=tactics_str
+            )
             
             # Set system prompt and generate plan
             self.attacker_llm.set_system_prompt(prompt)
             self.attacker_llm.clear_conversation()
             
             # Generate the plan
-            plan = self.attacker_llm.forward()
-            logger.info("Followup attack plan generated successfully")
+            raw_response = self.attacker_llm.forward()
+            logger.debug(f"Raw followup planning response: {raw_response[:200]}...")
             
-            return plan
+            # Parse response and extract nextPrompt
+            next_prompt = self._parse_followup_plan_response(raw_response)
+            logger.info("Followup attack plan generated and parsed successfully")
+            
+            return next_prompt
             
         except Exception as e:
             logger.error(f"Failed to generate followup plan: {e}")
@@ -606,35 +713,11 @@ class AttackerAgent:
 
     def perform_tactic_generalization(self, goal: str, knowledge_str: str, tactics: str) -> str:
         """
-        Perform tactic generalization using reasoning LLM.
-        
-        Args:
-            goal (str): The attack goal
-            knowledge_str (str): Current knowledge base content
-            tactics (str): Available tactics
-            
-        Returns:
-            str: Generalized tactics result
+        Placeholder for tactic generalization functionality.
+        Implementation depends on specific requirements.
         """
-        logger.info("Performing tactic generalization")
-        
-        try:
-            # Get the generalize tactics prompt
-            prompt = get_generalize_tactics_prompt(goal, knowledge_str, tactics)
-            
-            # Set system prompt and generate generalization
-            self.reasoning_llm.set_system_prompt(prompt)
-            self.reasoning_llm.clear_conversation()
-            
-            # Generate the generalization result
-            result = self.reasoning_llm.forward()
-            logger.info("Tactic generalization completed successfully")
-            
-            return result
-            
-        except Exception as e:
-            logger.error(f"Failed to perform tactic generalization: {e}")
-            raise
+        logger.info("Tactic generalization functionality not yet implemented")
+        return "Tactic generalization placeholder"
 
     def perform_local_learning(self, *args, **kwargs) -> str:
         """
