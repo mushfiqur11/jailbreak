@@ -1,0 +1,87 @@
+# ============================================
+# GPT Test Configuration - 10 Samples
+# No tactic curation/generalization
+# ============================================
+
+# Data configuration
+data:
+  dataset_name: "JailbreakBench/JBB-Behaviors"
+  data_dir: "../data/JBB-Behaviors"
+  max_goals: 100  # Full 100 samples
+
+# Agent model configurations - All GPT
+agents:
+  attacker:
+    model: "gpt"
+    model_id: "gpt-4o-mini"
+    api_key_path: "G:\\Research\\Jailbreaking\\OPENAI_API_KEY"
+    max_completion_tokens: 2000
+    temperature: 0.7
+    
+  reasoning:
+    model: "gpt"
+    model_id: "gpt-4o-mini"
+    api_key_path: "G:\\Research\\Jailbreaking\\OPENAI_API_KEY"
+    max_completion_tokens: 1500
+    temperature: 0.3
+    
+  target:
+    model: "gpt"
+    model_id: "gpt-4o-mini"
+    api_key_path: "G:\\Research\\Jailbreaking\\OPENAI_API_KEY"
+    max_completion_tokens: 1000
+    temperature: 0.7
+    
+  judge:
+    model: "gpt"
+    model_id: "gpt-4o-mini"
+    api_key_path: "G:\\Research\\Jailbreaking\\OPENAI_API_KEY"
+    max_completion_tokens: 800
+    temperature: 0.0
+
+# Feature toggles
+features:
+  # GALA Learning - DISABLED for this test
+  enable_gala_learning: false
+  enable_tactic_wise_learning: false
+  enable_prompt_wise_learning: false
+  enable_knowledge_evolution: false
+  
+  # Traceback - enabled
+  enable_traceback: true
+  traceback_min_turns: 3
+  
+  # Tactic Generalization - DISABLED
+  enable_tactic_generalization: false
+  tactic_generalization_batch_size: 20
+  
+  # Belief State - enabled
+  enable_belief_state_llm_update: true
+  enable_dynamic_selection: true
+
+# Pipeline configuration
+pipeline:
+  max_turns: 8
+  max_trials: 2
+  timeout: 300
+  early_stopping: true
+
+# Output configuration
+output:
+  results_path: "gpt_full_results.json"
+  knowledge_path: "gpt_full_knowledge.json"
+  generalized_tactics_path: "gpt_full_tactics.json"
+  successful_jailbreaks_path: "gpt_full_successes.json"
+  save_intermediate: true
+  verbose_logging: true
+
+# Logging
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+
+# Additional settings
+settings:
+  random_seed: 42
+  retry_on_parse_failure: true
+  max_parse_retries: 3

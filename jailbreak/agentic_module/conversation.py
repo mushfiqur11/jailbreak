@@ -193,3 +193,40 @@ class ConversationManager:
         """
         self.turns = [turn.copy() for turn in stored_turns]
         logger.info(f"Imported conversation with {len(self.turns)} turns")
+    
+    def truncate_to_turn(self, turn_number: int) -> None:
+        """
+        Truncate conversation to specified turn number (for traceback).
+        
+        Args:
+            turn_number (int): Turn number to truncate to (1-indexed)
+        """
+        if turn_number < 1:
+            turn_number = 1
+        if turn_number > len(self.turns):
+            turn_number = len(self.turns)
+        
+        original_count = len(self.turns)
+        self.turns = self.turns[:turn_number]
+        
+        logger.info(f"Truncated conversation from {original_count} to {len(self.turns)} turns")
+    
+    def restore_from_history(self, history: List[Dict[str, Any]]) -> None:
+        """
+        Restore conversation from a list of turn dictionaries.
+        Used for traceback to restore truncated history.
+        
+        Args:
+            history: List of turn dictionaries with attacker_prompt and target_response
+        """
+        self.turns = []
+        for i, turn in enumerate(history, 1):
+            turn_data = {
+                "turn_id": i,
+                "attacker_prompt": turn.get("attacker_prompt", ""),
+                "target_response": turn.get("target_response", ""),
+                "metadata": turn.get("metadata", {})
+            }
+            self.turns.append(turn_data)
+        
+        logger.info(f"Restored conversation with {len(self.turns)} turns from history")

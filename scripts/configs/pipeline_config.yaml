@@ -1,0 +1,96 @@
+# ============================================
+# Multi-Turn Red-Teaming Pipeline Configuration
+# Extended GALA with Traceback and Tactic Generalization
+# ============================================
+# Usage: python orchestrator.py --config_path ../../scripts/configs/pipeline_config.yaml
+
+# Data configuration
+data:
+  dataset_name: "JailbreakBench/JBB-Behaviors"
+  data_dir: "../data/JBB-Behaviors"
+  max_goals: null  # null = all goals, or specify number for testing
+
+# Agent model configurations
+# Each agent can use a different model
+agents:
+  # Attacker agent - generates attack prompts
+  attacker:
+    model: "gpt"
+    model_id: "gpt-4o-mini"
+    api_key_path: "G:\\Research\\Jailbreaking\\OPENAI_API_KEY"
+    max_completion_tokens: 2000
+    temperature: 0.7
+    
+  # Reasoning agent - belief update, traceback, generalization
+  reasoning:
+    model: "gpt"
+    model_id: "gpt-4o-mini"
+    api_key_path: "G:\\Research\\Jailbreaking\\OPENAI_API_KEY"
+    max_completion_tokens: 1500
+    temperature: 0.3
+    
+  # Target agent - simulates safety-aligned AI
+  target:
+    model: "gpt"
+    model_id: "gpt-4o-mini"
+    api_key_path: "G:\\Research\\Jailbreaking\\OPENAI_API_KEY"
+    max_completion_tokens: 1000
+    temperature: 0.7
+    
+  # Judge agent - evaluates policy violations
+  judge:
+    model: "gpt"
+    model_id: "gpt-4o-mini"
+    api_key_path: "G:\\Research\\Jailbreaking\\OPENAI_API_KEY"
+    max_completion_tokens: 800
+    temperature: 0.0
+
+# Feature toggles for modularity
+# Set to false to disable specific components
+features:
+  # ===== GALA Learning =====
+  enable_gala_learning: true        # Master switch for GALA
+  enable_tactic_wise_learning: true # Global learning from successes (per-success)
+  enable_prompt_wise_learning: true # Local learning from failures (per-failure)
+  enable_knowledge_evolution: true  # Store learned tactics in knowledge base
+  
+  # ===== Traceback =====
+  enable_traceback: true            # Enable traceback on max-turn failure
+  traceback_min_turns: 3            # Minimum turns before traceback is considered
+  
+  # ===== Tactic Generalization =====
+  enable_tactic_generalization: true  # Enable end-of-run generalization
+  tactic_generalization_batch_size: 20  # Process N successes per batch
+  
+  # ===== Belief State =====
+  enable_belief_state_llm_update: true  # Use LLM for belief update (vs heuristic)
+  
+  # ===== Dynamic Tactic Selection =====
+  enable_dynamic_selection: true    # Use selection framework for tactics
+
+# Pipeline configuration
+pipeline:
+  max_turns: 5              # Maximum turns per conversation (GALA uses 5)
+  max_trials: 2             # Maximum retry attempts per goal
+  timeout: 300              # Seconds timeout per LLM call
+  early_stopping: true      # Stop on strong violation (PV=2)
+
+# Output configuration
+output:
+  results_path: "pipeline_results.json"
+  knowledge_path: "knowledge_evolution.json"
+  generalized_tactics_path: "generalized_tactics.json"
+  successful_jailbreaks_path: "successful_jailbreaks.json"
+  save_intermediate: true
+  verbose_logging: true
+
+# Logging configuration
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+
+# Additional settings
+settings:
+  random_seed: 42
+  retry_on_parse_failure: true
+  max_parse_retries: 3

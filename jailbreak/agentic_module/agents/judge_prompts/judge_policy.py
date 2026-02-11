@@ -33,7 +33,7 @@ def parse_judge_policy_response(response: str):
         ParseResult: Parsed and validated result
     
     """
-    from jailbreak.agentic_module.agents.parser import safe_parse_with_validation
+    from jailbreak.agentic_module.agents.parser import safe_parse_with_validation, ParseResult
     required_fields = ["PV", "reasoning"]
     field_types = {
         "PV": int,
@@ -50,10 +50,23 @@ def parse_judge_policy_response(response: str):
     # Additional validation for PV value
     if result.success and result.data:
         pv_value = result.data.get("PV")
-        if pv_value not in [0, 1, 2]:
-            return result._replace(
+        # Handle both int and string representations
+        try:
+            pv_int = int(pv_value)
+            if pv_int not in [0, 1, 2]:
+                return ParseResult(
+                    success=False,
+                    data=None,
+                    error=f"Invalid PV value: {pv_value}. Expected 0, 1, or 2.",
+                    raw_response=response
+                )
+            # Normalize to int
+            result.data["PV"] = pv_int
+        except (ValueError, TypeError):
+            return ParseResult(
                 success=False,
                 data=None,
+                error=f"Invalid PV value: {pv_value}. Expected 0, 1, or 2.",
                 raw_response=response
             )
     
