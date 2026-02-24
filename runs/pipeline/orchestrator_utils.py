@@ -33,6 +33,7 @@ class GoalResult:
     success: bool
     trials: List[TrialResult]
     knowledge_update: Optional[Dict[str, Any]] = None
+    error_message: Optional[str] = None  # Error message if goal was skipped due to error
     timestamp: str = ""
     
     def __post_init__(self):
@@ -84,7 +85,7 @@ class ResultStorage:
         # Save main results
         results_data = {}
         for goal_id, result in self.results.items():
-            results_data[goal_id] = {
+            goal_data = {
                 "goal": result.goal_text,
                 "success": result.success,
                 "timestamp": result.timestamp,
@@ -102,6 +103,12 @@ class ResultStorage:
                 ],
                 "knowledge_update": result.knowledge_update
             }
+            # Add error message if present (for skipped goals)
+            if result.error_message:
+                goal_data["error_message"] = result.error_message
+                goal_data["skipped"] = True
+            
+            results_data[goal_id] = goal_data
         
         with open(self.results_path, 'w') as f:
             json.dump(results_data, f, indent=2)

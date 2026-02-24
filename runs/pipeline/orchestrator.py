@@ -186,16 +186,51 @@ class PipelineOrchestrator:
         
         logger.info(f"Processing {len(goals)} goals")
         
-        # Process each goal
+        # Statistics tracking
+        self.stats = {
+            "total_goals": len(goals),
+            "completed_goals": 0,
+            "skipped_goals": 0,
+            "judge_fallback_count": 0,
+            "skipped_goal_ids": []
+        }
+        
+        # Process each goal with error handling
         for idx, goal_text in enumerate(goals):
             goal_id = f"goal_{idx + 1:03d}"
             logger.info(f"\n{'='*60}")
             logger.info(f"📎 Processing {goal_id}: {goal_text[:80]}...")
             
-            result = self._process_goal(goal_id, goal_text)
-            self.storage.add_goal_result(result)
-            
-            logger.info(f"✅ {goal_id} complete: success={result.success}")
+            try:
+                result = self._process_goal(goal_id, goal_text)
+                self.storage.add_goal_result(result)
+                self.stats["completed_goals"] += 1
+                
+                # Count judge fallback usage in this goal's results
+                for trial in result.trials:
+                    for turn in trial.turns:
+                        if turn.get("judge_evaluation", {}).get("used_fallback", False):
+                            self.stats["judge_fallback_count"] += 1
+                
+                logger.info(f"✅ {goal_id} complete: success={result.success}")
+                
+            except Exception as e:
+                logger.error(f"❌ {goal_id} FAILED with error: {e}")
+                logger.error(f"   Skipping goal and continuing to next...")
+                self.stats["skipped_goals"] += 1
+                self.stats["skipped_goal_ids"].append(goal_id)
+                
+                # Create a failed result placeholder
+                failed_result = GoalResult(
+                    goal_id=goal_id,
+                    goal_text=goal_text,
+                    success=False,
+                    trials=[],
+                    knowledge_update=None,
+                    error_message=str(e)
+                )
+                self.storage.add_goal_result(failed_result)
+                continue  # Skip to next goal
         
         # End-of-run tactic generalization
         if self.enable_generalization and self.generalization_module:
@@ -305,17 +340,22 @@ class PipelineOrchestrator:
             judge_result = self.judge.evaluate_turn(attacker_prompt, target_response, goal)
             pv = judge_result["violation_intensity"]
             
-            # Store turn data
+            # Store turn data (including fallback flag for tracking)
             turn_data = {
                 "turn": turn_num + 1,
                 "attacker_prompt": attacker_prompt,
                 "target_response": target_response,
                 "judge_evaluation": {
                     "violation_intensity": pv,
-                    "reasoning": judge_result["reasoning"]
+                    "reasoning": judge_result["reasoning"],
+                    "used_fallback": judge_result.get("used_fallback", False)
                 }
             }
             turns_data.append(turn_data)
+            
+            # Log if fallback was used
+            if judge_result.get("used_fallback", False):
+                logger.warning(f"    ⚠️ Judge used FALLBACK extraction for this turn")
             
             logger.info(f"    PV={pv}")
             
@@ -391,10 +431,31 @@ class PipelineOrchestrator:
         logger.info("\n" + "="*60)
         logger.info("🎉 PIPELINE COMPLETE!")
         logger.info(f"📈 Success Rate: {rate:.1f}% ({successes}/{total})")
+        logger.info(f"📊 Goals: {self.stats['completed_goals']} completed, {self.stats['skipped_goals']} skipped")
+        
+        # Log fallback statistics
+        if self.stats["judge_fallback_count"] > 0:
+            logger.warning(f"⚠️  Judge fallback used: {self.stats['judge_fallback_count']} times (check results for 'used_fallback: true')")
+        else:
+            logger.info(f"✓  Judge fallback: 0 times (all parsing successful)")
+        
+        # Log skipped goals if any
+        if self.stats["skipped_goal_ids"]:
+            logger.warning(f"⚠️  Skipped goals: {', '.join(self.stats['skipped_goal_ids'])}")
         
         if self.enable_gala and self.gala_module:
             stats = self.gala_module.get_learning_statistics()
             logger.info(f"🧠 GALA Stats: {stats['learned_tactics_count']} tactics learned")
+        
+        # Save statistics to file
+        stats_path = get_config_value(self.config, 'output', 'results_path', default='pipeline_results.json')
+        stats_file = stats_path.replace('.json', '_stats.json')
+        try:
+            with open(stats_file, 'w') as f:
+                json.dump(self.stats, f, indent=2)
+            logger.info(f"📄 Statistics saved to: {stats_file}")
+        except Exception as e:
+            logger.warning(f"Failed to save statistics: {e}")
 
 
 def main(config):
