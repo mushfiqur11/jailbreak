@@ -6,15 +6,15 @@
 #SBATCH --qos=gpu
 #SBATCH --output=/scratch/%u/jailbreaking_repos/outputs/hf_short_test_%j.out
 #SBATCH --error=/scratch/%u/jailbreaking_repos/outputs/hf_short_test_%j.err
-#SBATCH --mail-type=END,FAIL
+#SBATCH --mail-type=FAIL
 #SBATCH --mail-user=mrahma45@gmu.edu
 
 # Reduced resources for short test (5 samples only)
-#SBATCH --mem=120GB
-#SBATCH --time=0-04:00:00  # 4 hours (should be plenty for 5 samples)
+#SBATCH --mem=100GB
+#SBATCH --time=0-04:00  # 4 hours (should be plenty for 5 samples)
 
-#SBATCH --cpus-per-task=4
-#SBATCH --ntasks=1
+#SBATCH --cpus-per-task 1
+#SBATCH --ntasks 1
 #SBATCH --gres=gpu:A100.80gb:1
 
 ## Load modules
@@ -22,11 +22,12 @@ set echo
 umask 0022 
 
 module load gnu10
-module load cuda/12.1
 
 ## Setup environment
 cd /scratch/mrahma45/jailbreaking_repos/
 source venv_jailbreak/bin/activate
+
+pip install -r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt
 
 ## Create output directory if it doesn't exist
 mkdir -p /scratch/mrahma45/jailbreaking_repos/outputs
