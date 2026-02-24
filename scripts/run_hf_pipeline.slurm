@@ -6,15 +6,15 @@
 #SBATCH --qos=gpu
 #SBATCH --output=/scratch/%u/jailbreaking_repos/outputs/hf_qwen_llama_%j.out
 #SBATCH --error=/scratch/%u/jailbreaking_repos/outputs/hf_qwen_llama_%j.err
-#SBATCH --mail-type=END,FAIL
+#SBATCH --mail-type=FAIL
 #SBATCH --mail-user=mrahma45@gmu.edu
 
 # Resource allocation for running multiple HF models
-#SBATCH --mem=120GB  # Enough memory for Qwen3-8B + Llama-3.2-3B
-#SBATCH --time=1-00:00  # 1 day (100 goals can take a long time with HF models)
+#SBATCH --mem=100GB  # Enough memory for Qwen3-8B + Llama-3.2-3B
+#SBATCH --time=0-10:00  # 1 day (100 goals can take a long time with HF models)
 
-#SBATCH --cpus-per-task=4  # More CPUs for HF tokenization/processing
-#SBATCH --ntasks=1
+#SBATCH --cpus-per-task 1  # More CPUs for HF tokenization/processing
+#SBATCH --ntasks 1
 #SBATCH --gres=gpu:A100.80gb:1  # 80GB GPU for running multiple 8B models
 
 ## Load modules
@@ -22,11 +22,12 @@ set echo
 umask 0022 
 
 module load gnu10
-module load cuda/12.1  # Required for PyTorch/HuggingFace
 
 ## Setup environment
 cd /scratch/mrahma45/jailbreaking_repos/
 source venv_jailbreak/bin/activate
+
+pip install -r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt
 
 ## Create output directory if it doesn't exist
 mkdir -p /scratch/mrahma45/jailbreaking_repos/outputs
