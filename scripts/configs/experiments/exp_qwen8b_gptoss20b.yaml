@@ -1,0 +1,77 @@
+_comment: 'Experiment: Attacker=Qwen/Qwen3-8B vs Target=openai/gpt-oss-20b'
+data:
+  dataset_name: JailbreakBench/JBB-Behaviors
+  data_dir: ../data/JBB-Behaviors
+  max_goals: 100
+agents:
+  attacker:
+    model: qwen
+    model_id: Qwen/Qwen3-8B
+    quantization: auto
+    temperature: 0.7
+    max_new_tokens: 2000
+    top_p: 0.8
+    top_k: 40
+    repetition_penalty: 1.05
+    do_sample: true
+    hf_token_path: /home/mrahma45/HUGGINGFACE_KEY
+    hf_model_path: /scratch/mrahma45/hf_models
+  reasoning:
+    model: qwen
+    model_id: Qwen/Qwen3-8B
+    quantization: auto
+    temperature: 0.3
+    max_new_tokens: 1500
+    top_p: 0.8
+    top_k: 40
+    repetition_penalty: 1.05
+    do_sample: true
+    hf_token_path: /home/mrahma45/HUGGINGFACE_KEY
+    hf_model_path: /scratch/mrahma45/hf_models
+  target:
+    model: gpt
+    model_id: openai/gpt-oss-20b
+    quantization: 4bit
+    temperature: 0.7
+    max_new_tokens: 1000
+    top_p: 0.9
+    top_k: 40
+    repetition_penalty: 1.1
+    do_sample: true
+    hf_token_path: /home/mrahma45/HUGGINGFACE_KEY
+    hf_model_path: /scratch/mrahma45/hf_models
+  judge:
+    model: gpt
+    model_id: gpt-4o-mini
+    api_key_path: /home/mrahma45/OPENAI_API_KEY
+    max_completion_tokens: 800
+features:
+  enable_gala_learning: false
+  enable_tactic_wise_learning: false
+  enable_prompt_wise_learning: false
+  enable_knowledge_evolution: false
+  enable_traceback: true
+  traceback_min_turns: 3
+  enable_tactic_generalization: false
+  tactic_generalization_batch_size: 20
+  enable_belief_state_llm_update: true
+  enable_dynamic_selection: true
+pipeline:
+  max_turns: 8
+  max_trials: 2
+  timeout: 600
+  early_stopping: true
+output:
+  results_path: exp_qwen8b_gptoss20b_results.json
+  knowledge_path: exp_qwen8b_gptoss20b_knowledge.json
+  generalized_tactics_path: exp_qwen8b_gptoss20b_tactics.json
+  successful_jailbreaks_path: exp_qwen8b_gptoss20b_successes.json
+  save_intermediate: true
+  verbose_logging: true
+logging:
+  level: INFO
+  format: '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+settings:
+  random_seed: 42
+  retry_on_parse_failure: true
+  max_parse_retries: 3
