@@ -1,0 +1,173 @@
+LLM Module - Basic Usage Examples
+==================================================
+Llama
+=== Llama Model Example ===
+Applied Qwen small model optimizations
+Loading model: Qwen/Qwen3-0.6B
+Starting Loading Qwen/Qwen3-0.6B...
+🔧 CUDA available: 1 GPUs detected
+🔧 Current GPU: 0 (NVIDIA A100-SXM4-40GB, 39.5GB)
+🔧 Using device_map: cuda:0
+🔧 Model loading config: {'trust_remote_code': True, 'torch_dtype': torch.float16, 'device_map': 'cuda:0'}
+
+==================================================
+🔍 DEVICE PLACEMENT REPORT
+==================================================
+📍 Model device (direct): cuda:0
+📍 Tokenizer: CPU-based (no device attribute)
+🔋 GPU 0 memory: 1.1GB allocated, 1.4GB cached
+==================================================
+
+Loading Qwen/Qwen3-0.6B completed.
+System memory change: 0.19 GB
+NVIDIA A100-SXM4-40GB (gpu_0) memory change: 1.11 GB
+Model loaded successfully: Qwen/Qwen3-0.6B
+Qwen text model initialized: Qwen/Qwen3-0.6B
+System prompt set: You are a helpful AI assistant specialized in cybersecurity....
+Current system prompt: You are a helpful AI assistant specialized in cybe...
+Generating response using conversation history...
+🔍 Forward pass device check:
+   Model device: cuda:0
+   Input device (before): cpu
+⚡ Moving inputs from cpu to cuda:0
+   Input transfer took: 0.000s
+🔢 Input tensor shape: torch.Size([1, 60]), sequence length: 60
+🔋 GPU 0 memory before generation: 1.11GB
+⚡ Generation completed:
+   Time: 12.09s
+   Tokens generated: 352
+   Speed: 29.1 tokens/second
+🔋 GPU 0 memory after generation: 1.12GB (+0.01GB)
+🏁 Total forward pass time: 12.14s
+
+<think>
+Okay, the user asked for an explanation of SQL injection. Let me start by recalling what I know. SQL injection is when malicious code is inserted into a database query to manipulate the data it's trying to retrieve.
+
+I should explain the process clearly. The attacker uses a string or a variable that's part of the SQL statement. For example, if they have a parameter like `username`, they can inject something like `' OR 1=1'` to create a false condition. This allows them to insert invalid SQL code, which can be used to delete, update, or even drop tables.
+
+I need to mention how this works step by step: the attacker manipulates the SQL string, the database engine processes it, and the result is the malicious code. It's important to note that this is a type of code injection, not just any injection method.
+
+Wait, maybe I should include examples to make it more concrete. Like, if a form field is expecting a username, and the input includes a backslash, that's a common case. Also, the potential risks here are unauthorized access or data manipulation.
+
+I should also highlight the importance of proper input validation and using prepared statements to prevent such attacks. That's why developers use things like parameterized queries instead of raw SQL.
+
+Let me check if there's any other aspect I'm missing. Oh right, SQL injection can be done with different types of inputs, like date ranges or boolean values. Emphasizing that attackers can exploit any vulnerable code injection method would be good.
+
+Putting it all together, the explanation should be clear, step-by-step, with examples, and emphasize the impact. Make sure the language is easy to understand and cover all key points without being too technical.
+Generating standalone response...
+🔍 Forward pass device check:
+   Model device: cuda:0
+   Input device (before): cpu
+⚡ Moving inputs from cpu to cuda:0
+   Input transfer took: 0.000s
+🔢 Input tensor shape: torch.Size([1, 27]), sequence length: 27
+🔋 GPU 0 memory before generation: 1.12GB
+⚡ Generation completed:
+   Time: 14.77s
+   Tokens generated: 469
+   Speed: 31.7 tokens/second
+🔋 GPU 0 memory after generation: 1.12GB (+0.00GB)
+🏁 Total forward pass time: 14.78s
+
+<think>
+Okay, the user asked about XSS, which I know is a type of web security vulnerability. Let me start by explaining what it is. I should mention that XSS can be in various forms like injection or stealing session tokens. It's important to note that XSS attacks can be done through scripts, so users need to be cautious with their own code.
+
+I should also cover different types of XSS, such as cross-site scripting (XSS), cross-site request forgery (CSRF), and maybe mention how they work. It's crucial to emphasize that even simple code can lead to XSS if not properly sanitized. Including examples would help clarify, but since I don't have real data, I'll stick to general terms.
+
+Wait, maybe I should add that XSS can be mitigated using techniques like output encoding or using secure HTTP headers. That's good to mention. Also, the user might be a developer or someone managing a website, so providing practical advice would be helpful. I should keep the explanation clear and concise without overwhelming them.
+</think>
+
+**Cross-Site Scripting (XSS)** is a type of **web security vulnerability** that allows an attacker to inject malicious code into a web page, which then executes when the page is viewed by a user's browser. This can be done through **script injection**, **command execution**, or **session stealing**.
+
+### Key Features:
+1. **Intrusion**: Attackers can embed HTML, JavaScript, or other code into a webpage.
+2. **Session Hijacking**: If a session token is leaked, attackers may steal session IDs and hijack user accounts.
+3. **Malicious Execution**: The injected code can run untrusted scripts, leading to data theft, man-in-the-browser (MITM) attacks, or other harmful actions.
+
+### Example:
+```html
+<script>alert("Hello, world!');</script>
+```
+
+### Mitigations:
+- **Output Encoding**: Ensure all user input is properly encoded before outputting.
+- **Secure HTTP Headers**: Use `Content-Security-Policy` or `X-XSS-Block` headers to prevent XSS.
+- **Input Validation**: Validate user inputs to prevent injection attacks.
+
+XSS is one of the most common vulnerabilities, so being aware of its risks and implementing defenses is essential for securing web applications.
+fYou are a helpful AI assistant specialized in cybersecurity.
+Model Info: {'model_id': 'Qwen/Qwen3-0.6B', 'is_loaded': True, 'max_tokens': 512, 'temperature': 0.7, 'conversation_length': 3, 'has_system_prompt': True, 'model_type': 'HuggingFace', 'model_path': '/scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/hf_models/Qwen/Qwen3-0.6B', 'is_quantized': False, 'device_map': 'auto', 'generation_config': {'temperature': 0.7, 'top_p': 0.8, 'top_k': 40, 'repetition_penalty': 1.05, 'do_sample': True, 'max_new_tokens': 512, 'pad_token_id': 151643}, 'hf_token_configured': False, 'cuda_available': True, 'device_count': 1, 'model_loaded': True, 'primary_device': 'cuda:0', 'single_device': True, 'gpu_memory': {'allocated_gb': 1.118910312652588, 'cached_gb': 1.48828125, 'total_gb': 39.4964599609375, 'gpu_name': 'NVIDIA A100-SXM4-40GB'}}
+
+GPT
+
+=== GPT Model Example ===
+Applied GPT-4o model optimizations
+Initializing OpenAI client for model: gpt-4o
+OpenAI client initialized successfully for: gpt-4o
+GPT model initialized: gpt-4o
+System prompt set: You are an expert in AI security research....
+GPT system prompt: You are an expert in AI security research.
+GPT response: Jailbreaking, in the context of AI and particularly language models, involves manipulating the model to bypass its built-in safety features and output content or perform actions that it is typically restricted from doing. Researchers, developers, and malicious actors may use various techniques to achieve this. Here are some common jailbreaking techniques:
+
+1. **Prompt Injection:** This involves crafting a series of inputs or prompts that exploit the model's behavior to generate undesired or restricted outputs. For example, a user might input a cleverly disguised request that tricks the AI into providing sensitive information or performing unauthorized actions.
+
+2. **Role Play or Scenario Manipulation:** This technique leverages the model's ability to simulate roles or scenarios to coax it into producing restricted content. By framing a request in the context of a fictional scenario or role-play, users can sometimes bypass safety filters.
+
+3. **Token Manipulation:** By carefully choosing inputs that exploit the model's tokenization process, users might induce the model to produce outputs it should not. This might involve using unconventional spellings, synonyms, or characters to bypass certain restrictions.
+
+4. **Model Overloading:** Overloading the model with complex or ambiguous input can sometimes cause it to bypass its usual constraints. This might involve using convoluted sentences or layering multiple requests to confuse the model's safety systems.
+
+5. **Adversarial Attacks:** These involve creating inputs specifically designed to exploit vulnerabilities in the model's architecture or training data. Adversarial examples might look benign to humans but are crafted to cause the model to behave unexpectedly.
+
+6. **Contextual Drift:** By providing a series of leading inputs, users can gradually shift the context or tone of the conversation to lead the model into generating restricted content. This is a more subtle technique that involves slowly altering the conversation's direction.
+
+7. **Encoding Tricks:** Sometimes, encoding information in a way that the model interprets differently than intended can bypass restrictions. This might involve using different languages, codes, or hidden messages.
+
+It's important to note that while these techniques can be used to bypass restrictions, they are also valuable tools for security researchers and developers to identify and patch vulnerabilities in AI systems. Ethical considerations are paramount in this field, and responsible disclosure of discovered vulnerabilities is crucial to improving AI safety.
+
+Configuration Management
+
+=== Configuration Management Example ===
+Available configurations: {'llama': ['llama-1b', 'llama-3b', 'llama-8b', 'llama-70b'], 'gpt': ['gpt-3.5-turbo', 'gpt-4o', 'o3-mini'], 'phi': ['phi-3-mini', 'phi-4'], 'qwen': ['qwen-0.5b', 'qwen-1.5b', 'qwen-3b', 'qwen-7b', 'qwen-14b', 'qwen-32b', 'qwen-vl', 'qwen3-vl-4b', 'qwen3-vl-8b'], 'deepseek': ['deepseek-1.5b', 'deepseek-14b', 'deepseek-32b', 'deepseek-70b'], 'aya': ['aya-8b', 'aya-32b'], 'tasks': ['jailbreaking', 'reasoning', 'creative', 'analytical']}
+Llama 3B config: {'hf_token_path': './tokens/hf_token.txt', 'api_key_path': './tokens/openai_key.txt', 'temperature': 0.7, 'max_new_tokens': 512, 'top_p': 0.9, 'quantization': 'none', 'model_id': 'meta-llama/Llama-3.2-3B-Instruct'}
+Memory-efficient config: {'hf_token_path': './tokens/hf_token.txt', 'api_key_path': './tokens/openai_key.txt', 'temperature': 0.7, 'max_new_tokens': 512, 'top_p': 0.9, 'quantization': '8bit', 'model_id': 'meta-llama/Llama-3.2-3B-Instruct', 'max_tokens': 512}
+Warning: hf_token_path file not found: ./tokens/hf_token.txt
+Warning: api_key_path file not found: ./tokens/openai_key.txt
+Config via manager: {'hf_token_path': './tokens/hf_token.txt', 'api_key_path': './tokens/openai_key.txt', 'temperature': 0.7, 'max_new_tokens': 512, 'top_p': 0.9, 'quantization': 'none', 'model_id': 'meta-llama/Llama-3.2-3B-Instruct'}
+
+=== Conversation Management Example ===
+Conversation stats: {'conversation_id': '7d09a371-e377-46bd-a027-41c8a47e99de', 'total_messages': 3, 'role_distribution': {'system': 1, 'user': 1, 'assistant': 1}, 'estimated_tokens': 21, 'duration_seconds': 5.6e-05, 'created_at': '2025-11-13T02:33:25.285625', 'updated_at': '2025-11-13T02:33:25.285681', 'has_system_prompt': True}
+Messages for API: [{'role': 'system', 'content': 'You are a security researcher.'}, {'role': 'user', 'content': 'What is a buffer overflow?'}, {'role': 'assistant', 'content': 'A buffer overflow occurs when...'}]
+Training format: [{'instruction': 'What is a buffer overflow?', 'input': '', 'output': 'A buffer overflow occurs when...', 'system': 'You are a security researcher.'}]
+
+=== Model Utilities Example ===
+Model validation: {'valid': True, 'model_id': 'meta-llama/Llama-3.2-3B-Instruct', 'family': 'llama', 'size': '3b', 'is_openai': False, 'is_huggingface': True, 'provider': 'huggingface'}
+Model family: phi, size: 3b
+System info: GPU available: True
+Cleaned text: 'This is a sample text with multiple spaces and
+extra newlines.'
+Estimated tokens: 7
+
+=== Quantization Features Example ===
+Recommended quantization for 70B model: QuantizationMode.INT4_BNB
+Memory usage: {'base_size_gb': 14.0, 'quantized_size_gb': 3.5, 'reduction_factor': 0.25, 'memory_saved_gb': 10.5, 'memory_saved_percent': 75.0, 'quantization_mode': '4bit'}
+Memory requirements: {'model_id': 'meta-llama/Llama-3.2-7B-Instruct', 'quantization_mode': '4bit', 'required_memory_gb': 3.5, 'available_system_gb': 882.4973831176758, 'available_gpu_gb': 39.488525390625, 'recommended_device': 'cuda', 'memory_ratio': 11.282435825892858, 'is_sufficient': True, 'needs_warning': False, 'suggestions': []}
+
+=== LoRA Configuration Example ===
+LoRA config: {'r': 16, 'lora_alpha': 32, 'lora_dropout': 0.05, 'target_modules': ['q_proj', 'v_proj', 'k_proj', 'o_proj', 'gate_proj', 'down_proj', 'up_proj'], 'task_type': 'CAUSAL_LM', 'fan_in_fan_out': False, 'bias': 'none', 'use_rslora': False, 'use_dora': False, 'init_lora_weights': True, 'revision': 'main'}
+Parameter info: {'rank': 16, 'target_modules': 7, 'estimated_trainable_params': 917504, 'estimated_memory_mb': 3.5}
+Compatibility: {'supports_quantization': True, 'supports_gradient_checkpointing': True, 'supports_mixed_precision': True, 'memory_efficient': True, 'recommended_batch_size': 5, 'requires_peft': True, 'requires_transformers_version': '>=4.21.0'}
+
+==================================================
+All examples completed successfully!
+
+Key Features Demonstrated:
+✓ Explicit model imports (from llm_module.models import Llama)
+✓ Configuration-based initialization (llm = Llama(config))
+✓ System prompt management (llm.set_system_prompt())
+✓ Message and conversation management
+✓ Dual forward modes (with/without conversation state)
+✓ Quantization support for memory efficiency
+✓ Future LoRA fine-tuning framework
+✓ Comprehensive configuration management
+✓ Conversation utilities and analytics

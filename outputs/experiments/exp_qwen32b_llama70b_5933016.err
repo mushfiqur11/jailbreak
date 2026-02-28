@@ -1,0 +1,73 @@
+
+Lmod is automatically replacing "gnu9/9.3.0" with "gnu10/10.3.0-ya".
+
+
+Inactive Modules:
+  1) hwloc/2.1.0     2) libfabric     3) ucx
+
+The following have been reloaded with a version change:
+  1) openmpi4/4.0.4 => openmpi4/4.1.2-4a
+
+/scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages/transformers/utils/hub.py:110: FutureWarning: Using `TRANSFORMERS_CACHE` is deprecated and will be removed in v5 of Transformers. Use `HF_HOME` instead.
+  warnings.warn(
+2026-02-24 22:37:26,167 - __main__ - INFO - Initializing agents...
+2026-02-24 22:37:26,168 - jailbreak.agentic_module.agents.attacker - INFO - Initializing AttackerAgent
+`torch_dtype` is deprecated! Use `dtype` instead!
+2026-02-24 22:37:30,264 - accelerate.utils.modeling - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+Loading checkpoint shards:   0%|          | 0/17 [00:00<?, ?it/s]Loading checkpoint shards:   6%|▌         | 1/17 [00:06<01:41,  6.32s/it]Loading checkpoint shards:  12%|█▏        | 2/17 [00:12<01:34,  6.32s/it]Loading checkpoint shards:  18%|█▊        | 3/17 [00:20<01:39,  7.14s/it]Loading checkpoint shards:  24%|██▎       | 4/17 [00:27<01:29,  6.85s/it]Loading checkpoint shards:  29%|██▉       | 5/17 [00:32<01:15,  6.25s/it]Loading checkpoint shards:  35%|███▌      | 6/17 [00:38<01:07,  6.14s/it]Loading checkpoint shards:  41%|████      | 7/17 [00:43<00:59,  5.96s/it]Loading checkpoint shards:  47%|████▋     | 8/17 [00:49<00:52,  5.81s/it]Loading checkpoint shards:  53%|█████▎    | 9/17 [00:55<00:46,  5.77s/it]Loading checkpoint shards:  59%|█████▉    | 10/17 [01:01<00:41,  5.97s/it]Loading checkpoint shards:  65%|██████▍   | 11/17 [01:07<00:35,  5.93s/it]Loading checkpoint shards:  71%|███████   | 12/17 [01:14<00:31,  6.29s/it]Loading checkpoint shards:  76%|███████▋  | 13/17 [01:21<00:26,  6.51s/it]Loading checkpoint shards:  82%|████████▏ | 14/17 [01:30<00:21,  7.25s/it]Loading checkpoint shards:  88%|████████▊ | 15/17 [01:38<00:14,  7.41s/it]Loading checkpoint shards:  94%|█████████▍| 16/17 [01:46<00:07,  7.55s/it]Loading checkpoint shards: 100%|██████████| 17/17 [01:51<00:00,  6.85s/it]Loading checkpoint shards: 100%|██████████| 17/17 [01:51<00:00,  6.55s/it]
+2026-02-24 22:39:21,814 - jailbreak.agentic_module.agents.attacker - INFO - Successfully created attacker LLM: QwenText(model_id=Qwen/Qwen3-32B, loaded=True)
+2026-02-24 22:39:22,607 - accelerate.utils.modeling - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+Loading checkpoint shards:   0%|          | 0/17 [00:00<?, ?it/s]Loading checkpoint shards:   6%|▌         | 1/17 [00:05<01:35,  5.97s/it]Loading checkpoint shards:  12%|█▏        | 2/17 [00:14<01:49,  7.30s/it]Loading checkpoint shards:  18%|█▊        | 3/17 [00:23<01:56,  8.29s/it]Loading checkpoint shards:  24%|██▎       | 4/17 [00:30<01:39,  7.63s/it]Loading checkpoint shards:  29%|██▉       | 5/17 [00:33<01:12,  6.02s/it]Loading checkpoint shards:  35%|███▌      | 6/17 [00:36<00:55,  5.06s/it]Loading checkpoint shards:  41%|████      | 7/17 [00:39<00:43,  4.31s/it]Loading checkpoint shards:  47%|████▋     | 8/17 [00:42<00:35,  3.90s/it]Loading checkpoint shards:  53%|█████▎    | 9/17 [00:45<00:28,  3.54s/it]Loading checkpoint shards:  59%|█████▉    | 10/17 [00:47<00:23,  3.31s/it]Loading checkpoint shards:  65%|██████▍   | 11/17 [00:51<00:20,  3.39s/it]Loading checkpoint shards:  71%|███████   | 12/17 [00:54<00:16,  3.22s/it]Loading checkpoint shards:  76%|███████▋  | 13/17 [00:57<00:12,  3.10s/it]Loading checkpoint shards:  82%|████████▏ | 14/17 [01:00<00:09,  3.01s/it]Loading checkpoint shards:  88%|████████▊ | 15/17 [01:03<00:06,  3.01s/it]Loading checkpoint shards:  94%|█████████▍| 16/17 [01:06<00:03,  3.13s/it]Loading checkpoint shards: 100%|██████████| 17/17 [01:07<00:00,  2.63s/it]Loading checkpoint shards: 100%|██████████| 17/17 [01:07<00:00,  3.99s/it]
+2026-02-24 22:40:30,736 - jailbreak.agentic_module.agents.attacker - INFO - Successfully created reasoning LLM: QwenText(model_id=Qwen/Qwen3-32B, loaded=True)
+2026-02-24 22:40:30,746 - jailbreak.agentic_module.agents.utils - INFO - Successfully loaded tactics from /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/runs/pipeline/../../jailbreak/agentic_module/agents/initial_tactics.json
+2026-02-24 22:40:30,746 - jailbreak.agentic_module.agents.attacker - INFO - KnowledgeBase initialized with 6 tactics
+2026-02-24 22:40:30,746 - jailbreak.agentic_module.agents.attacker - INFO - AttackerAgent initialized successfully
+2026-02-24 22:40:30,746 - __main__ - INFO - AttackerAgent initialized
+2026-02-24 22:40:30,746 - jailbreak.agentic_module.agents.target - INFO - Initializing TargetAgent
+2026-02-24 22:40:31,752 - accelerate.utils.modeling - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+Loading checkpoint shards:   0%|          | 0/30 [00:00<?, ?it/s]Loading checkpoint shards:   3%|▎         | 1/30 [00:06<03:03,  6.32s/it]Loading checkpoint shards:   7%|▋         | 2/30 [00:16<03:57,  8.48s/it]Loading checkpoint shards:  10%|█         | 3/30 [00:26<04:09,  9.25s/it]Loading checkpoint shards:  13%|█▎        | 4/30 [00:34<03:49,  8.84s/it]Loading checkpoint shards:  17%|█▋        | 5/30 [00:46<04:05,  9.82s/it]Loading checkpoint shards:  20%|██        | 6/30 [00:55<03:54,  9.75s/it]Loading checkpoint shards:  23%|██▎       | 7/30 [01:05<03:43,  9.72s/it]Loading checkpoint shards:  27%|██▋       | 8/30 [01:15<03:36,  9.84s/it]Loading checkpoint shards:  30%|███       | 9/30 [01:23<03:13,  9.23s/it]Loading checkpoint shards:  33%|███▎      | 10/30 [01:32<03:01,  9.05s/it]Loading checkpoint shards:  37%|███▋      | 11/30 [01:41<02:53,  9.14s/it]Loading checkpoint shards:  40%|████      | 12/30 [01:52<02:52,  9.56s/it]Loading checkpoint shards:  43%|████▎     | 13/30 [02:00<02:35,  9.14s/it]Loading checkpoint shards:  47%|████▋     | 14/30 [02:08<02:22,  8.91s/it]Loading checkpoint shards:  50%|█████     | 15/30 [02:17<02:11,  8.76s/it]Loading checkpoint shards:  53%|█████▎    | 16/30 [02:30<02:21, 10.11s/it]Loading checkpoint shards:  57%|█████▋    | 17/30 [02:40<02:13, 10.25s/it]Loading checkpoint shards:  60%|██████    | 18/30 [02:51<02:02, 10.25s/it]Loading checkpoint shards:  63%|██████▎   | 19/30 [03:05<02:05, 11.40s/it]Loading checkpoint shards:  67%|██████▋   | 20/30 [03:15<01:51, 11.15s/it]Loading checkpoint shards:  70%|███████   | 21/30 [03:26<01:40, 11.17s/it]Loading checkpoint shards:  73%|███████▎  | 22/30 [03:38<01:29, 11.16s/it]Loading checkpoint shards:  77%|███████▋  | 23/30 [03:48<01:17, 11.01s/it]Loading checkpoint shards:  80%|████████  | 24/30 [03:59<01:06, 11.00s/it]Loading checkpoint shards:  83%|████████▎ | 25/30 [04:12<00:57, 11.50s/it]Loading checkpoint shards:  87%|████████▋ | 26/30 [04:22<00:44, 11.15s/it]Loading checkpoint shards:  90%|█████████ | 27/30 [04:35<00:34, 11.50s/it]Loading checkpoint shards:  93%|█████████▎| 28/30 [04:47<00:23, 11.90s/it]Loading checkpoint shards:  97%|█████████▋| 29/30 [04:59<00:11, 11.82s/it]Loading checkpoint shards: 100%|██████████| 30/30 [05:03<00:00,  9.54s/it]Loading checkpoint shards: 100%|██████████| 30/30 [05:03<00:00, 10.12s/it]
+2026-02-24 22:45:35,738 - jailbreak.agentic_module.agents.target - INFO - Successfully created target LLM: Llama(model_id=meta-llama/Llama-3.3-70B-Instruct, loaded=True)
+2026-02-24 22:45:35,738 - jailbreak.agentic_module.agents.target - INFO - Safety prompt set successfully
+2026-02-24 22:45:35,738 - jailbreak.agentic_module.agents.target - INFO - TargetAgent initialized successfully
+2026-02-24 22:45:35,738 - __main__ - INFO - TargetAgent initialized
+2026-02-24 22:45:35,738 - jailbreak.agentic_module.agents.judge - INFO - Initializing JudgeAgent
+2026-02-24 22:45:35,867 - jailbreak.agentic_module.agents.judge - INFO - Successfully created judge LLM: GPT(model_id=gpt-4o-mini, loaded=True)
+2026-02-24 22:45:35,867 - jailbreak.agentic_module.agents.judge - INFO - Judge policy prompt set successfully
+2026-02-24 22:45:35,867 - jailbreak.agentic_module.agents.judge - INFO - JudgeAgent initialized successfully
+2026-02-24 22:45:35,867 - __main__ - INFO - JudgeAgent initialized
+2026-02-24 22:45:35,867 - jailbreak.agentic_module.agents.reasoning_agent - INFO - Initializing ReasoningAgent
+2026-02-24 22:45:36,719 - accelerate.utils.modeling - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+Traceback (most recent call last):
+  File "/scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/runs/pipeline/orchestrator.py", line 476, in <module>
+    main(config)
+  File "/scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/runs/pipeline/orchestrator.py", line 463, in main
+    orchestrator = PipelineOrchestrator(config)
+  File "/scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/runs/pipeline/orchestrator.py", line 83, in __init__
+    self._initialize_agents()
+  File "/scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/runs/pipeline/orchestrator.py", line 122, in _initialize_agents
+    self.reasoning = ReasoningAgent(reasoning_config=reasoning_config)
+  File "/scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/runs/pipeline/../../jailbreak/agentic_module/agents/reasoning_agent.py", line 46, in __init__
+    self.reasoning_llm = llm_model_factory(reasoning_config)
+  File "/scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/runs/pipeline/../../jailbreak/llm_module/model_factory.py", line 66, in llm_model_factory
+    return Qwen(config)
+  File "/scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/runs/pipeline/../../jailbreak/llm_module/models/qwen.py", line 34, in Qwen
+    return QwenText(config)
+  File "/scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/runs/pipeline/../../jailbreak/llm_module/models/qwen.py", line 167, in __init__
+    super().__init__(config)
+  File "/scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/runs/pipeline/../../jailbreak/llm_module/base/hf_base.py", line 58, in __init__
+    self._load_model()
+  File "/scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/runs/pipeline/../../jailbreak/llm_module/base/hf_base.py", line 117, in _load_model
+    self._load_model_weights()
+  File "/scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/runs/pipeline/../../jailbreak/llm_module/base/hf_base.py", line 228, in _load_model_weights
+    self.model = AutoModelForCausalLM.from_pretrained(
+  File "/scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages/transformers/models/auto/auto_factory.py", line 604, in from_pretrained
+    return model_class.from_pretrained(
+  File "/scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages/transformers/modeling_utils.py", line 277, in _wrapper
+    return func(*args, **kwargs)
+  File "/scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages/transformers/modeling_utils.py", line 5029, in from_pretrained
+    device_map = _get_device_map(model, device_map, max_memory, hf_quantizer, dtype, keep_in_fp32_regex)
+  File "/scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages/transformers/modeling_utils.py", line 1365, in _get_device_map
+    hf_quantizer.validate_environment(device_map=device_map)
+  File "/scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages/transformers/quantizers/quantizer_bnb_4bit.py", line 127, in validate_environment
+    raise ValueError(
+ValueError: Some modules are dispatched on the CPU or the disk. Make sure you have enough GPU RAM to fit the quantized model. If you want to dispatch the model on the CPU or the disk while keeping these modules in 32-bit, you need to set `llm_int8_enable_fp32_cpu_offload=True` and pass a custom `device_map` to `from_pretrained`. Check https://huggingface.co/docs/transformers/main/en/main_classes/quantization#offload-between-cpu-and-gpu for more details. 

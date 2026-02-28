@@ -1,0 +1,55 @@
+
+Lmod is automatically replacing "gnu9/9.3.0" with "gnu10/10.3.0-ya".
+
+
+Inactive Modules:
+  1) hwloc/2.1.0     2) libfabric     3) ucx
+
+The following have been reloaded with a version change:
+  1) openmpi4/4.0.4 => openmpi4/4.1.2-4a
+
+/scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages/transformers/utils/hub.py:110: FutureWarning: Using `TRANSFORMERS_CACHE` is deprecated and will be removed in v5 of Transformers. Use `HF_HOME` instead.
+  warnings.warn(
+2026-02-25 07:14:12,146 - __main__ - INFO - Initializing agents...
+2026-02-25 07:14:12,147 - jailbreak.agentic_module.agents.attacker - INFO - Initializing AttackerAgent
+`torch_dtype` is deprecated! Use `dtype` instead!
+2026-02-25 07:14:16,170 - accelerate.utils.modeling - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+Loading checkpoint shards:   0%|          | 0/17 [00:00<?, ?it/s]Loading checkpoint shards:   6%|▌         | 1/17 [00:07<01:58,  7.38s/it]Loading checkpoint shards:  12%|█▏        | 2/17 [00:13<01:39,  6.62s/it]Loading checkpoint shards:  18%|█▊        | 3/17 [00:19<01:28,  6.30s/it]Loading checkpoint shards:  24%|██▎       | 4/17 [00:25<01:20,  6.17s/it]Loading checkpoint shards:  29%|██▉       | 5/17 [00:30<01:08,  5.75s/it]Loading checkpoint shards:  35%|███▌      | 6/17 [00:35<01:00,  5.54s/it]Loading checkpoint shards:  41%|████      | 7/17 [00:42<01:01,  6.12s/it]Loading checkpoint shards:  47%|████▋     | 8/17 [00:50<00:58,  6.50s/it]Loading checkpoint shards:  53%|█████▎    | 9/17 [00:56<00:50,  6.35s/it]Loading checkpoint shards:  59%|█████▉    | 10/17 [01:01<00:42,  6.11s/it]Loading checkpoint shards:  65%|██████▍   | 11/17 [01:08<00:38,  6.36s/it]Loading checkpoint shards:  71%|███████   | 12/17 [01:15<00:32,  6.40s/it]Loading checkpoint shards:  76%|███████▋  | 13/17 [01:22<00:26,  6.58s/it]Loading checkpoint shards:  82%|████████▏ | 14/17 [01:29<00:20,  6.79s/it]Loading checkpoint shards:  88%|████████▊ | 15/17 [01:34<00:12,  6.31s/it]Loading checkpoint shards:  94%|█████████▍| 16/17 [01:41<00:06,  6.42s/it]Loading checkpoint shards: 100%|██████████| 17/17 [01:46<00:00,  6.21s/it]Loading checkpoint shards: 100%|██████████| 17/17 [01:46<00:00,  6.29s/it]
+2026-02-25 07:16:03,439 - jailbreak.agentic_module.agents.attacker - INFO - Successfully created attacker LLM: QwenText(model_id=Qwen/Qwen3-32B, loaded=True)
+2026-02-25 07:16:04,209 - accelerate.utils.modeling - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+Loading checkpoint shards:   0%|          | 0/17 [00:00<?, ?it/s]Loading checkpoint shards:   6%|▌         | 1/17 [00:02<00:32,  2.04s/it]Loading checkpoint shards:  12%|█▏        | 2/17 [00:04<00:38,  2.57s/it]Loading checkpoint shards:  18%|█▊        | 3/17 [00:07<00:38,  2.73s/it]Loading checkpoint shards:  24%|██▎       | 4/17 [00:10<00:36,  2.81s/it]Loading checkpoint shards:  29%|██▉       | 5/17 [00:13<00:34,  2.83s/it]Loading checkpoint shards:  35%|███▌      | 6/17 [00:16<00:31,  2.84s/it]Loading checkpoint shards:  41%|████      | 7/17 [00:19<00:28,  2.83s/it]Loading checkpoint shards:  47%|████▋     | 8/17 [00:22<00:25,  2.85s/it]Loading checkpoint shards:  53%|█████▎    | 9/17 [00:25<00:22,  2.86s/it]Loading checkpoint shards:  59%|█████▉    | 10/17 [00:27<00:19,  2.85s/it]Loading checkpoint shards:  65%|██████▍   | 11/17 [00:30<00:17,  2.89s/it]Loading checkpoint shards:  71%|███████   | 12/17 [00:33<00:14,  2.87s/it]Loading checkpoint shards:  76%|███████▋  | 13/17 [00:36<00:11,  2.88s/it]Loading checkpoint shards:  82%|████████▏ | 14/17 [00:39<00:08,  2.90s/it]Loading checkpoint shards:  88%|████████▊ | 15/17 [00:42<00:05,  2.89s/it]Loading checkpoint shards:  94%|█████████▍| 16/17 [00:45<00:02,  2.88s/it]Loading checkpoint shards: 100%|██████████| 17/17 [00:46<00:00,  2.44s/it]Loading checkpoint shards: 100%|██████████| 17/17 [00:46<00:00,  2.75s/it]
+2026-02-25 07:16:51,207 - jailbreak.agentic_module.agents.attacker - INFO - Successfully created reasoning LLM: QwenText(model_id=Qwen/Qwen3-32B, loaded=True)
+2026-02-25 07:16:51,224 - jailbreak.agentic_module.agents.utils - INFO - Successfully loaded tactics from /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/runs/pipeline/../../jailbreak/agentic_module/agents/initial_tactics.json
+2026-02-25 07:16:51,224 - jailbreak.agentic_module.agents.attacker - INFO - KnowledgeBase initialized with 6 tactics
+2026-02-25 07:16:51,224 - jailbreak.agentic_module.agents.attacker - INFO - AttackerAgent initialized successfully
+2026-02-25 07:16:51,225 - __main__ - INFO - AttackerAgent initialized
+2026-02-25 07:16:51,225 - jailbreak.agentic_module.agents.target - INFO - Initializing TargetAgent
+2026-02-25 07:16:51,225 - jailbreak.agentic_module.agents.target - ERROR - Failed to create target LLM: OpenAI API key not found. Please provide it via:
+1. 'api_key' in config
+2. 'api_key_path' file path in config
+3. OPENAI_API_KEY environment variable
+Traceback (most recent call last):
+  File "/scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/runs/pipeline/orchestrator.py", line 476, in <module>
+    main(config)
+  File "/scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/runs/pipeline/orchestrator.py", line 463, in main
+    orchestrator = PipelineOrchestrator(config)
+  File "/scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/runs/pipeline/orchestrator.py", line 83, in __init__
+    self._initialize_agents()
+  File "/scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/runs/pipeline/orchestrator.py", line 114, in _initialize_agents
+    self.target = TargetAgent(target_config=target_config)
+  File "/scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/runs/pipeline/../../jailbreak/agentic_module/agents/target.py", line 36, in __init__
+    self.target_llm = llm_model_factory(target_config)
+  File "/scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/runs/pipeline/../../jailbreak/llm_module/model_factory.py", line 58, in llm_model_factory
+    return GPT(config)
+  File "/scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/runs/pipeline/../../jailbreak/llm_module/models/gpt.py", line 55, in __init__
+    super().__init__(config)
+  File "/scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/runs/pipeline/../../jailbreak/llm_module/base/openai_base.py", line 57, in __init__
+    self._load_model()
+  File "/scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/runs/pipeline/../../jailbreak/llm_module/base/openai_base.py", line 67, in _load_model
+    self._load_api_key()
+  File "/scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/runs/pipeline/../../jailbreak/llm_module/base/openai_base.py", line 109, in _load_api_key
+    raise ValueError(
+ValueError: OpenAI API key not found. Please provide it via:
+1. 'api_key' in config
+2. 'api_key_path' file path in config
+3. OPENAI_API_KEY environment variable

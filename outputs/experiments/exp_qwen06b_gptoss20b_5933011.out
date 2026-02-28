@@ -1,0 +1,151 @@
+Requirement already satisfied: torch>=2.0.0 in ./venv_jailbreak/lib/python3.9/site-packages (from -r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 3)) (2.7.1+cu118)
+Requirement already satisfied: transformers>=4.35.0 in ./venv_jailbreak/lib/python3.9/site-packages (from -r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 4)) (4.57.6)
+Requirement already satisfied: accelerate>=0.24.0 in ./venv_jailbreak/lib/python3.9/site-packages (from -r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 5)) (1.10.1)
+Requirement already satisfied: tokenizers>=0.15.0 in ./venv_jailbreak/lib/python3.9/site-packages (from -r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 6)) (0.22.2)
+Requirement already satisfied: safetensors>=0.4.0 in ./venv_jailbreak/lib/python3.9/site-packages (from -r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 7)) (0.7.0)
+Requirement already satisfied: openai>=1.3.0 in ./venv_jailbreak/lib/python3.9/site-packages (from -r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 10)) (2.20.0)
+Requirement already satisfied: huggingface_hub>=0.19.0 in ./venv_jailbreak/lib/python3.9/site-packages (from -r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 11)) (0.36.2)
+Requirement already satisfied: bitsandbytes>=0.41.0 in ./venv_jailbreak/lib/python3.9/site-packages (from -r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 14)) (0.48.2)
+Requirement already satisfied: scipy>=1.11.0 in ./venv_jailbreak/lib/python3.9/site-packages (from -r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 15)) (1.13.1)
+Requirement already satisfied: peft>=0.7.0 in ./venv_jailbreak/lib/python3.9/site-packages (from -r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 18)) (0.17.1)
+Requirement already satisfied: psutil>=5.9.0 in ./venv_jailbreak/lib/python3.9/site-packages (from -r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 21)) (7.2.2)
+Requirement already satisfied: numpy>=1.24.0 in ./venv_jailbreak/lib/python3.9/site-packages (from -r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 22)) (2.0.2)
+Requirement already satisfied: tqdm>=4.65.0 in ./venv_jailbreak/lib/python3.9/site-packages (from -r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 23)) (4.67.3)
+Requirement already satisfied: requests>=2.31.0 in ./venv_jailbreak/lib/python3.9/site-packages (from -r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 24)) (2.32.5)
+Requirement already satisfied: nvidia-ml-py3>=7.352.0 in ./venv_jailbreak/lib/python3.9/site-packages (from -r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 27)) (7.352.0)
+Requirement already satisfied: pytest>=7.4.0 in ./venv_jailbreak/lib/python3.9/site-packages (from -r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 30)) (8.4.2)
+Requirement already satisfied: pytest-cov>=4.1.0 in ./venv_jailbreak/lib/python3.9/site-packages (from -r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 31)) (7.0.0)
+Requirement already satisfied: pandas>=2.0.0 in ./venv_jailbreak/lib/python3.9/site-packages (from -r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 34)) (2.3.3)
+Requirement already satisfied: jsonlines>=4.0.0 in ./venv_jailbreak/lib/python3.9/site-packages (from -r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 35)) (4.0.0)
+Requirement already satisfied: pyyaml>=6.0.1 in ./venv_jailbreak/lib/python3.9/site-packages (from -r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 38)) (6.0.3)
+Requirement already satisfied: toml>=0.10.2 in ./venv_jailbreak/lib/python3.9/site-packages (from -r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 39)) (0.10.2)
+Requirement already satisfied: scikit-learn>=1.3.0 in ./venv_jailbreak/lib/python3.9/site-packages (from -r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 42)) (1.6.1)
+Requirement already satisfied: matplotlib>=3.7.0 in ./venv_jailbreak/lib/python3.9/site-packages (from -r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 43)) (3.9.4)
+Requirement already satisfied: seaborn>=0.12.0 in ./venv_jailbreak/lib/python3.9/site-packages (from -r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 44)) (0.13.2)
+Requirement already satisfied: filelock in ./venv_jailbreak/lib/python3.9/site-packages (from torch>=2.0.0->-r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 3)) (3.19.1)
+Requirement already satisfied: typing-extensions>=4.10.0 in ./venv_jailbreak/lib/python3.9/site-packages (from torch>=2.0.0->-r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 3)) (4.15.0)
+Requirement already satisfied: sympy>=1.13.3 in ./venv_jailbreak/lib/python3.9/site-packages (from torch>=2.0.0->-r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 3)) (1.14.0)
+Requirement already satisfied: networkx in ./venv_jailbreak/lib/python3.9/site-packages (from torch>=2.0.0->-r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 3)) (3.2.1)
+Requirement already satisfied: jinja2 in ./venv_jailbreak/lib/python3.9/site-packages (from torch>=2.0.0->-r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 3)) (3.1.6)
+Requirement already satisfied: fsspec in ./venv_jailbreak/lib/python3.9/site-packages (from torch>=2.0.0->-r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 3)) (2025.10.0)
+Requirement already satisfied: nvidia-cuda-nvrtc-cu11==11.8.89 in ./venv_jailbreak/lib/python3.9/site-packages (from torch>=2.0.0->-r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 3)) (11.8.89)
+Requirement already satisfied: nvidia-cuda-runtime-cu11==11.8.89 in ./venv_jailbreak/lib/python3.9/site-packages (from torch>=2.0.0->-r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 3)) (11.8.89)
+Requirement already satisfied: nvidia-cuda-cupti-cu11==11.8.87 in ./venv_jailbreak/lib/python3.9/site-packages (from torch>=2.0.0->-r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 3)) (11.8.87)
+Requirement already satisfied: nvidia-cudnn-cu11==9.1.0.70 in ./venv_jailbreak/lib/python3.9/site-packages (from torch>=2.0.0->-r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 3)) (9.1.0.70)
+Requirement already satisfied: nvidia-cublas-cu11==11.11.3.6 in ./venv_jailbreak/lib/python3.9/site-packages (from torch>=2.0.0->-r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 3)) (11.11.3.6)
+Requirement already satisfied: nvidia-cufft-cu11==10.9.0.58 in ./venv_jailbreak/lib/python3.9/site-packages (from torch>=2.0.0->-r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 3)) (10.9.0.58)
+Requirement already satisfied: nvidia-curand-cu11==10.3.0.86 in ./venv_jailbreak/lib/python3.9/site-packages (from torch>=2.0.0->-r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 3)) (10.3.0.86)
+Requirement already satisfied: nvidia-cusolver-cu11==11.4.1.48 in ./venv_jailbreak/lib/python3.9/site-packages (from torch>=2.0.0->-r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 3)) (11.4.1.48)
+Requirement already satisfied: nvidia-cusparse-cu11==11.7.5.86 in ./venv_jailbreak/lib/python3.9/site-packages (from torch>=2.0.0->-r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 3)) (11.7.5.86)
+Requirement already satisfied: nvidia-nccl-cu11==2.21.5 in ./venv_jailbreak/lib/python3.9/site-packages (from torch>=2.0.0->-r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 3)) (2.21.5)
+Requirement already satisfied: nvidia-nvtx-cu11==11.8.86 in ./venv_jailbreak/lib/python3.9/site-packages (from torch>=2.0.0->-r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 3)) (11.8.86)
+Requirement already satisfied: triton==3.3.1 in ./venv_jailbreak/lib/python3.9/site-packages (from torch>=2.0.0->-r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 3)) (3.3.1)
+Requirement already satisfied: setuptools>=40.8.0 in ./venv_jailbreak/lib/python3.9/site-packages (from triton==3.3.1->torch>=2.0.0->-r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 3)) (58.1.0)
+Requirement already satisfied: packaging>=20.0 in ./venv_jailbreak/lib/python3.9/site-packages (from transformers>=4.35.0->-r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 4)) (26.0)
+Requirement already satisfied: regex!=2019.12.17 in ./venv_jailbreak/lib/python3.9/site-packages (from transformers>=4.35.0->-r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 4)) (2026.1.15)
+Requirement already satisfied: hf-xet<2.0.0,>=1.1.3 in ./venv_jailbreak/lib/python3.9/site-packages (from huggingface_hub>=0.19.0->-r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 11)) (1.2.0)
+Requirement already satisfied: anyio<5,>=3.5.0 in ./venv_jailbreak/lib/python3.9/site-packages (from openai>=1.3.0->-r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 10)) (4.12.1)
+Requirement already satisfied: distro<2,>=1.7.0 in ./venv_jailbreak/lib/python3.9/site-packages (from openai>=1.3.0->-r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 10)) (1.9.0)
+Requirement already satisfied: httpx<1,>=0.23.0 in ./venv_jailbreak/lib/python3.9/site-packages (from openai>=1.3.0->-r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 10)) (0.28.1)
+Requirement already satisfied: jiter<1,>=0.10.0 in ./venv_jailbreak/lib/python3.9/site-packages (from openai>=1.3.0->-r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 10)) (0.13.0)
+Requirement already satisfied: pydantic<3,>=1.9.0 in ./venv_jailbreak/lib/python3.9/site-packages (from openai>=1.3.0->-r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 10)) (2.12.5)
+Requirement already satisfied: sniffio in ./venv_jailbreak/lib/python3.9/site-packages (from openai>=1.3.0->-r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 10)) (1.3.1)
+Requirement already satisfied: exceptiongroup>=1.0.2 in ./venv_jailbreak/lib/python3.9/site-packages (from anyio<5,>=3.5.0->openai>=1.3.0->-r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 10)) (1.3.1)
+Requirement already satisfied: idna>=2.8 in ./venv_jailbreak/lib/python3.9/site-packages (from anyio<5,>=3.5.0->openai>=1.3.0->-r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 10)) (3.11)
+Requirement already satisfied: certifi in ./venv_jailbreak/lib/python3.9/site-packages (from httpx<1,>=0.23.0->openai>=1.3.0->-r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 10)) (2026.1.4)
+Requirement already satisfied: httpcore==1.* in ./venv_jailbreak/lib/python3.9/site-packages (from httpx<1,>=0.23.0->openai>=1.3.0->-r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 10)) (1.0.9)
+Requirement already satisfied: h11>=0.16 in ./venv_jailbreak/lib/python3.9/site-packages (from httpcore==1.*->httpx<1,>=0.23.0->openai>=1.3.0->-r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 10)) (0.16.0)
+Requirement already satisfied: annotated-types>=0.6.0 in ./venv_jailbreak/lib/python3.9/site-packages (from pydantic<3,>=1.9.0->openai>=1.3.0->-r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 10)) (0.7.0)
+Requirement already satisfied: pydantic-core==2.41.5 in ./venv_jailbreak/lib/python3.9/site-packages (from pydantic<3,>=1.9.0->openai>=1.3.0->-r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 10)) (2.41.5)
+Requirement already satisfied: typing-inspection>=0.4.2 in ./venv_jailbreak/lib/python3.9/site-packages (from pydantic<3,>=1.9.0->openai>=1.3.0->-r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 10)) (0.4.2)
+Requirement already satisfied: charset_normalizer<4,>=2 in ./venv_jailbreak/lib/python3.9/site-packages (from requests>=2.31.0->-r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 24)) (3.4.4)
+Requirement already satisfied: urllib3<3,>=1.21.1 in ./venv_jailbreak/lib/python3.9/site-packages (from requests>=2.31.0->-r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 24)) (2.6.3)
+Requirement already satisfied: iniconfig>=1 in ./venv_jailbreak/lib/python3.9/site-packages (from pytest>=7.4.0->-r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 30)) (2.1.0)
+Requirement already satisfied: pluggy<2,>=1.5 in ./venv_jailbreak/lib/python3.9/site-packages (from pytest>=7.4.0->-r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 30)) (1.6.0)
+Requirement already satisfied: pygments>=2.7.2 in ./venv_jailbreak/lib/python3.9/site-packages (from pytest>=7.4.0->-r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 30)) (2.19.2)
+Requirement already satisfied: tomli>=1 in ./venv_jailbreak/lib/python3.9/site-packages (from pytest>=7.4.0->-r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 30)) (2.4.0)
+Requirement already satisfied: coverage>=7.10.6 in ./venv_jailbreak/lib/python3.9/site-packages (from coverage[toml]>=7.10.6->pytest-cov>=4.1.0->-r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 31)) (7.10.7)
+Requirement already satisfied: python-dateutil>=2.8.2 in ./venv_jailbreak/lib/python3.9/site-packages (from pandas>=2.0.0->-r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 34)) (2.9.0.post0)
+Requirement already satisfied: pytz>=2020.1 in ./venv_jailbreak/lib/python3.9/site-packages (from pandas>=2.0.0->-r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 34)) (2025.2)
+Requirement already satisfied: tzdata>=2022.7 in ./venv_jailbreak/lib/python3.9/site-packages (from pandas>=2.0.0->-r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 34)) (2025.3)
+Requirement already satisfied: attrs>=19.2.0 in ./venv_jailbreak/lib/python3.9/site-packages (from jsonlines>=4.0.0->-r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 35)) (25.4.0)
+Requirement already satisfied: joblib>=1.2.0 in ./venv_jailbreak/lib/python3.9/site-packages (from scikit-learn>=1.3.0->-r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 42)) (1.5.3)
+Requirement already satisfied: threadpoolctl>=3.1.0 in ./venv_jailbreak/lib/python3.9/site-packages (from scikit-learn>=1.3.0->-r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 42)) (3.6.0)
+Requirement already satisfied: contourpy>=1.0.1 in ./venv_jailbreak/lib/python3.9/site-packages (from matplotlib>=3.7.0->-r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 43)) (1.3.0)
+Requirement already satisfied: cycler>=0.10 in ./venv_jailbreak/lib/python3.9/site-packages (from matplotlib>=3.7.0->-r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 43)) (0.12.1)
+Requirement already satisfied: fonttools>=4.22.0 in ./venv_jailbreak/lib/python3.9/site-packages (from matplotlib>=3.7.0->-r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 43)) (4.60.2)
+Requirement already satisfied: kiwisolver>=1.3.1 in ./venv_jailbreak/lib/python3.9/site-packages (from matplotlib>=3.7.0->-r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 43)) (1.4.7)
+Requirement already satisfied: pillow>=8 in ./venv_jailbreak/lib/python3.9/site-packages (from matplotlib>=3.7.0->-r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 43)) (11.3.0)
+Requirement already satisfied: pyparsing>=2.3.1 in ./venv_jailbreak/lib/python3.9/site-packages (from matplotlib>=3.7.0->-r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 43)) (3.3.2)
+Requirement already satisfied: importlib-resources>=3.2.0 in ./venv_jailbreak/lib/python3.9/site-packages (from matplotlib>=3.7.0->-r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 43)) (6.5.2)
+Requirement already satisfied: zipp>=3.1.0 in ./venv_jailbreak/lib/python3.9/site-packages (from importlib-resources>=3.2.0->matplotlib>=3.7.0->-r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 43)) (3.23.0)
+Requirement already satisfied: six>=1.5 in ./venv_jailbreak/lib/python3.9/site-packages (from python-dateutil>=2.8.2->pandas>=2.0.0->-r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 34)) (1.17.0)
+Requirement already satisfied: mpmath<1.4,>=1.1.0 in ./venv_jailbreak/lib/python3.9/site-packages (from sympy>=1.13.3->torch>=2.0.0->-r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 3)) (1.3.0)
+Requirement already satisfied: MarkupSafe>=2.0 in ./venv_jailbreak/lib/python3.9/site-packages (from jinja2->torch>=2.0.0->-r /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/setup/requirements.txt (line 3)) (2.1.5)
+============================================
+EXPERIMENT: exp_qwen06b_gptoss20b
+============================================
+Date: Tue Feb 24 22:35:19 EST 2026
+Job ID: 5933011
+Job Name: exp_qwen06b_gptoss20b
+
+Config file: scripts/configs/experiments/exp_qwen06b_gptoss20b.yaml
+
+Agentic Jailbreak Framework - Under Development
+Applied Qwen small model optimizations
+Loading model: Qwen/Qwen3-0.6B
+Starting Loading Qwen/Qwen3-0.6B...
+🔧 CUDA available: 1 GPUs detected
+🔧 Current GPU: 0 (NVIDIA A100-SXM4-80GB, 79.3GB)
+🔧 Using device_map: cuda:0
+🔧 Model loading config: {'trust_remote_code': True, 'torch_dtype': torch.float16, 'device_map': 'cuda:0'}
+
+==================================================
+🔍 DEVICE PLACEMENT REPORT
+==================================================
+📍 Model device (direct): cuda:0
+📍 Tokenizer: CPU-based (no device attribute)
+🔋 GPU 0 memory: 1.1GB allocated, 1.4GB cached
+==================================================
+
+Loading Qwen/Qwen3-0.6B completed.
+System memory change: 1.13 GB
+NVIDIA A100-SXM4-80GB (gpu_0) memory change: 1.11 GB
+Model loaded successfully: Qwen/Qwen3-0.6B
+Qwen text model initialized: Qwen/Qwen3-0.6B
+Applied Qwen small model optimizations
+Loading model: Qwen/Qwen3-0.6B
+Starting Loading Qwen/Qwen3-0.6B...
+🔧 CUDA available: 1 GPUs detected
+🔧 Current GPU: 0 (NVIDIA A100-SXM4-80GB, 79.3GB)
+🔧 Using device_map: cuda:0
+🔧 Model loading config: {'trust_remote_code': True, 'torch_dtype': torch.float16, 'device_map': 'cuda:0'}
+
+==================================================
+🔍 DEVICE PLACEMENT REPORT
+==================================================
+📍 Model device (direct): cuda:0
+📍 Tokenizer: CPU-based (no device attribute)
+🔋 GPU 0 memory: 2.2GB allocated, 2.5GB cached
+==================================================
+
+Loading Qwen/Qwen3-0.6B completed.
+System memory change: 0.78 GB
+NVIDIA A100-SXM4-80GB (gpu_0) memory change: 1.11 GB
+Model loaded successfully: Qwen/Qwen3-0.6B
+Qwen text model initialized: Qwen/Qwen3-0.6B
+Warning: openai/gpt-oss-20b is not in the list of known GPT variants
+Supported variants: ['gpt-3.5-turbo', 'o3-mini', 'o3-mini-2025-01-31', 'gpt-4o', 'gpt-4o-2024-08-06', 'chatgpt-4o-latest']
+Initializing OpenAI client for model: openai/gpt-oss-20b
+
+Moving results to output directory...
+
+============================================
+EXPERIMENT COMPLETED at: Tue Feb 24 22:35:46 EST 2026
+============================================
+
+Results location: /scratch/mrahma45/jailbreaking_repos/outputs/results/
+  - exp_qwen06b_gptoss20b_results.json
+  - exp_qwen06b_gptoss20b_results_stats.json
+  - exp_qwen06b_gptoss20b_knowledge.json
+  - exp_qwen06b_gptoss20b_successes.json

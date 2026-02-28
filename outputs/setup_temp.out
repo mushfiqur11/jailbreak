@@ -1,0 +1,509 @@
+
+[0;34m================================[0m
+[0;34mJailbreak Framework Setup[0m
+[0;34m================================[0m
+
+
+[0;34m================================[0m
+[0;34mChecking System Requirements[0m
+[0;34m================================[0m
+
+[0;34m[INFO][0m Python version: 3.9.9
+[0;32m[SUCCESS][0m Python version is compatible
+[0;34m[INFO][0m NVIDIA GPU detected
+Thu Nov 13 01:59:17 2025       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 560.35.05              Driver Version: 560.35.05      CUDA Version: 12.6     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA A100-SXM4-40GB          On  |   00000000:4E:00.0 Off |                    0 |
+| N/A   25C    P0             56W /  400W |       1MiB /  40960MiB |      0%      Default |
+|                                         |                        |             Disabled |
++-----------------------------------------+------------------------+----------------------+
+                                                                                         
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI        PID   Type   Process name                              GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|  No running processes found                                                             |
++-----------------------------------------------------------------------------------------+
+
+[0;34m================================[0m
+[0;34mSetting up Virtual Environment[0m
+[0;34m================================[0m
+
+[0;34m[INFO][0m Creating virtual environment: venv_jailbreak
+[0;34m[INFO][0m Activating virtual environment...
+[0;34m[INFO][0m Upgrading pip...
+Requirement already satisfied: pip in ./venv_jailbreak/lib/python3.9/site-packages (21.2.4)
+Collecting pip
+  Using cached pip-25.3-py3-none-any.whl (1.8 MB)
+Installing collected packages: pip
+  Attempting uninstall: pip
+    Found existing installation: pip 21.2.4
+    Uninstalling pip-21.2.4:
+      Successfully uninstalled pip-21.2.4
+Successfully installed pip-25.3
+[0;32m[SUCCESS][0m Virtual environment setup complete
+
+[0;34m================================[0m
+[0;34mInstalling PyTorch[0m
+[0;34m================================[0m
+
+[0;34m[INFO][0m Installing PyTorch...
+[0;34m[INFO][0m NVIDIA GPU detected
+Thu Nov 13 01:59:45 2025       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 560.35.05              Driver Version: 560.35.05      CUDA Version: 12.6     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA A100-SXM4-40GB          On  |   00000000:4E:00.0 Off |                    0 |
+| N/A   25C    P0             55W /  400W |       1MiB /  40960MiB |      0%      Default |
+|                                         |                        |             Disabled |
++-----------------------------------------+------------------------+----------------------+
+                                                                                         
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI        PID   Type   Process name                              GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|  No running processes found                                                             |
++-----------------------------------------------------------------------------------------+
+[0;34m[INFO][0m Installing PyTorch with CUDA support...
+Looking in indexes: https://download.pytorch.org/whl/cu118
+Collecting torch
+  Using cached https://download.pytorch.org/whl/cu118/torch-2.7.1%2Bcu118-cp39-cp39-manylinux_2_28_x86_64.whl.metadata (28 kB)
+Collecting torchvision
+  Using cached https://download.pytorch.org/whl/cu118/torchvision-0.22.1%2Bcu118-cp39-cp39-manylinux_2_28_x86_64.whl.metadata (6.1 kB)
+Collecting torchaudio
+  Using cached https://download.pytorch.org/whl/cu118/torchaudio-2.7.1%2Bcu118-cp39-cp39-manylinux_2_28_x86_64.whl.metadata (6.6 kB)
+Collecting filelock (from torch)
+  Using cached https://download.pytorch.org/whl/filelock-3.19.1-py3-none-any.whl.metadata (2.1 kB)
+Collecting typing-extensions>=4.10.0 (from torch)
+  Using cached https://download.pytorch.org/whl/typing_extensions-4.15.0-py3-none-any.whl.metadata (3.3 kB)
+Collecting sympy>=1.13.3 (from torch)
+  Using cached https://download.pytorch.org/whl/sympy-1.14.0-py3-none-any.whl.metadata (12 kB)
+Collecting networkx (from torch)
+  Using cached https://download.pytorch.org/whl/networkx-3.5-py3-none-any.whl.metadata (6.3 kB)
+Collecting jinja2 (from torch)
+  Using cached https://download.pytorch.org/whl/jinja2-3.1.6-py3-none-any.whl.metadata (2.9 kB)
+Collecting fsspec (from torch)
+  Using cached https://download.pytorch.org/whl/fsspec-2025.9.0-py3-none-any.whl.metadata (10 kB)
+Collecting nvidia-cuda-nvrtc-cu11==11.8.89 (from torch)
+  Using cached https://download.pytorch.org/whl/cu118/nvidia_cuda_nvrtc_cu11-11.8.89-py3-none-manylinux1_x86_64.whl (23.2 MB)
+Collecting nvidia-cuda-runtime-cu11==11.8.89 (from torch)
+  Using cached https://download.pytorch.org/whl/cu118/nvidia_cuda_runtime_cu11-11.8.89-py3-none-manylinux1_x86_64.whl (875 kB)
+Collecting nvidia-cuda-cupti-cu11==11.8.87 (from torch)
+  Using cached https://download.pytorch.org/whl/cu118/nvidia_cuda_cupti_cu11-11.8.87-py3-none-manylinux1_x86_64.whl (13.1 MB)
+Collecting nvidia-cudnn-cu11==9.1.0.70 (from torch)
+  Using cached https://download.pytorch.org/whl/cu118/nvidia_cudnn_cu11-9.1.0.70-py3-none-manylinux2014_x86_64.whl (663.9 MB)
+Collecting nvidia-cublas-cu11==11.11.3.6 (from torch)
+  Using cached https://download.pytorch.org/whl/cu118/nvidia_cublas_cu11-11.11.3.6-py3-none-manylinux1_x86_64.whl (417.9 MB)
+Collecting nvidia-cufft-cu11==10.9.0.58 (from torch)
+  Using cached https://download.pytorch.org/whl/cu118/nvidia_cufft_cu11-10.9.0.58-py3-none-manylinux1_x86_64.whl (168.4 MB)
+Collecting nvidia-curand-cu11==10.3.0.86 (from torch)
+  Using cached https://download.pytorch.org/whl/cu118/nvidia_curand_cu11-10.3.0.86-py3-none-manylinux1_x86_64.whl (58.1 MB)
+Collecting nvidia-cusolver-cu11==11.4.1.48 (from torch)
+  Using cached https://download.pytorch.org/whl/cu118/nvidia_cusolver_cu11-11.4.1.48-py3-none-manylinux1_x86_64.whl (128.2 MB)
+Collecting nvidia-cusparse-cu11==11.7.5.86 (from torch)
+  Using cached https://download.pytorch.org/whl/cu118/nvidia_cusparse_cu11-11.7.5.86-py3-none-manylinux1_x86_64.whl (204.1 MB)
+Collecting nvidia-nccl-cu11==2.21.5 (from torch)
+  Using cached https://download.pytorch.org/whl/cu118/nvidia_nccl_cu11-2.21.5-py3-none-manylinux2014_x86_64.whl (147.8 MB)
+Collecting nvidia-nvtx-cu11==11.8.86 (from torch)
+  Using cached https://download.pytorch.org/whl/cu118/nvidia_nvtx_cu11-11.8.86-py3-none-manylinux1_x86_64.whl (99 kB)
+Collecting triton==3.3.1 (from torch)
+  Using cached https://download.pytorch.org/whl/triton-3.3.1-cp39-cp39-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (1.5 kB)
+Requirement already satisfied: setuptools>=40.8.0 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from triton==3.3.1->torch) (58.1.0)
+Collecting numpy (from torchvision)
+  Using cached https://download.pytorch.org/whl/numpy-1.26.3-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (18.2 MB)
+Collecting pillow!=8.3.*,>=5.3.0 (from torchvision)
+  Using cached https://download.pytorch.org/whl/pillow-11.3.0-cp39-cp39-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (9.0 kB)
+Collecting mpmath<1.4,>=1.1.0 (from sympy>=1.13.3->torch)
+  Using cached https://download.pytorch.org/whl/mpmath-1.3.0-py3-none-any.whl (536 kB)
+Collecting MarkupSafe>=2.0 (from jinja2->torch)
+  Using cached https://download.pytorch.org/whl/MarkupSafe-2.1.5-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (25 kB)
+INFO: pip is looking at multiple versions of networkx to determine which version is compatible with other requirements. This could take a while.
+Collecting networkx (from torch)
+  Using cached https://download.pytorch.org/whl/networkx-3.2.1-py3-none-any.whl.metadata (5.2 kB)
+Using cached https://download.pytorch.org/whl/cu118/torch-2.7.1%2Bcu118-cp39-cp39-manylinux_2_28_x86_64.whl (905.3 MB)
+Using cached https://download.pytorch.org/whl/triton-3.3.1-cp39-cp39-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (155.6 MB)
+Using cached https://download.pytorch.org/whl/cu118/torchvision-0.22.1%2Bcu118-cp39-cp39-manylinux_2_28_x86_64.whl (6.7 MB)
+Using cached https://download.pytorch.org/whl/cu118/torchaudio-2.7.1%2Bcu118-cp39-cp39-manylinux_2_28_x86_64.whl (3.3 MB)
+Using cached https://download.pytorch.org/whl/pillow-11.3.0-cp39-cp39-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (6.6 MB)
+Using cached https://download.pytorch.org/whl/sympy-1.14.0-py3-none-any.whl (6.3 MB)
+Using cached https://download.pytorch.org/whl/typing_extensions-4.15.0-py3-none-any.whl (44 kB)
+Using cached https://download.pytorch.org/whl/filelock-3.19.1-py3-none-any.whl (15 kB)
+Using cached https://download.pytorch.org/whl/fsspec-2025.9.0-py3-none-any.whl (199 kB)
+Using cached https://download.pytorch.org/whl/jinja2-3.1.6-py3-none-any.whl (134 kB)
+Using cached https://download.pytorch.org/whl/networkx-3.2.1-py3-none-any.whl (1.6 MB)
+Installing collected packages: mpmath, typing-extensions, triton, sympy, pillow, nvidia-nvtx-cu11, nvidia-nccl-cu11, nvidia-cusparse-cu11, nvidia-curand-cu11, nvidia-cufft-cu11, nvidia-cuda-runtime-cu11, nvidia-cuda-nvrtc-cu11, nvidia-cuda-cupti-cu11, nvidia-cublas-cu11, numpy, networkx, MarkupSafe, fsspec, filelock, nvidia-cusolver-cu11, nvidia-cudnn-cu11, jinja2, torch, torchvision, torchaudio
+
+Successfully installed MarkupSafe-2.1.5 filelock-3.19.1 fsspec-2025.9.0 jinja2-3.1.6 mpmath-1.3.0 networkx-3.2.1 numpy-1.26.3 nvidia-cublas-cu11-11.11.3.6 nvidia-cuda-cupti-cu11-11.8.87 nvidia-cuda-nvrtc-cu11-11.8.89 nvidia-cuda-runtime-cu11-11.8.89 nvidia-cudnn-cu11-9.1.0.70 nvidia-cufft-cu11-10.9.0.58 nvidia-curand-cu11-10.3.0.86 nvidia-cusolver-cu11-11.4.1.48 nvidia-cusparse-cu11-11.7.5.86 nvidia-nccl-cu11-2.21.5 nvidia-nvtx-cu11-11.8.86 pillow-11.3.0 sympy-1.14.0 torch-2.7.1+cu118 torchaudio-2.7.1+cu118 torchvision-0.22.1+cu118 triton-3.3.1 typing-extensions-4.15.0
+[0;32m[SUCCESS][0m PyTorch installation complete
+
+[0;34m================================[0m
+[0;34mInstalling Requirements[0m
+[0;34m================================[0m
+
+[0;34m[INFO][0m Installing requirements from requirements.txt...
+Collecting transformers>=4.35.0 (from -r /dev/stdin (line 3))
+  Using cached transformers-4.57.1-py3-none-any.whl.metadata (43 kB)
+Collecting accelerate>=0.24.0 (from -r /dev/stdin (line 4))
+  Using cached accelerate-1.10.1-py3-none-any.whl.metadata (19 kB)
+Collecting tokenizers>=0.15.0 (from -r /dev/stdin (line 5))
+  Using cached tokenizers-0.22.1-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.8 kB)
+Collecting safetensors>=0.4.0 (from -r /dev/stdin (line 6))
+  Using cached safetensors-0.6.2-cp38-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.1 kB)
+Collecting openai>=1.3.0 (from -r /dev/stdin (line 9))
+  Using cached openai-2.7.2-py3-none-any.whl.metadata (29 kB)
+Collecting huggingface_hub>=0.19.0 (from -r /dev/stdin (line 10))
+  Using cached huggingface_hub-1.1.2-py3-none-any.whl.metadata (13 kB)
+Collecting bitsandbytes>=0.41.0 (from -r /dev/stdin (line 13))
+  Using cached bitsandbytes-0.48.2-py3-none-manylinux_2_24_x86_64.whl.metadata (10 kB)
+Collecting scipy>=1.11.0 (from -r /dev/stdin (line 14))
+  Using cached scipy-1.13.1-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (60 kB)
+Collecting peft>=0.7.0 (from -r /dev/stdin (line 17))
+  Using cached peft-0.17.1-py3-none-any.whl.metadata (14 kB)
+Collecting psutil>=5.9.0 (from -r /dev/stdin (line 20))
+  Using cached psutil-7.1.3-cp36-abi3-manylinux2010_x86_64.manylinux_2_12_x86_64.manylinux_2_28_x86_64.whl.metadata (23 kB)
+Requirement already satisfied: numpy>=1.24.0 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from -r /dev/stdin (line 21)) (1.26.3)
+Collecting tqdm>=4.65.0 (from -r /dev/stdin (line 22))
+  Using cached tqdm-4.67.1-py3-none-any.whl.metadata (57 kB)
+Collecting requests>=2.31.0 (from -r /dev/stdin (line 23))
+  Using cached requests-2.32.5-py3-none-any.whl.metadata (4.9 kB)
+Collecting nvidia-ml-py3>=7.352.0 (from -r /dev/stdin (line 26))
+  Using cached nvidia_ml_py3-7.352.0-py3-none-any.whl
+Collecting pytest>=7.4.0 (from -r /dev/stdin (line 29))
+  Using cached pytest-8.4.2-py3-none-any.whl.metadata (7.7 kB)
+Collecting pytest-cov>=4.1.0 (from -r /dev/stdin (line 30))
+  Using cached pytest_cov-7.0.0-py3-none-any.whl.metadata (31 kB)
+Collecting pandas>=2.0.0 (from -r /dev/stdin (line 33))
+  Using cached pandas-2.3.3-cp39-cp39-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl.metadata (91 kB)
+Collecting jsonlines>=4.0.0 (from -r /dev/stdin (line 34))
+  Using cached jsonlines-4.0.0-py3-none-any.whl.metadata (1.6 kB)
+Collecting pyyaml>=6.0.1 (from -r /dev/stdin (line 37))
+  Using cached pyyaml-6.0.3-cp39-cp39-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.4 kB)
+Collecting toml>=0.10.2 (from -r /dev/stdin (line 38))
+  Using cached toml-0.10.2-py2.py3-none-any.whl.metadata (7.1 kB)
+Collecting scikit-learn>=1.3.0 (from -r /dev/stdin (line 41))
+  Using cached scikit_learn-1.6.1-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (18 kB)
+Collecting matplotlib>=3.7.0 (from -r /dev/stdin (line 42))
+  Using cached matplotlib-3.9.4-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (11 kB)
+Collecting seaborn>=0.12.0 (from -r /dev/stdin (line 43))
+  Using cached seaborn-0.13.2-py3-none-any.whl.metadata (5.4 kB)
+Requirement already satisfied: filelock in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from transformers>=4.35.0->-r /dev/stdin (line 3)) (3.19.1)
+Collecting huggingface_hub>=0.19.0 (from -r /dev/stdin (line 10))
+  Using cached huggingface_hub-0.36.0-py3-none-any.whl.metadata (14 kB)
+Collecting packaging>=20.0 (from transformers>=4.35.0->-r /dev/stdin (line 3))
+  Using cached packaging-25.0-py3-none-any.whl.metadata (3.3 kB)
+Collecting regex!=2019.12.17 (from transformers>=4.35.0->-r /dev/stdin (line 3))
+  Using cached regex-2025.11.3-cp39-cp39-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (40 kB)
+Requirement already satisfied: fsspec>=2023.5.0 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from huggingface_hub>=0.19.0->-r /dev/stdin (line 10)) (2025.9.0)
+Requirement already satisfied: typing-extensions>=3.7.4.3 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from huggingface_hub>=0.19.0->-r /dev/stdin (line 10)) (4.15.0)
+Collecting hf-xet<2.0.0,>=1.1.3 (from huggingface_hub>=0.19.0->-r /dev/stdin (line 10))
+  Using cached hf_xet-1.2.0-cp37-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.9 kB)
+Requirement already satisfied: torch>=2.0.0 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from accelerate>=0.24.0->-r /dev/stdin (line 4)) (2.7.1+cu118)
+Collecting anyio<5,>=3.5.0 (from openai>=1.3.0->-r /dev/stdin (line 9))
+  Using cached anyio-4.11.0-py3-none-any.whl.metadata (4.1 kB)
+Collecting distro<2,>=1.7.0 (from openai>=1.3.0->-r /dev/stdin (line 9))
+  Using cached distro-1.9.0-py3-none-any.whl.metadata (6.8 kB)
+Collecting httpx<1,>=0.23.0 (from openai>=1.3.0->-r /dev/stdin (line 9))
+  Using cached httpx-0.28.1-py3-none-any.whl.metadata (7.1 kB)
+Collecting jiter<1,>=0.10.0 (from openai>=1.3.0->-r /dev/stdin (line 9))
+  Using cached jiter-0.12.0-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (5.2 kB)
+Collecting pydantic<3,>=1.9.0 (from openai>=1.3.0->-r /dev/stdin (line 9))
+  Using cached pydantic-2.12.4-py3-none-any.whl.metadata (89 kB)
+Collecting sniffio (from openai>=1.3.0->-r /dev/stdin (line 9))
+  Using cached sniffio-1.3.1-py3-none-any.whl.metadata (3.9 kB)
+Collecting exceptiongroup>=1.0.2 (from anyio<5,>=3.5.0->openai>=1.3.0->-r /dev/stdin (line 9))
+  Using cached exceptiongroup-1.3.0-py3-none-any.whl.metadata (6.7 kB)
+Collecting idna>=2.8 (from anyio<5,>=3.5.0->openai>=1.3.0->-r /dev/stdin (line 9))
+  Using cached idna-3.11-py3-none-any.whl.metadata (8.4 kB)
+Collecting certifi (from httpx<1,>=0.23.0->openai>=1.3.0->-r /dev/stdin (line 9))
+  Downloading certifi-2025.11.12-py3-none-any.whl.metadata (2.5 kB)
+Collecting httpcore==1.* (from httpx<1,>=0.23.0->openai>=1.3.0->-r /dev/stdin (line 9))
+  Using cached httpcore-1.0.9-py3-none-any.whl.metadata (21 kB)
+Collecting h11>=0.16 (from httpcore==1.*->httpx<1,>=0.23.0->openai>=1.3.0->-r /dev/stdin (line 9))
+  Using cached h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)
+Collecting annotated-types>=0.6.0 (from pydantic<3,>=1.9.0->openai>=1.3.0->-r /dev/stdin (line 9))
+  Using cached annotated_types-0.7.0-py3-none-any.whl.metadata (15 kB)
+Collecting pydantic-core==2.41.5 (from pydantic<3,>=1.9.0->openai>=1.3.0->-r /dev/stdin (line 9))
+  Using cached pydantic_core-2.41.5-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (7.3 kB)
+Collecting typing-inspection>=0.4.2 (from pydantic<3,>=1.9.0->openai>=1.3.0->-r /dev/stdin (line 9))
+  Using cached typing_inspection-0.4.2-py3-none-any.whl.metadata (2.6 kB)
+Requirement already satisfied: sympy>=1.13.3 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from torch>=2.0.0->accelerate>=0.24.0->-r /dev/stdin (line 4)) (1.14.0)
+Requirement already satisfied: networkx in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from torch>=2.0.0->accelerate>=0.24.0->-r /dev/stdin (line 4)) (3.2.1)
+Requirement already satisfied: jinja2 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from torch>=2.0.0->accelerate>=0.24.0->-r /dev/stdin (line 4)) (3.1.6)
+Requirement already satisfied: nvidia-cuda-nvrtc-cu11==11.8.89 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from torch>=2.0.0->accelerate>=0.24.0->-r /dev/stdin (line 4)) (11.8.89)
+Requirement already satisfied: nvidia-cuda-runtime-cu11==11.8.89 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from torch>=2.0.0->accelerate>=0.24.0->-r /dev/stdin (line 4)) (11.8.89)
+Requirement already satisfied: nvidia-cuda-cupti-cu11==11.8.87 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from torch>=2.0.0->accelerate>=0.24.0->-r /dev/stdin (line 4)) (11.8.87)
+Requirement already satisfied: nvidia-cudnn-cu11==9.1.0.70 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from torch>=2.0.0->accelerate>=0.24.0->-r /dev/stdin (line 4)) (9.1.0.70)
+Requirement already satisfied: nvidia-cublas-cu11==11.11.3.6 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from torch>=2.0.0->accelerate>=0.24.0->-r /dev/stdin (line 4)) (11.11.3.6)
+Requirement already satisfied: nvidia-cufft-cu11==10.9.0.58 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from torch>=2.0.0->accelerate>=0.24.0->-r /dev/stdin (line 4)) (10.9.0.58)
+Requirement already satisfied: nvidia-curand-cu11==10.3.0.86 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from torch>=2.0.0->accelerate>=0.24.0->-r /dev/stdin (line 4)) (10.3.0.86)
+Requirement already satisfied: nvidia-cusolver-cu11==11.4.1.48 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from torch>=2.0.0->accelerate>=0.24.0->-r /dev/stdin (line 4)) (11.4.1.48)
+Requirement already satisfied: nvidia-cusparse-cu11==11.7.5.86 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from torch>=2.0.0->accelerate>=0.24.0->-r /dev/stdin (line 4)) (11.7.5.86)
+Requirement already satisfied: nvidia-nccl-cu11==2.21.5 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from torch>=2.0.0->accelerate>=0.24.0->-r /dev/stdin (line 4)) (2.21.5)
+Requirement already satisfied: nvidia-nvtx-cu11==11.8.86 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from torch>=2.0.0->accelerate>=0.24.0->-r /dev/stdin (line 4)) (11.8.86)
+Requirement already satisfied: triton==3.3.1 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from torch>=2.0.0->accelerate>=0.24.0->-r /dev/stdin (line 4)) (3.3.1)
+Requirement already satisfied: setuptools>=40.8.0 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from triton==3.3.1->torch>=2.0.0->accelerate>=0.24.0->-r /dev/stdin (line 4)) (58.1.0)
+Collecting charset_normalizer<4,>=2 (from requests>=2.31.0->-r /dev/stdin (line 23))
+  Using cached charset_normalizer-3.4.4-cp39-cp39-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (37 kB)
+Collecting urllib3<3,>=1.21.1 (from requests>=2.31.0->-r /dev/stdin (line 23))
+  Using cached urllib3-2.5.0-py3-none-any.whl.metadata (6.5 kB)
+Collecting iniconfig>=1 (from pytest>=7.4.0->-r /dev/stdin (line 29))
+  Using cached iniconfig-2.1.0-py3-none-any.whl.metadata (2.7 kB)
+Collecting pluggy<2,>=1.5 (from pytest>=7.4.0->-r /dev/stdin (line 29))
+  Using cached pluggy-1.6.0-py3-none-any.whl.metadata (4.8 kB)
+Collecting pygments>=2.7.2 (from pytest>=7.4.0->-r /dev/stdin (line 29))
+  Using cached pygments-2.19.2-py3-none-any.whl.metadata (2.5 kB)
+Collecting tomli>=1 (from pytest>=7.4.0->-r /dev/stdin (line 29))
+  Using cached tomli-2.3.0-py3-none-any.whl.metadata (10 kB)
+Collecting coverage>=7.10.6 (from coverage[toml]>=7.10.6->pytest-cov>=4.1.0->-r /dev/stdin (line 30))
+  Using cached coverage-7.10.7-cp39-cp39-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (8.9 kB)
+Collecting python-dateutil>=2.8.2 (from pandas>=2.0.0->-r /dev/stdin (line 33))
+  Using cached python_dateutil-2.9.0.post0-py2.py3-none-any.whl.metadata (8.4 kB)
+Collecting pytz>=2020.1 (from pandas>=2.0.0->-r /dev/stdin (line 33))
+  Using cached pytz-2025.2-py2.py3-none-any.whl.metadata (22 kB)
+Collecting tzdata>=2022.7 (from pandas>=2.0.0->-r /dev/stdin (line 33))
+  Using cached tzdata-2025.2-py2.py3-none-any.whl.metadata (1.4 kB)
+Collecting attrs>=19.2.0 (from jsonlines>=4.0.0->-r /dev/stdin (line 34))
+  Using cached attrs-25.4.0-py3-none-any.whl.metadata (10 kB)
+Collecting joblib>=1.2.0 (from scikit-learn>=1.3.0->-r /dev/stdin (line 41))
+  Using cached joblib-1.5.2-py3-none-any.whl.metadata (5.6 kB)
+Collecting threadpoolctl>=3.1.0 (from scikit-learn>=1.3.0->-r /dev/stdin (line 41))
+  Using cached threadpoolctl-3.6.0-py3-none-any.whl.metadata (13 kB)
+Collecting contourpy>=1.0.1 (from matplotlib>=3.7.0->-r /dev/stdin (line 42))
+  Using cached contourpy-1.3.0-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (5.4 kB)
+Collecting cycler>=0.10 (from matplotlib>=3.7.0->-r /dev/stdin (line 42))
+  Using cached cycler-0.12.1-py3-none-any.whl.metadata (3.8 kB)
+Collecting fonttools>=4.22.0 (from matplotlib>=3.7.0->-r /dev/stdin (line 42))
+  Using cached fonttools-4.60.1-cp39-cp39-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (112 kB)
+Collecting kiwisolver>=1.3.1 (from matplotlib>=3.7.0->-r /dev/stdin (line 42))
+  Using cached kiwisolver-1.4.7-cp39-cp39-manylinux_2_12_x86_64.manylinux2010_x86_64.whl.metadata (6.3 kB)
+Requirement already satisfied: pillow>=8 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from matplotlib>=3.7.0->-r /dev/stdin (line 42)) (11.3.0)
+Collecting pyparsing>=2.3.1 (from matplotlib>=3.7.0->-r /dev/stdin (line 42))
+  Using cached pyparsing-3.2.5-py3-none-any.whl.metadata (5.0 kB)
+Collecting importlib-resources>=3.2.0 (from matplotlib>=3.7.0->-r /dev/stdin (line 42))
+  Using cached importlib_resources-6.5.2-py3-none-any.whl.metadata (3.9 kB)
+Collecting zipp>=3.1.0 (from importlib-resources>=3.2.0->matplotlib>=3.7.0->-r /dev/stdin (line 42))
+  Using cached zipp-3.23.0-py3-none-any.whl.metadata (3.6 kB)
+Collecting six>=1.5 (from python-dateutil>=2.8.2->pandas>=2.0.0->-r /dev/stdin (line 33))
+  Using cached six-1.17.0-py2.py3-none-any.whl.metadata (1.7 kB)
+Requirement already satisfied: mpmath<1.4,>=1.1.0 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from sympy>=1.13.3->torch>=2.0.0->accelerate>=0.24.0->-r /dev/stdin (line 4)) (1.3.0)
+Requirement already satisfied: MarkupSafe>=2.0 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from jinja2->torch>=2.0.0->accelerate>=0.24.0->-r /dev/stdin (line 4)) (2.1.5)
+Using cached transformers-4.57.1-py3-none-any.whl (12.0 MB)
+Using cached tokenizers-0.22.1-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (3.3 MB)
+Using cached huggingface_hub-0.36.0-py3-none-any.whl (566 kB)
+Using cached hf_xet-1.2.0-cp37-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (3.3 MB)
+Using cached accelerate-1.10.1-py3-none-any.whl (374 kB)
+Using cached safetensors-0.6.2-cp38-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (485 kB)
+Using cached openai-2.7.2-py3-none-any.whl (1.0 MB)
+Using cached anyio-4.11.0-py3-none-any.whl (109 kB)
+Using cached distro-1.9.0-py3-none-any.whl (20 kB)
+Using cached httpx-0.28.1-py3-none-any.whl (73 kB)
+Using cached httpcore-1.0.9-py3-none-any.whl (78 kB)
+Using cached jiter-0.12.0-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (366 kB)
+Using cached pydantic-2.12.4-py3-none-any.whl (463 kB)
+Using cached pydantic_core-2.41.5-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.1 MB)
+Using cached bitsandbytes-0.48.2-py3-none-manylinux_2_24_x86_64.whl (59.4 MB)
+Using cached scipy-1.13.1-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (38.6 MB)
+Using cached peft-0.17.1-py3-none-any.whl (504 kB)
+Using cached psutil-7.1.3-cp36-abi3-manylinux2010_x86_64.manylinux_2_12_x86_64.manylinux_2_28_x86_64.whl (263 kB)
+Using cached tqdm-4.67.1-py3-none-any.whl (78 kB)
+Using cached requests-2.32.5-py3-none-any.whl (64 kB)
+Using cached charset_normalizer-3.4.4-cp39-cp39-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (153 kB)
+Using cached idna-3.11-py3-none-any.whl (71 kB)
+Using cached urllib3-2.5.0-py3-none-any.whl (129 kB)
+Using cached pytest-8.4.2-py3-none-any.whl (365 kB)
+Using cached pluggy-1.6.0-py3-none-any.whl (20 kB)
+Using cached pytest_cov-7.0.0-py3-none-any.whl (22 kB)
+Using cached pandas-2.3.3-cp39-cp39-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (12.8 MB)
+Using cached jsonlines-4.0.0-py3-none-any.whl (8.7 kB)
+Using cached pyyaml-6.0.3-cp39-cp39-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (750 kB)
+Using cached toml-0.10.2-py2.py3-none-any.whl (16 kB)
+Using cached scikit_learn-1.6.1-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (13.5 MB)
+Using cached matplotlib-3.9.4-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (8.3 MB)
+Using cached seaborn-0.13.2-py3-none-any.whl (294 kB)
+Using cached annotated_types-0.7.0-py3-none-any.whl (13 kB)
+Using cached attrs-25.4.0-py3-none-any.whl (67 kB)
+Downloading certifi-2025.11.12-py3-none-any.whl (159 kB)
+Using cached contourpy-1.3.0-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (321 kB)
+Using cached coverage-7.10.7-cp39-cp39-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (246 kB)
+Using cached cycler-0.12.1-py3-none-any.whl (8.3 kB)
+Using cached exceptiongroup-1.3.0-py3-none-any.whl (16 kB)
+Using cached fonttools-4.60.1-cp39-cp39-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (4.8 MB)
+Using cached h11-0.16.0-py3-none-any.whl (37 kB)
+Using cached importlib_resources-6.5.2-py3-none-any.whl (37 kB)
+Using cached iniconfig-2.1.0-py3-none-any.whl (6.0 kB)
+Using cached joblib-1.5.2-py3-none-any.whl (308 kB)
+Using cached kiwisolver-1.4.7-cp39-cp39-manylinux_2_12_x86_64.manylinux2010_x86_64.whl (1.6 MB)
+Using cached packaging-25.0-py3-none-any.whl (66 kB)
+Using cached pygments-2.19.2-py3-none-any.whl (1.2 MB)
+Using cached pyparsing-3.2.5-py3-none-any.whl (113 kB)
+Using cached python_dateutil-2.9.0.post0-py2.py3-none-any.whl (229 kB)
+Using cached pytz-2025.2-py2.py3-none-any.whl (509 kB)
+Using cached regex-2025.11.3-cp39-cp39-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (791 kB)
+Using cached six-1.17.0-py2.py3-none-any.whl (11 kB)
+Using cached sniffio-1.3.1-py3-none-any.whl (10 kB)
+Using cached threadpoolctl-3.6.0-py3-none-any.whl (18 kB)
+Using cached tomli-2.3.0-py3-none-any.whl (14 kB)
+Using cached typing_inspection-0.4.2-py3-none-any.whl (14 kB)
+Using cached tzdata-2025.2-py2.py3-none-any.whl (347 kB)
+Using cached zipp-3.23.0-py3-none-any.whl (10 kB)
+Installing collected packages: pytz, nvidia-ml-py3, zipp, urllib3, tzdata, typing-inspection, tqdm, tomli, toml, threadpoolctl, sniffio, six, scipy, safetensors, regex, pyyaml, pyparsing, pygments, pydantic-core, psutil, pluggy, packaging, kiwisolver, joblib, jiter, iniconfig, idna, hf-xet, h11, fonttools, exceptiongroup, distro, cycler, coverage, contourpy, charset_normalizer, certifi, attrs, annotated-types, scikit-learn, requests, python-dateutil, pytest, pydantic, jsonlines, importlib-resources, httpcore, anyio, pytest-cov, pandas, matplotlib, huggingface_hub, httpx, bitsandbytes, tokenizers, seaborn, openai, accelerate, transformers, peft
+
+Successfully installed accelerate-1.10.1 annotated-types-0.7.0 anyio-4.11.0 attrs-25.4.0 bitsandbytes-0.48.2 certifi-2025.11.12 charset_normalizer-3.4.4 contourpy-1.3.0 coverage-7.10.7 cycler-0.12.1 distro-1.9.0 exceptiongroup-1.3.0 fonttools-4.60.1 h11-0.16.0 hf-xet-1.2.0 httpcore-1.0.9 httpx-0.28.1 huggingface_hub-0.36.0 idna-3.11 importlib-resources-6.5.2 iniconfig-2.1.0 jiter-0.12.0 joblib-1.5.2 jsonlines-4.0.0 kiwisolver-1.4.7 matplotlib-3.9.4 nvidia-ml-py3-7.352.0 openai-2.7.2 packaging-25.0 pandas-2.3.3 peft-0.17.1 pluggy-1.6.0 psutil-7.1.3 pydantic-2.12.4 pydantic-core-2.41.5 pygments-2.19.2 pyparsing-3.2.5 pytest-8.4.2 pytest-cov-7.0.0 python-dateutil-2.9.0.post0 pytz-2025.2 pyyaml-6.0.3 regex-2025.11.3 requests-2.32.5 safetensors-0.6.2 scikit-learn-1.6.1 scipy-1.13.1 seaborn-0.13.2 six-1.17.0 sniffio-1.3.1 threadpoolctl-3.6.0 tokenizers-0.22.1 toml-0.10.2 tomli-2.3.0 tqdm-4.67.1 transformers-4.57.1 typing-inspection-0.4.2 tzdata-2025.2 urllib3-2.5.0 zipp-3.23.0
+[0;32m[SUCCESS][0m Requirements installation complete
+
+[0;34m================================[0m
+[0;34mInstalling Jailbreak Framework Package[0m
+[0;34m================================[0m
+
+[0;34m[INFO][0m Installing jailbreak framework package in editable mode...
+Obtaining file:///scratch/mrahma45/jailbreaking_repos/jailbreak-pkg
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Checking if build backend supports build_editable: started
+  Checking if build backend supports build_editable: finished with status 'done'
+  Getting requirements to build editable: started
+  Getting requirements to build editable: finished with status 'done'
+  Preparing editable metadata (pyproject.toml): started
+  Preparing editable metadata (pyproject.toml): finished with status 'done'
+Requirement already satisfied: torch>=2.0.0 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from jailbreak==1.0.0) (2.7.1+cu118)
+Requirement already satisfied: transformers>=4.35.0 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from jailbreak==1.0.0) (4.57.1)
+Requirement already satisfied: accelerate>=0.24.0 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from jailbreak==1.0.0) (1.10.1)
+Requirement already satisfied: tokenizers>=0.15.0 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from jailbreak==1.0.0) (0.22.1)
+Requirement already satisfied: safetensors>=0.4.0 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from jailbreak==1.0.0) (0.6.2)
+Requirement already satisfied: openai>=1.3.0 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from jailbreak==1.0.0) (2.7.2)
+Requirement already satisfied: huggingface_hub>=0.19.0 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from jailbreak==1.0.0) (0.36.0)
+Requirement already satisfied: bitsandbytes>=0.41.0 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from jailbreak==1.0.0) (0.48.2)
+Requirement already satisfied: scipy>=1.11.0 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from jailbreak==1.0.0) (1.13.1)
+Requirement already satisfied: peft>=0.7.0 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from jailbreak==1.0.0) (0.17.1)
+Requirement already satisfied: psutil>=5.9.0 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from jailbreak==1.0.0) (7.1.3)
+Requirement already satisfied: numpy>=1.24.0 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from jailbreak==1.0.0) (1.26.3)
+Requirement already satisfied: tqdm>=4.65.0 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from jailbreak==1.0.0) (4.67.1)
+Requirement already satisfied: requests>=2.31.0 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from jailbreak==1.0.0) (2.32.5)
+Requirement already satisfied: pandas>=2.0.0 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from jailbreak==1.0.0) (2.3.3)
+Requirement already satisfied: jsonlines>=4.0.0 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from jailbreak==1.0.0) (4.0.0)
+Requirement already satisfied: pyyaml>=6.0.1 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from jailbreak==1.0.0) (6.0.3)
+Requirement already satisfied: toml>=0.10.2 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from jailbreak==1.0.0) (0.10.2)
+Collecting typing (from jailbreak==1.0.0)
+  Using cached typing-3.7.4.3-py3-none-any.whl
+Requirement already satisfied: packaging>=20.0 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from accelerate>=0.24.0->jailbreak==1.0.0) (25.0)
+Requirement already satisfied: filelock in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from torch>=2.0.0->jailbreak==1.0.0) (3.19.1)
+Requirement already satisfied: typing-extensions>=4.10.0 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from torch>=2.0.0->jailbreak==1.0.0) (4.15.0)
+Requirement already satisfied: sympy>=1.13.3 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from torch>=2.0.0->jailbreak==1.0.0) (1.14.0)
+Requirement already satisfied: networkx in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from torch>=2.0.0->jailbreak==1.0.0) (3.2.1)
+Requirement already satisfied: jinja2 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from torch>=2.0.0->jailbreak==1.0.0) (3.1.6)
+Requirement already satisfied: fsspec in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from torch>=2.0.0->jailbreak==1.0.0) (2025.9.0)
+Requirement already satisfied: nvidia-cuda-nvrtc-cu11==11.8.89 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from torch>=2.0.0->jailbreak==1.0.0) (11.8.89)
+Requirement already satisfied: nvidia-cuda-runtime-cu11==11.8.89 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from torch>=2.0.0->jailbreak==1.0.0) (11.8.89)
+Requirement already satisfied: nvidia-cuda-cupti-cu11==11.8.87 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from torch>=2.0.0->jailbreak==1.0.0) (11.8.87)
+Requirement already satisfied: nvidia-cudnn-cu11==9.1.0.70 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from torch>=2.0.0->jailbreak==1.0.0) (9.1.0.70)
+Requirement already satisfied: nvidia-cublas-cu11==11.11.3.6 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from torch>=2.0.0->jailbreak==1.0.0) (11.11.3.6)
+Requirement already satisfied: nvidia-cufft-cu11==10.9.0.58 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from torch>=2.0.0->jailbreak==1.0.0) (10.9.0.58)
+Requirement already satisfied: nvidia-curand-cu11==10.3.0.86 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from torch>=2.0.0->jailbreak==1.0.0) (10.3.0.86)
+Requirement already satisfied: nvidia-cusolver-cu11==11.4.1.48 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from torch>=2.0.0->jailbreak==1.0.0) (11.4.1.48)
+Requirement already satisfied: nvidia-cusparse-cu11==11.7.5.86 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from torch>=2.0.0->jailbreak==1.0.0) (11.7.5.86)
+Requirement already satisfied: nvidia-nccl-cu11==2.21.5 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from torch>=2.0.0->jailbreak==1.0.0) (2.21.5)
+Requirement already satisfied: nvidia-nvtx-cu11==11.8.86 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from torch>=2.0.0->jailbreak==1.0.0) (11.8.86)
+Requirement already satisfied: triton==3.3.1 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from torch>=2.0.0->jailbreak==1.0.0) (3.3.1)
+Requirement already satisfied: setuptools>=40.8.0 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from triton==3.3.1->torch>=2.0.0->jailbreak==1.0.0) (58.1.0)
+Requirement already satisfied: hf-xet<2.0.0,>=1.1.3 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from huggingface_hub>=0.19.0->jailbreak==1.0.0) (1.2.0)
+Requirement already satisfied: attrs>=19.2.0 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from jsonlines>=4.0.0->jailbreak==1.0.0) (25.4.0)
+Requirement already satisfied: anyio<5,>=3.5.0 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from openai>=1.3.0->jailbreak==1.0.0) (4.11.0)
+Requirement already satisfied: distro<2,>=1.7.0 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from openai>=1.3.0->jailbreak==1.0.0) (1.9.0)
+Requirement already satisfied: httpx<1,>=0.23.0 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from openai>=1.3.0->jailbreak==1.0.0) (0.28.1)
+Requirement already satisfied: jiter<1,>=0.10.0 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from openai>=1.3.0->jailbreak==1.0.0) (0.12.0)
+Requirement already satisfied: pydantic<3,>=1.9.0 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from openai>=1.3.0->jailbreak==1.0.0) (2.12.4)
+Requirement already satisfied: sniffio in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from openai>=1.3.0->jailbreak==1.0.0) (1.3.1)
+Requirement already satisfied: exceptiongroup>=1.0.2 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from anyio<5,>=3.5.0->openai>=1.3.0->jailbreak==1.0.0) (1.3.0)
+Requirement already satisfied: idna>=2.8 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from anyio<5,>=3.5.0->openai>=1.3.0->jailbreak==1.0.0) (3.11)
+Requirement already satisfied: certifi in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from httpx<1,>=0.23.0->openai>=1.3.0->jailbreak==1.0.0) (2025.11.12)
+Requirement already satisfied: httpcore==1.* in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from httpx<1,>=0.23.0->openai>=1.3.0->jailbreak==1.0.0) (1.0.9)
+Requirement already satisfied: h11>=0.16 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from httpcore==1.*->httpx<1,>=0.23.0->openai>=1.3.0->jailbreak==1.0.0) (0.16.0)
+Requirement already satisfied: annotated-types>=0.6.0 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from pydantic<3,>=1.9.0->openai>=1.3.0->jailbreak==1.0.0) (0.7.0)
+Requirement already satisfied: pydantic-core==2.41.5 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from pydantic<3,>=1.9.0->openai>=1.3.0->jailbreak==1.0.0) (2.41.5)
+Requirement already satisfied: typing-inspection>=0.4.2 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from pydantic<3,>=1.9.0->openai>=1.3.0->jailbreak==1.0.0) (0.4.2)
+Requirement already satisfied: python-dateutil>=2.8.2 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from pandas>=2.0.0->jailbreak==1.0.0) (2.9.0.post0)
+Requirement already satisfied: pytz>=2020.1 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from pandas>=2.0.0->jailbreak==1.0.0) (2025.2)
+Requirement already satisfied: tzdata>=2022.7 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from pandas>=2.0.0->jailbreak==1.0.0) (2025.2)
+Requirement already satisfied: six>=1.5 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from python-dateutil>=2.8.2->pandas>=2.0.0->jailbreak==1.0.0) (1.17.0)
+Requirement already satisfied: charset_normalizer<4,>=2 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from requests>=2.31.0->jailbreak==1.0.0) (3.4.4)
+Requirement already satisfied: urllib3<3,>=1.21.1 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from requests>=2.31.0->jailbreak==1.0.0) (2.5.0)
+Requirement already satisfied: mpmath<1.4,>=1.1.0 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from sympy>=1.13.3->torch>=2.0.0->jailbreak==1.0.0) (1.3.0)
+Requirement already satisfied: regex!=2019.12.17 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from transformers>=4.35.0->jailbreak==1.0.0) (2025.11.3)
+Requirement already satisfied: MarkupSafe>=2.0 in /scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages (from jinja2->torch>=2.0.0->jailbreak==1.0.0) (2.1.5)
+Building wheels for collected packages: jailbreak
+  Building editable for jailbreak (pyproject.toml): started
+  Building editable for jailbreak (pyproject.toml): finished with status 'done'
+  Created wheel for jailbreak: filename=jailbreak-1.0.0-0.editable-py3-none-any.whl size=3595 sha256=e68cbcb23527a1c3b5a1a335cce4020a6416d1b6f4d49ac83b0f1b9f573222ef
+  Stored in directory: /scratch/mrahma45/tmp/pip-ephem-wheel-cache-uk9ni0lk/wheels/68/9c/7c/31d2a871ab9f683a8ec973b0d5e77fff214bb7291bfb48db67
+Successfully built jailbreak
+Installing collected packages: typing, jailbreak
+
+Successfully installed jailbreak-1.0.0 typing-3.7.4.3
+[0;32m[SUCCESS][0m jailbreak package installed successfully
+
+[0;34m================================[0m
+[0;34mVerifying Installation[0m
+[0;34m================================[0m
+
+[0;34m[INFO][0m Verifying installation...
+✓ All core dependencies imported successfully
+✓ CUDA available: NVIDIA A100-SXM4-40GB
+✓ CUDA version: 11.8
+✓ PyTorch version: 2.7.1+cu118
+✓ Transformers version: 4.57.1
+[0;34m[INFO][0m Testing jailbreak package imports...
+✓ jailbreak.llm_module imported successfully
+[0;34m[INFO][0m Testing jailbreak.agentic_jailbreak import...
+Agentic Jailbreak Framework - Under Development
+✓ jailbreak.agentic_jailbreak imported successfully (placeholder)
+[0;32m[SUCCESS][0m Installation verification completed!
+
+[0;34m================================[0m
+[0;34mAPI Key Setup[0m
+[0;34m================================[0m
+
+[0;34m[INFO][0m Setting up API key directories...
+[0;34m[INFO][0m API key setup:
+[0;34m[INFO][0m 1. For HuggingFace: Place your token in '../tokens/hf_token.txt'
+[0;34m[INFO][0m 2. For OpenAI: Place your API key in '../tokens/openai_key.txt'
+[0;34m[INFO][0m 3. You can also set environment variables:
+[0;34m[INFO][0m    export HUGGINGFACE_HUB_TOKEN='your_token_here'
+[0;34m[INFO][0m    export OPENAI_API_KEY='your_key_here'
+[1;33m[WARNING][0m Remember to keep your API keys secure and never commit them to git!
+
+[0;34m================================[0m
+[0;34mRunning Tests[0m
+[0;34m================================[0m
+
+[0;34m[INFO][0m Running basic functionality tests...
+[1;33m[WARNING][0m llm_module examples not found
+
+[0;34m================================[0m
+[0;34mSetup Complete![0m
+[0;34m================================[0m
+
+[0;32m[SUCCESS][0m Jailbreak Framework has been successfully set up!
+[0;34m[INFO][0m 
+[0;34m[INFO][0m Installed packages:
+[0;34m[INFO][0m ✓ llm_module - Complete LLM management system
+[0;34m[INFO][0m ⚠ agentic_jailbreak - Placeholder (under development)
+[0;34m[INFO][0m 
+[0;34m[INFO][0m Next steps:
+[0;34m[INFO][0m 1. Add your API keys to the tokens directory
+[0;34m[INFO][0m 2. Test jailbreak package: python -c 'import jailbreak; print("Success!")'
+[0;34m[INFO][0m 3. Run examples: python jailbreak/llm_module/examples/basic_usage.py
+[0;34m[INFO][0m 4. Check documentation in jailbreak/llm_module/README.md
+[0;34m[INFO][0m 
+[0;32m[SUCCESS][0m Happy jailbreaking research! 🚀

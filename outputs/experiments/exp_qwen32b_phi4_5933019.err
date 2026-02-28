@@ -1,0 +1,59 @@
+
+Lmod is automatically replacing "gnu9/9.3.0" with "gnu10/10.3.0-ya".
+
+
+Inactive Modules:
+  1) hwloc/2.1.0     2) libfabric     3) ucx
+
+The following have been reloaded with a version change:
+  1) openmpi4/4.0.4 => openmpi4/4.1.2-4a
+
+/scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages/transformers/utils/hub.py:110: FutureWarning: Using `TRANSFORMERS_CACHE` is deprecated and will be removed in v5 of Transformers. Use `HF_HOME` instead.
+  warnings.warn(
+2026-02-24 23:39:01,393 - __main__ - INFO - Initializing agents...
+2026-02-24 23:39:01,393 - jailbreak.agentic_module.agents.attacker - INFO - Initializing AttackerAgent
+`torch_dtype` is deprecated! Use `dtype` instead!
+2026-02-24 23:39:05,488 - accelerate.utils.modeling - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+Loading checkpoint shards:   0%|          | 0/17 [00:00<?, ?it/s]Loading checkpoint shards:   6%|▌         | 1/17 [00:05<01:24,  5.31s/it]Loading checkpoint shards:  12%|█▏        | 2/17 [00:12<01:36,  6.41s/it]Loading checkpoint shards:  18%|█▊        | 3/17 [00:17<01:23,  5.94s/it]Loading checkpoint shards:  24%|██▎       | 4/17 [00:24<01:22,  6.35s/it]Loading checkpoint shards:  29%|██▉       | 5/17 [00:29<01:08,  5.72s/it]Loading checkpoint shards:  35%|███▌      | 6/17 [00:36<01:07,  6.14s/it]Loading checkpoint shards:  41%|████      | 7/17 [00:44<01:06,  6.69s/it]Loading checkpoint shards:  47%|████▋     | 8/17 [00:50<00:58,  6.50s/it]Loading checkpoint shards:  53%|█████▎    | 9/17 [01:00<01:00,  7.61s/it]Loading checkpoint shards:  59%|█████▉    | 10/17 [01:05<00:48,  6.97s/it]Loading checkpoint shards:  65%|██████▍   | 11/17 [01:13<00:43,  7.27s/it]Loading checkpoint shards:  71%|███████   | 12/17 [01:19<00:33,  6.77s/it]Loading checkpoint shards:  76%|███████▋  | 13/17 [01:26<00:26,  6.74s/it]Loading checkpoint shards:  82%|████████▏ | 14/17 [01:35<00:22,  7.49s/it]Loading checkpoint shards:  88%|████████▊ | 15/17 [01:45<00:16,  8.28s/it]Loading checkpoint shards:  94%|█████████▍| 16/17 [01:55<00:08,  8.84s/it]Loading checkpoint shards: 100%|██████████| 17/17 [02:00<00:00,  7.74s/it]Loading checkpoint shards: 100%|██████████| 17/17 [02:00<00:00,  7.11s/it]
+2026-02-24 23:41:06,567 - jailbreak.agentic_module.agents.attacker - INFO - Successfully created attacker LLM: QwenText(model_id=Qwen/Qwen3-32B, loaded=True)
+2026-02-24 23:41:07,328 - accelerate.utils.modeling - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+Loading checkpoint shards:   0%|          | 0/17 [00:00<?, ?it/s]Loading checkpoint shards:   6%|▌         | 1/17 [00:01<00:31,  1.99s/it]Loading checkpoint shards:  12%|█▏        | 2/17 [00:04<00:36,  2.46s/it]Loading checkpoint shards:  18%|█▊        | 3/17 [00:07<00:36,  2.62s/it]Loading checkpoint shards:  24%|██▎       | 4/17 [00:10<00:34,  2.67s/it]Loading checkpoint shards:  29%|██▉       | 5/17 [00:13<00:32,  2.72s/it]Loading checkpoint shards:  35%|███▌      | 6/17 [00:15<00:30,  2.73s/it]Loading checkpoint shards:  41%|████      | 7/17 [00:18<00:27,  2.76s/it]Loading checkpoint shards:  47%|████▋     | 8/17 [00:21<00:24,  2.76s/it]Loading checkpoint shards:  53%|█████▎    | 9/17 [00:24<00:22,  2.79s/it]Loading checkpoint shards:  59%|█████▉    | 10/17 [00:27<00:19,  2.79s/it]Loading checkpoint shards:  65%|██████▍   | 11/17 [00:29<00:16,  2.80s/it]Loading checkpoint shards:  71%|███████   | 12/17 [00:32<00:13,  2.79s/it]Loading checkpoint shards:  76%|███████▋  | 13/17 [00:35<00:11,  2.78s/it]Loading checkpoint shards:  82%|████████▏ | 14/17 [00:38<00:08,  2.78s/it]Loading checkpoint shards:  88%|████████▊ | 15/17 [00:41<00:05,  2.79s/it]Loading checkpoint shards:  94%|█████████▍| 16/17 [00:43<00:02,  2.77s/it]Loading checkpoint shards: 100%|██████████| 17/17 [00:45<00:00,  2.33s/it]Loading checkpoint shards: 100%|██████████| 17/17 [00:45<00:00,  2.65s/it]
+2026-02-24 23:41:52,656 - jailbreak.agentic_module.agents.attacker - INFO - Successfully created reasoning LLM: QwenText(model_id=Qwen/Qwen3-32B, loaded=True)
+2026-02-24 23:41:52,673 - jailbreak.agentic_module.agents.utils - INFO - Successfully loaded tactics from /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/runs/pipeline/../../jailbreak/agentic_module/agents/initial_tactics.json
+2026-02-24 23:41:52,673 - jailbreak.agentic_module.agents.attacker - INFO - KnowledgeBase initialized with 6 tactics
+2026-02-24 23:41:52,673 - jailbreak.agentic_module.agents.attacker - INFO - AttackerAgent initialized successfully
+2026-02-24 23:41:52,673 - __main__ - INFO - AttackerAgent initialized
+2026-02-24 23:41:52,673 - jailbreak.agentic_module.agents.target - INFO - Initializing TargetAgent
+2026-02-24 23:41:53,456 - jailbreak.agentic_module.agents.target - ERROR - Failed to create target LLM: cannot import name 'LossKwargs' from 'transformers.utils' (/scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages/transformers/utils/__init__.py)
+Traceback (most recent call last):
+  File "/scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/runs/pipeline/orchestrator.py", line 476, in <module>
+    main(config)
+  File "/scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/runs/pipeline/orchestrator.py", line 463, in main
+    orchestrator = PipelineOrchestrator(config)
+  File "/scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/runs/pipeline/orchestrator.py", line 83, in __init__
+    self._initialize_agents()
+  File "/scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/runs/pipeline/orchestrator.py", line 114, in _initialize_agents
+    self.target = TargetAgent(target_config=target_config)
+  File "/scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/runs/pipeline/../../jailbreak/agentic_module/agents/target.py", line 36, in __init__
+    self.target_llm = llm_model_factory(target_config)
+  File "/scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/runs/pipeline/../../jailbreak/llm_module/model_factory.py", line 62, in llm_model_factory
+    return Phi(config)
+  File "/scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/runs/pipeline/../../jailbreak/llm_module/models/phi.py", line 51, in __init__
+    super().__init__(config)
+  File "/scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/runs/pipeline/../../jailbreak/llm_module/base/hf_base.py", line 58, in __init__
+    self._load_model()
+  File "/scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/runs/pipeline/../../jailbreak/llm_module/base/hf_base.py", line 117, in _load_model
+    self._load_model_weights()
+  File "/scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/runs/pipeline/../../jailbreak/llm_module/base/hf_base.py", line 228, in _load_model_weights
+    self.model = AutoModelForCausalLM.from_pretrained(
+  File "/scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages/transformers/models/auto/auto_factory.py", line 586, in from_pretrained
+    model_class = get_class_from_dynamic_module(
+  File "/scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages/transformers/dynamic_module_utils.py", line 616, in get_class_from_dynamic_module
+    return get_class_in_module(class_name, final_module, force_reload=force_download)
+  File "/scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages/transformers/dynamic_module_utils.py", line 311, in get_class_in_module
+    module_spec.loader.exec_module(module)
+  File "<frozen importlib._bootstrap_external>", line 850, in exec_module
+  File "<frozen importlib._bootstrap>", line 228, in _call_with_frames_removed
+  File "/scratch/mrahma45/hf_models/modules/transformers_modules/Phi_hyphen_4_hyphen_mini_hyphen_instruct/modeling_phi3.py", line 37, in <module>
+    from transformers.utils import (
+ImportError: cannot import name 'LossKwargs' from 'transformers.utils' (/scratch/mrahma45/jailbreaking_repos/venv_jailbreak/lib/python3.9/site-packages/transformers/utils/__init__.py)

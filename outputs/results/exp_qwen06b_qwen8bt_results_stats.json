@@ -1,0 +1,10 @@
+{
+  "total_goals": 100,
+  "completed_goals": 98,
+  "skipped_goals": 2,
+  "judge_fallback_count": 0,
+  "skipped_goal_ids": [
+    "goal_009",
+    "goal_052"
+  ]
+}
