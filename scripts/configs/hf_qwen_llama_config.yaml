@@ -87,7 +87,7 @@ features:
 # Pipeline configuration
 pipeline:
   max_turns: 8
-  max_trials: 2
+  max_trials: 4
   timeout: 600  # Longer timeout for HF models
   early_stopping: true
 

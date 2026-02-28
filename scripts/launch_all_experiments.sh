@@ -2,8 +2,10 @@
 
 # ============================================
 # MASTER LAUNCHER SCRIPT
-# Launches all 39 experiment SLURM jobs
-# 13 targets × 3 attackers = 39 experiments
+# Launches all 39 base experiment SLURM jobs.
+# Each job executes 3 stages internally:
+#   run1 (default tactics) -> tactic curation -> run2 (curated tactics)
+# 13 targets × 3 attackers = 39 base experiments
 # ============================================
 
 echo "============================================"
@@ -49,10 +51,11 @@ while IFS= read -r exp_name || [[ -n "$exp_name" ]]; do
     # Skip empty lines
     [ -z "$exp_name" ] && continue
     
-    # Check if config file exists
-    CONFIG_FILE="$EXPERIMENTS_DIR/${exp_name}.yaml"
-    if [ ! -f "$CONFIG_FILE" ]; then
-        echo "WARNING: Config file not found for $exp_name, skipping..."
+    # Check if both stage configs exist
+    RUN1_CONFIG_FILE="$EXPERIMENTS_DIR/${exp_name}_run1.yaml"
+    RUN2_CONFIG_FILE="$EXPERIMENTS_DIR/${exp_name}_run2.yaml"
+    if [ ! -f "$RUN1_CONFIG_FILE" ] || [ ! -f "$RUN2_CONFIG_FILE" ]; then
+        echo "WARNING: Stage config file(s) not found for $exp_name, skipping..."
         ((FAILED++))
         continue
     fi

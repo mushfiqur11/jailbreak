@@ -19,9 +19,12 @@
 #SBATCH --gres=gpu:A100.80gb:1
 
 # ============================================
-# PARAMETRIZED SLURM SCRIPT
+# PARAMETRIZED 3-STAGE SLURM SCRIPT
 # Usage: sbatch --export=CONFIG_NAME=exp_qwen8b_llama1b run_experiment.slurm
-# Or:    sbatch --job-name=exp_qwen8b_llama1b --export=CONFIG_NAME=exp_qwen8b_llama1b run_experiment.slurm
+# Stages:
+#   1) run1 with default tactics
+#   2) independent tactic curation command
+#   3) run2 with curated tactics
 # ============================================
 
 ## Load modules
@@ -67,24 +70,48 @@ mkdir -p $HF_HOME
 ## Navigate to project directory
 cd /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg
 
-## Check if config file exists
-CONFIG_PATH="scripts/configs/experiments/${CONFIG_NAME}.yaml"
-if [ ! -f "$CONFIG_PATH" ]; then
-    echo "ERROR: Config file not found: $CONFIG_PATH"
+## Resolve config paths
+RUN1_CONFIG_PATH="scripts/configs/experiments/${CONFIG_NAME}_run1.yaml"
+RUN2_CONFIG_PATH="scripts/configs/experiments/${CONFIG_NAME}_run2.yaml"
+CURATED_TACTICS_PATH="scripts/configs/experiments/curated_tactics/${CONFIG_NAME}_curated_tactics.json"
+
+if [ ! -f "$RUN1_CONFIG_PATH" ]; then
+    echo "ERROR: Run1 config file not found: $RUN1_CONFIG_PATH"
     exit 1
 fi
 
-echo "Config file: $CONFIG_PATH"
+if [ ! -f "$RUN2_CONFIG_PATH" ]; then
+    echo "ERROR: Run2 config file not found: $RUN2_CONFIG_PATH"
+    exit 1
+fi
+
+mkdir -p scripts/configs/experiments/curated_tactics
+
+echo "Run1 config: $RUN1_CONFIG_PATH"
+echo "Run2 config: $RUN2_CONFIG_PATH"
 echo ""
 
-## Run the orchestrator pipeline
+## Stage 1: run1 (default tactics)
+echo "[Stage 1/3] Running run1 with default tactics..."
 python runs/pipeline/orchestrator.py \
-    --config_path "$CONFIG_PATH"
+    --config_path "$RUN1_CONFIG_PATH"
+
+## Stage 2: independent tactic curation command
+echo "[Stage 2/3] Curating tactics from run1 successful jailbreaks..."
+python scripts/curate_experiment_tactics.py \
+    --config_path "$RUN1_CONFIG_PATH" \
+    --output_path "$CURATED_TACTICS_PATH"
+
+## Stage 3: run2 (curated tactics)
+echo "[Stage 3/3] Running run2 with curated tactics..."
+python runs/pipeline/orchestrator.py \
+    --config_path "$RUN2_CONFIG_PATH"
 
 ## Move output files to results directory
 echo ""
 echo "Moving results to output directory..."
 mv ${CONFIG_NAME}_*.json /scratch/mrahma45/jailbreaking_repos/outputs/results/ 2>/dev/null || true
+mv scripts/configs/experiments/curated_tactics/${CONFIG_NAME}_curated_tactics.json /scratch/mrahma45/jailbreaking_repos/outputs/results/ 2>/dev/null || true
 
 echo ""
 echo "============================================"
@@ -92,7 +119,12 @@ echo "EXPERIMENT COMPLETED at: $(date)"
 echo "============================================"
 echo ""
 echo "Results location: /scratch/mrahma45/jailbreaking_repos/outputs/results/"
-echo "  - ${CONFIG_NAME}_results.json"
-echo "  - ${CONFIG_NAME}_results_stats.json"
-echo "  - ${CONFIG_NAME}_knowledge.json"
-echo "  - ${CONFIG_NAME}_successes.json"
+echo "  - ${CONFIG_NAME}_run1_results.json"
+echo "  - ${CONFIG_NAME}_run1_results_stats.json"
+echo "  - ${CONFIG_NAME}_run1_knowledge.json"
+echo "  - ${CONFIG_NAME}_run1_successes.json"
+echo "  - ${CONFIG_NAME}_run2_results.json"
+echo "  - ${CONFIG_NAME}_run2_results_stats.json"
+echo "  - ${CONFIG_NAME}_run2_knowledge.json"
+echo "  - ${CONFIG_NAME}_run2_successes.json"
+echo "  - ${CONFIG_NAME}_curated_tactics.json"

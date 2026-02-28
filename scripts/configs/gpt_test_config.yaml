@@ -62,7 +62,7 @@ features:
 # Pipeline configuration
 pipeline:
   max_turns: 8
-  max_trials: 2
+  max_trials: 4
   timeout: 300
   early_stopping: true
 

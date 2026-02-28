@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 """
 Generate all experiment configuration files for the large-scale experiment.
-13 targets × 3 attackers = 39 experiment configurations
-Judge: GPT-4o-mini (API)
+
+For each experiment pair (attacker, target), generate two configs:
+1) run1: default tactics
+2) run2: curated tactics (produced by independent curation command)
 """
 
 import os
@@ -127,29 +129,26 @@ JUDGE_CONFIG = {
 
 
 def generate_config(attacker_key: str, target_key: str, output_dir: str) -> str:
-    """Generate a single experiment configuration file."""
+    """Generate run1/run2 configs for a single experiment pair."""
     attacker = ATTACKERS[attacker_key]
     target = TARGETS[target_key]
     
-    # Create unique experiment name
+    # Create unique experiment base name
     exp_name = f"exp_{attacker['short_name']}_{target['short_name']}"
-    
-    config = {
-        # Header comment
+    curated_tactics_file = f"curated_tactics/{exp_name}_curated_tactics.json"
+
+    base_config = {
         "_comment": f"Experiment: Attacker={attacker['model_id']} vs Target={target['model_id']}",
-        
-        # Data configuration
         "data": {
             "dataset_name": "JailbreakBench/JBB-Behaviors",
             "data_dir": "../data/JBB-Behaviors",
             "max_goals": 100,
         },
-        
-        # Agent model configurations
         "agents": {
             "attacker": {
                 "model": attacker["model"],
                 "model_id": attacker["model_id"],
+                "tactics_file": "initial_tactics.json",  # run1 default
                 "quantization": attacker["quantization"],
                 "temperature": 0.7,
                 "max_new_tokens": 2000,
@@ -188,46 +187,36 @@ def generate_config(attacker_key: str, target_key: str, output_dir: str) -> str:
             },
             "judge": JUDGE_CONFIG,
         },
-        
-        # Feature toggles
         "features": {
-            "enable_gala_learning": False,
-            "enable_tactic_wise_learning": False,
-            "enable_prompt_wise_learning": False,
-            "enable_knowledge_evolution": False,
+            "enable_gala_learning": True,
+            "enable_tactic_wise_learning": True,
+            "enable_prompt_wise_learning": True,
+            "enable_knowledge_evolution": True,
             "enable_traceback": True,
             "traceback_min_turns": 3,
-            "enable_tactic_generalization": False,
+            "enable_tactic_generalization": True,
             "tactic_generalization_batch_size": 20,
             "enable_belief_state_llm_update": True,
             "enable_dynamic_selection": True,
         },
-        
-        # Pipeline configuration
         "pipeline": {
             "max_turns": 8,
-            "max_trials": 2,
+            "max_trials": 4,  # 1 initial attempt + 3 retries
             "timeout": 600,
             "early_stopping": True,
         },
-        
-        # Output configuration
         "output": {
-            "results_path": f"{exp_name}_results.json",
-            "knowledge_path": f"{exp_name}_knowledge.json",
-            "generalized_tactics_path": f"{exp_name}_tactics.json",
-            "successful_jailbreaks_path": f"{exp_name}_successes.json",
+            "results_path": f"{exp_name}_run1_results.json",
+            "knowledge_path": f"{exp_name}_run1_knowledge.json",
+            "generalized_tactics_path": f"{exp_name}_run1_tactics.json",
+            "successful_jailbreaks_path": f"{exp_name}_run1_successes.json",
             "save_intermediate": True,
             "verbose_logging": True,
         },
-        
-        # Logging
         "logging": {
             "level": "INFO",
             "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
         },
-        
-        # Additional settings
         "settings": {
             "random_seed": 42,
             "retry_on_parse_failure": True,
@@ -235,10 +224,25 @@ def generate_config(attacker_key: str, target_key: str, output_dir: str) -> str:
         },
     }
     
-    # Write config file
-    config_path = os.path.join(output_dir, f"{exp_name}.yaml")
-    with open(config_path, 'w') as f:
-        yaml.dump(config, f, default_flow_style=False, sort_keys=False)
+    # run1 config
+    run1_config_path = os.path.join(output_dir, f"{exp_name}_run1.yaml")
+    with open(run1_config_path, 'w') as f:
+        yaml.dump(base_config, f, default_flow_style=False, sort_keys=False)
+
+    # run2 config: same as run1 but attacker uses curated tactics + distinct outputs
+    run2_config = yaml.safe_load(yaml.dump(base_config))
+    run2_config["agents"]["attacker"]["tactics_file"] = curated_tactics_file
+    run2_config["output"] = {
+        "results_path": f"{exp_name}_run2_results.json",
+        "knowledge_path": f"{exp_name}_run2_knowledge.json",
+        "generalized_tactics_path": f"{exp_name}_run2_tactics.json",
+        "successful_jailbreaks_path": f"{exp_name}_run2_successes.json",
+        "save_intermediate": True,
+        "verbose_logging": True,
+    }
+    run2_config_path = os.path.join(output_dir, f"{exp_name}_run2.yaml")
+    with open(run2_config_path, 'w') as f:
+        yaml.dump(run2_config, f, default_flow_style=False, sort_keys=False)
     
     return exp_name
 
@@ -249,7 +253,7 @@ def main():
     experiments_dir = os.path.join(script_dir, "configs", "experiments")
     os.makedirs(experiments_dir, exist_ok=True)
     
-    # Generate all experiment configurations
+    # Generate all experiment configurations (base list for 3-stage workflow)
     experiment_names = []
     for attacker_key in ATTACKERS:
         for target_key in TARGETS:

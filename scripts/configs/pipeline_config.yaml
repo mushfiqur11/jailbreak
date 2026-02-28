@@ -70,8 +70,8 @@ features:
 
 # Pipeline configuration
 pipeline:
-  max_turns: 5              # Maximum turns per conversation (GALA uses 5)
-  max_trials: 2             # Maximum retry attempts per goal
+  max_turns: 8              # Maximum turns per conversation
+  max_trials: 4             # 1 initial attempt + 3 retries
   timeout: 300              # Seconds timeout per LLM call
   early_stopping: true      # Stop on strong violation (PV=2)
 

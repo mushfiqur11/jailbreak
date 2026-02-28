@@ -58,7 +58,7 @@ features:
   enable_dynamic_selection: true
 pipeline:
   max_turns: 8
-  max_trials: 2
+  max_trials: 4
   timeout: 600
   early_stopping: true
 output:

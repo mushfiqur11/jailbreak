@@ -258,6 +258,7 @@ class KnowledgeBase:
             Dict[str, Any]: Complete knowledge base
         """
         return {
+            "failed_attempt_insight": self.failed_attempt_insight,
             "initial_tactics": self.initial_tactics,
             "discovered_tactics": self.discovered_tactics,
             "tactic_selection_framework": self.tactic_selection_framework,
@@ -428,8 +429,9 @@ class AttackerAgent:
             raise
         
         # Initialize belief state and knowledge base with full implementations
+        tactics_file = attacker_config.get("tactics_file", "initial_tactics.json")
         self.belief_state = BeliefState()
-        self.knowledge_base = KnowledgeBase()
+        self.knowledge_base = KnowledgeBase(tactics_file=tactics_file)
         
         # GALA-specific enhancements
         self.enable_gala = enable_gala
