@@ -12,7 +12,7 @@
 # Resource allocation - will vary by model size
 # Default for most experiments (up to 8B models)
 #SBATCH --mem=100GB
-#SBATCH --time=0-18:00  # 18 hours per experiment
+#SBATCH --time=1-20:00  # 18 hours per experiment
 
 #SBATCH --cpus-per-task 1
 #SBATCH --ntasks 1

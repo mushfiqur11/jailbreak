@@ -11,7 +11,7 @@
 
 # Resource allocation for running multiple HF models
 #SBATCH --mem=100GB  # Enough memory for Qwen3-8B + Llama-3.2-3B
-#SBATCH --time=0-10:00  # 1 day (100 goals can take a long time with HF models)
+#SBATCH --time=0-20:00  # 1 day (100 goals can take a long time with HF models)
 
 #SBATCH --cpus-per-task 1  # More CPUs for HF tokenization/processing
 #SBATCH --ntasks 1
