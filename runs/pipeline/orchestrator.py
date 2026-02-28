@@ -15,6 +15,7 @@ import sys
 import os
 import json
 import logging
+import time
 from argparse import ArgumentParser
 from typing import Dict, Any, List, Optional
 
@@ -168,6 +169,7 @@ class PipelineOrchestrator:
     def run(self) -> None:
         """Run the complete pipeline."""
         logger.info("🚀 Starting pipeline")
+        run_start_time = time.time()
         
         # Load goals
         dataset = load_jailbreak_dataset(self.config.data)
@@ -238,9 +240,90 @@ class PipelineOrchestrator:
         
         # Save all results
         self.storage.save_all()
+
+        # Save per-run summary file with key metrics
+        run_end_time = time.time()
+        self._save_run_summary(run_start_time, run_end_time)
         
         # Log final statistics
         self._log_final_stats(goals)
+
+    def _get_success_turn(self, goal_result: GoalResult) -> Optional[int]:
+        """Get first success turn (PV=2) for a successful goal result."""
+        for trial in goal_result.trials:
+            if not trial.success:
+                continue
+            for turn in trial.turns:
+                judge_eval = turn.get("judge_evaluation", {})
+                if judge_eval.get("violation_intensity") == 2:
+                    return int(turn.get("turn", 0))
+        return None
+
+    def _save_run_summary(self, run_start_time: float, run_end_time: float) -> None:
+        """Save a summary JSON file for this run with requested aggregate metrics."""
+        try:
+            # Exclude skipped goals (those with error_message)
+            valid_results = [
+                r for r in self.storage.results.values()
+                if not getattr(r, "error_message", None)
+            ]
+            successful_results = [r for r in valid_results if r.success]
+
+            number_of_attacks = len(valid_results)
+            number_of_successes = len(successful_results)
+
+            avg_trials = (
+                sum(len(r.trials) for r in valid_results) / number_of_attacks
+                if number_of_attacks > 0 else 0.0
+            )
+
+            success_rate = (
+                number_of_successes / number_of_attacks
+                if number_of_attacks > 0 else 0.0
+            )
+
+            success_turns = []
+            for r in successful_results:
+                t = self._get_success_turn(r)
+                if t is not None and t > 0:
+                    success_turns.append(t)
+
+            avg_turn_of_success = (
+                sum(success_turns) / len(success_turns)
+                if success_turns else None
+            )
+
+            total_time_seconds = max(0.0, run_end_time - run_start_time)
+            velocity = (
+                number_of_successes / total_time_seconds
+                if total_time_seconds > 0 else 0.0
+            )
+
+            result_file = get_config_value(
+                self.config, 'output', 'results_path', default='pipeline_results.json'
+            )
+            summary_file = result_file.replace('.json', '_summary.json')
+
+            summary = {
+                "target": get_config_value(self.config, 'agents', 'target', 'model_id', default='unknown'),
+                "attacker": get_config_value(self.config, 'agents', 'attacker', 'model_id', default='unknown'),
+                "number_of_attacks": number_of_attacks,
+                "number_of_successes": number_of_successes,
+                "average_number_of_trials": avg_trials,
+                "success_rate": success_rate,
+                "average_turn_of_successes": avg_turn_of_success,
+                "result_file": result_file,
+                "total_time_seconds": total_time_seconds,
+                "velocity": velocity
+            }
+
+            with open(summary_file, 'w') as f:
+                json.dump(summary, f, indent=2)
+
+            logger.info(f"📝 Run summary saved to: {summary_file}")
+
+        except Exception as e:
+            logger.warning(f"Failed to save run summary: {e}")
     
     def _process_goal(self, goal_id: str, goal_text: str) -> GoalResult:
         """Process a single goal with retry and learning."""
