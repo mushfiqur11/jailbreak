@@ -217,6 +217,45 @@ class ModelConfigs:
             "max_new_tokens": 1024
         }
     }
+
+    # Gemma model configurations
+    GEMMA_CONFIGS = {
+        "gemma-1b": {
+            **BASE_CONFIG,
+            "model_id": "google/gemma-3-1b-it",
+            "quantization": "none",
+            "temperature": 0.7,
+            "top_p": 0.9,
+        },
+        "gemma-4b": {
+            **BASE_CONFIG,
+            "model_id": "google/gemma-3-4b-it",
+            "quantization": "none",
+            "temperature": 0.7,
+            "top_p": 0.9,
+            "max_new_tokens": 1024,
+        },
+        "gemma-27b": {
+            **BASE_CONFIG,
+            "model_id": "google/gemma-3-27b-it",
+            "quantization": "4bit",
+            "temperature": 0.7,
+            "top_p": 0.9,
+            "max_new_tokens": 1024,
+        },
+    }
+
+    # GPT-OSS open-weight HF model configurations
+    GPTOSS_CONFIGS = {
+        "gpt-oss-20b": {
+            **BASE_CONFIG,
+            "model_id": "openai/gpt-oss-20b",
+            "quantization": "4bit",
+            "temperature": 0.7,
+            "top_p": 0.9,
+            "max_new_tokens": 1024,
+        },
+    }
     
     # Task-specific configurations
     TASK_CONFIGS = {
@@ -258,6 +297,8 @@ class ModelConfigs:
         **QWEN_CONFIGS,
         **DEEPSEEK_CONFIGS,
         **AYA_CONFIGS,
+        **GEMMA_CONFIGS,
+        **GPTOSS_CONFIGS,
         **TASK_CONFIGS
     }
     
@@ -296,6 +337,8 @@ class ModelConfigs:
             "qwen": list(cls.QWEN_CONFIGS.keys()),
             "deepseek": list(cls.DEEPSEEK_CONFIGS.keys()),
             "aya": list(cls.AYA_CONFIGS.keys()),
+            "gemma": list(cls.GEMMA_CONFIGS.keys()),
+            "gptoss": list(cls.GPTOSS_CONFIGS.keys()),
             "tasks": list(cls.TASK_CONFIGS.keys())
         }
     
@@ -321,7 +364,9 @@ class ModelConfigs:
             "phi": cls.PHI_CONFIGS,
             "qwen": cls.QWEN_CONFIGS,
             "deepseek": cls.DEEPSEEK_CONFIGS,
-            "aya": cls.AYA_CONFIGS
+            "aya": cls.AYA_CONFIGS,
+            "gemma": cls.GEMMA_CONFIGS,
+            "gptoss": cls.GPTOSS_CONFIGS,
         }
         
         if model_family in family_configs:

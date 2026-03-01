@@ -216,8 +216,30 @@ class KnowledgeBase:
             sce_knowledge (bool): Whether to enable SCE (Safety-Critical Evaluations) knowledge
             tactics_file (str): Name of the tactics JSON file to load
         """
-        # Load initial tactics from JSON file
-        tactics_path = os.path.join(os.path.dirname(__file__), tactics_file)
+        # Load tactics from a robustly-resolved path.
+        # Supports:
+        # 1) absolute paths
+        # 2) repo-working-dir relative paths (when runner cwd is repo root)
+        # 3) legacy agents-dir relative paths
+        tactics_path = None
+        candidate_paths = []
+
+        if os.path.isabs(tactics_file):
+            candidate_paths.append(tactics_file)
+        else:
+            candidate_paths.append(os.path.join(os.getcwd(), tactics_file))
+            candidate_paths.append(os.path.join(os.path.dirname(__file__), tactics_file))
+
+        for path in candidate_paths:
+            if os.path.exists(path):
+                tactics_path = path
+                break
+
+        if tactics_path is None:
+            raise FileNotFoundError(
+                f"Tactics file not found: {tactics_file}. Tried: {candidate_paths}"
+            )
+
         self.initial_tactics = load_initial_tactics(tactics_path)
         
         if not validate_tactics_structure(self.initial_tactics):

@@ -48,6 +48,7 @@ class HuggingFaceBase(BaseLLM):
             "repetition_penalty": config.get("repetition_penalty", 1.1),
             "do_sample": config.get("do_sample", True),
             "max_new_tokens": self.max_tokens,
+            "use_cache": config.get("use_cache", False),
             "pad_token_id": None  # Will be set after tokenizer loading
         }
         
@@ -417,10 +418,23 @@ class HuggingFaceBase(BaseLLM):
         # Generate response
         generation_start = time.time()
         with torch.no_grad():
-            generated_tokens = self.model.generate(
-                tokenized_input,
-                **self.generation_config
-            )
+            try:
+                generated_tokens = self.model.generate(
+                    tokenized_input,
+                    **self.generation_config
+                )
+            except AttributeError as e:
+                # Transformers cache compatibility fallback (e.g., DynamicCache seen_tokens)
+                # Retry with cache disabled regardless of model default.
+                if "DynamicCache" in str(e) or "seen_tokens" in str(e):
+                    fallback_gen_config = dict(self.generation_config)
+                    fallback_gen_config["use_cache"] = False
+                    generated_tokens = self.model.generate(
+                        tokenized_input,
+                        **fallback_gen_config
+                    )
+                else:
+                    raise
         generation_time = time.time() - generation_start
         
         # Log generation performance
@@ -565,11 +579,24 @@ class HuggingFaceBase(BaseLLM):
         # Generate batch response
         generation_start = time.time()
         with torch.no_grad():
-            generated_tokens = self.model.generate(
-                input_ids=batch_input_ids,
-                attention_mask=attention_mask,
-                **self.generation_config
-            )
+            try:
+                generated_tokens = self.model.generate(
+                    input_ids=batch_input_ids,
+                    attention_mask=attention_mask,
+                    **self.generation_config
+                )
+            except AttributeError as e:
+                # Transformers cache compatibility fallback (e.g., DynamicCache seen_tokens)
+                if "DynamicCache" in str(e) or "seen_tokens" in str(e):
+                    fallback_gen_config = dict(self.generation_config)
+                    fallback_gen_config["use_cache"] = False
+                    generated_tokens = self.model.generate(
+                        input_ids=batch_input_ids,
+                        attention_mask=attention_mask,
+                        **fallback_gen_config
+                    )
+                else:
+                    raise
         generation_time = time.time() - generation_start
         
         # Log generation performance

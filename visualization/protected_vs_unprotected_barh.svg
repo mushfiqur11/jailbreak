@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="508" viewBox="0 0 1100 508">
+<rect x="0" y="0" width="100%" height="100%" fill="white"/>
+<text x="20" y="35" font-size="24" font-family="Arial" font-weight="bold">Protected vs Unprotected LLM Scores</text>
+<line x1="220" y1="60" x2="220" y2="448" stroke="#666" stroke-width="1"/>
+<line x1="220.00" y1="60" x2="220.00" y2="448" stroke="#e6e6e6" stroke-width="1"/>
+<text x="220.00" y="468" text-anchor="middle" font-size="12" font-family="Arial" fill="#444">0.00</text>
+<line x1="358.33" y1="60" x2="358.33" y2="448" stroke="#e6e6e6" stroke-width="1"/>
+<text x="358.33" y="468" text-anchor="middle" font-size="12" font-family="Arial" fill="#444">0.16</text>
+<line x1="496.67" y1="60" x2="496.67" y2="448" stroke="#e6e6e6" stroke-width="1"/>
+<text x="496.67" y="468" text-anchor="middle" font-size="12" font-family="Arial" fill="#444">0.31</text>
+<line x1="635.00" y1="60" x2="635.00" y2="448" stroke="#e6e6e6" stroke-width="1"/>
+<text x="635.00" y="468" text-anchor="middle" font-size="12" font-family="Arial" fill="#444">0.47</text>
+<line x1="773.33" y1="60" x2="773.33" y2="448" stroke="#e6e6e6" stroke-width="1"/>
+<text x="773.33" y="468" text-anchor="middle" font-size="12" font-family="Arial" fill="#444">0.62</text>
+<line x1="911.67" y1="60" x2="911.67" y2="448" stroke="#e6e6e6" stroke-width="1"/>
+<text x="911.67" y="468" text-anchor="middle" font-size="12" font-family="Arial" fill="#444">0.78</text>
+<line x1="1050.00" y1="60" x2="1050.00" y2="448" stroke="#e6e6e6" stroke-width="1"/>
+<text x="1050.00" y="468" text-anchor="middle" font-size="12" font-family="Arial" fill="#444">0.93</text>
+<rect x="750" y="30" width="16" height="16" fill="#4C78A8"/>
+<text x="774" y="43" font-size="13" font-family="Arial">Protected LLM</text>
+<rect x="910" y="30" width="16" height="16" fill="#F58518"/>
+<text x="934" y="43" font-size="13" font-family="Arial">Unprotected LLM</text>
+<text x="210" y="97.0" text-anchor="end" font-size="13" font-family="Arial">Llama-3.2-1B</text>
+<rect x="220.00" y="77.00" width="249.49" height="14" fill="#4C78A8"/>
+<text x="475.49" y="89.00" font-size="11" font-family="Arial" fill="#333">0.28</text>
+<rect x="220.00" y="95.00" width="588.08" height="14" fill="#F58518"/>
+<text x="814.08" y="107.00" font-size="11" font-family="Arial" fill="#333">0.66</text>
+<text x="210" y="143.0" text-anchor="end" font-size="13" font-family="Arial">Llama-3-8B</text>
+<rect x="220.00" y="123.00" width="302.95" height="14" fill="#4C78A8"/>
+<text x="528.95" y="135.00" font-size="11" font-family="Arial" fill="#333">0.34</text>
+<rect x="220.00" y="141.00" width="632.64" height="14" fill="#F58518"/>
+<text x="858.64" y="153.00" font-size="11" font-family="Arial" fill="#333">0.71</text>
+<text x="210" y="189.0" text-anchor="end" font-size="13" font-family="Arial">Qwen3-0.6B</text>
+<rect x="220.00" y="169.00" width="276.22" height="14" fill="#4C78A8"/>
+<text x="502.22" y="181.00" font-size="11" font-family="Arial" fill="#333">0.31</text>
+<rect x="220.00" y="187.00" width="614.81" height="14" fill="#F58518"/>
+<text x="840.81" y="199.00" font-size="11" font-family="Arial" fill="#333">0.69</text>
+<text x="210" y="235.0" text-anchor="end" font-size="13" font-family="Arial">Qwen3-4B</text>
+<rect x="220.00" y="215.00" width="347.50" height="14" fill="#4C78A8"/>
+<text x="573.50" y="227.00" font-size="11" font-family="Arial" fill="#333">0.39</text>
+<rect x="220.00" y="233.00" width="668.28" height="14" fill="#F58518"/>
+<text x="894.28" y="245.00" font-size="11" font-family="Arial" fill="#333">0.75</text>
+<text x="210" y="281.0" text-anchor="end" font-size="13" font-family="Arial">Phi-3.5-mini</text>
+<rect x="220.00" y="261.00" width="320.77" height="14" fill="#4C78A8"/>
+<text x="546.77" y="273.00" font-size="11" font-family="Arial" fill="#333">0.36</text>
+<rect x="220.00" y="279.00" width="650.46" height="14" fill="#F58518"/>
+<text x="876.46" y="291.00" font-size="11" font-family="Arial" fill="#333">0.73</text>
+<text x="210" y="327.0" text-anchor="end" font-size="13" font-family="Arial">Gemma-3-4B</text>
+<rect x="220.00" y="307.00" width="294.04" height="14" fill="#4C78A8"/>
+<text x="520.04" y="319.00" font-size="11" font-family="Arial" fill="#333">0.33</text>
+<rect x="220.00" y="325.00" width="623.73" height="14" fill="#F58518"/>
+<text x="849.73" y="337.00" font-size="11" font-family="Arial" fill="#333">0.70</text>
+<text x="210" y="373.0" text-anchor="end" font-size="13" font-family="Arial">GPT-OSS-20B</text>
+<rect x="220.00" y="353.00" width="392.06" height="14" fill="#4C78A8"/>
+<text x="618.06" y="365.00" font-size="11" font-family="Arial" fill="#333">0.44</text>
+<rect x="220.00" y="371.00" width="721.74" height="14" fill="#F58518"/>
+<text x="947.74" y="383.00" font-size="11" font-family="Arial" fill="#333">0.81</text>
+<rect x="0" y="392" width="1100" height="46" fill="#f7f7f7"/>
+<text x="210" y="419.0" text-anchor="end" font-size="13" font-family="Arial" font-weight="bold">Average</text>
+<rect x="220.00" y="399.00" width="311.86" height="14" fill="#4C78A8"/>
+<text x="537.86" y="411.00" font-size="11" font-family="Arial" fill="#333">0.35</text>
+<rect x="220.00" y="417.00" width="642.82" height="14" fill="#F58518"/>
+<text x="868.82" y="429.00" font-size="11" font-family="Arial" fill="#333">0.72</text>
+<text x="635.00" y="493" text-anchor="middle" font-size="13" font-family="Arial">Score</text>
+</svg>

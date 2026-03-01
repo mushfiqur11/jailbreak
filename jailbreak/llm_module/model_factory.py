@@ -15,7 +15,7 @@ def llm_model_factory(config: Dict[str, Any]) -> BaseLLM:
     
     Args:
         config (Dict[str, Any]): Configuration dictionary containing:
-            - model (str): Required. Model type (llama, gpt, phi, qwen, deepseek, aya)
+            - model (str): Required. Model type (llama, gpt, phi, qwen, deepseek, aya, gemma, gptoss)
             - model_id (str): Required. Actual model identifier
             - Additional model-specific parameters (temperature, max_tokens, etc.)
     
@@ -53,10 +53,6 @@ def llm_model_factory(config: Dict[str, Any]) -> BaseLLM:
         from .models.llama import Llama
         return Llama(config)
     
-    elif model_type == "gpt":
-        from .models.gpt import GPT
-        return GPT(config)
-    
     elif model_type == "phi":
         from .models.phi import Phi
         return Phi(config)
@@ -72,7 +68,24 @@ def llm_model_factory(config: Dict[str, Any]) -> BaseLLM:
     elif model_type == "aya":
         from .models.aya import Aya
         return Aya(config)
+
+    elif model_type == "gemma":
+        from .models.gemma import Gemma
+        return Gemma(config)
+
+    elif model_type == "gptoss":
+        from .models.gptoss import GPTOSS
+        return GPTOSS(config)
+
+    elif model_type == "gpt":
+        model_id = str(config.get("model_id", "")).lower()
+        # Route open-weight GPT-OSS HF models through HF backend, not OpenAI API backend
+        if "gpt-oss" in model_id:
+            from .models.gptoss import GPTOSS
+            return GPTOSS(config)
+        from .models.gpt import GPT
+        return GPT(config)
     
     else:
-        supported_models = ["llama", "gpt", "phi", "qwen", "deepseek", "aya"]
+        supported_models = ["llama", "gpt", "phi", "qwen", "deepseek", "aya", "gemma", "gptoss"]
         raise ValueError(f"Unsupported model: '{model_type}'. Supported models: {supported_models}")

@@ -1,0 +1,8 @@
+model,protected_score,unprotected_score
+Llama-3.2-1B,0.28,0.66
+Llama-3-8B,0.34,0.71
+Qwen3-0.6B,0.31,0.69
+Qwen3-4B,0.39,0.75
+Phi-3.5-mini,0.36,0.73
+Gemma-3-4B,0.33,0.70
+GPT-OSS-20B,0.44,0.81

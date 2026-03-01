@@ -12,6 +12,8 @@ from .phi import Phi
 from .qwen import Qwen
 from .deepseek import DeepSeek
 from .aya import Aya
+from .gemma import Gemma
+from .gptoss import GPTOSS
 
 __all__ = [
     'Llama',
@@ -19,5 +21,7 @@ __all__ = [
     'Phi',
     'Qwen',
     'DeepSeek',
-    'Aya'
+    'Aya',
+    'Gemma',
+    'GPTOSS'
 ]

@@ -23,7 +23,7 @@ __version__ = "1.0.0"
 __author__ = "Jailbreak Framework Team"
 
 # Import main classes for easy access
-from .models import Llama, GPT, Phi, Qwen, DeepSeek, Aya
+from .models import Llama, GPT, Phi, Qwen, DeepSeek, Aya, Gemma, GPTOSS
 from .config import ModelConfigs, ConfigManager
 from .utils import ConversationManager, ModelUtils
 from .quantization import QuantizationConfig, MemoryOptimizer
@@ -33,7 +33,7 @@ from .model_factory import llm_model_factory
 # Main exports
 __all__ = [
     # Model classes
-    'Llama', 'GPT', 'Phi', 'Qwen', 'DeepSeek', 'Aya',
+    'Llama', 'GPT', 'Phi', 'Qwen', 'DeepSeek', 'Aya', 'Gemma', 'GPTOSS',
     
     # Model factory
     'llm_model_factory',
