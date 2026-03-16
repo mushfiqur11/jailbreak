@@ -1,0 +1,3 @@
+short_v3_qwen06b_qwen06b
+short_v3_qwen06b_llama1b
+short_v3_qwen06b_llama8b

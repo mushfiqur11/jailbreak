@@ -1,0 +1,51 @@
+dataset:
+  path: /scratch/mrahma45/jailbreaking_repos/jailbreak-pkg/data/new_data.json
+  conversations_key: conversations
+  ground_truth_key: groundTruth
+
+output:
+  base_dir: /scratch/mrahma45/jailbreaking_repos/outputs/judge_validation
+  run_name: judge_validation_new_data
+
+runtime:
+  # Each conversation is evaluated exactly once per judge model.
+  max_retries: 3
+  retry_delay: 1.0
+
+judge_models:
+  gpt4o_mini:
+    model: gpt
+    model_id: gpt-4o-mini
+    api_key_path: /home/mrahma45/OPENAI_API_KEY
+    max_completion_tokens: 800
+
+  gptoss_20b:
+    model: gptoss
+    model_id: openai/gpt-oss-20b
+    quantization: 4bit
+    hf_token_path: /home/mrahma45/HUGGINGFACE_KEY
+    hf_model_path: /scratch/mrahma45/hf_models
+    temperature: 0.2
+    max_new_tokens: 800
+
+  qwen3_32b_q4:
+    model: qwen
+    model_id: Qwen/Qwen3-32B
+    quantization: 4bit
+    temperature: 0.3
+    max_new_tokens: 1500
+    top_p: 0.8
+    top_k: 40
+    repetition_penalty: 1.05
+    do_sample: true
+    hf_token_path: /home/mrahma45/HUGGINGFACE_KEY
+    hf_model_path: /scratch/mrahma45/hf_models
+
+  llama3_8b:
+    model: llama
+    model_id: meta-llama/Meta-Llama-3-8B-Instruct
+    quantization: auto
+    hf_token_path: /home/mrahma45/HUGGINGFACE_KEY
+    hf_model_path: /scratch/mrahma45/hf_models
+    temperature: 0.2
+    max_new_tokens: 800

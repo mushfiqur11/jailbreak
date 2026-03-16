@@ -1,0 +1,9 @@
+# Ignore Python byte-compiled files and cache directories
+__pycache__/
+*.py[cod]
+*$py.class
+
+hf_models/
+jailbreak.egg-info/
+
+data/
